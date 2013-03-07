@@ -24,10 +24,17 @@ dbName="osm"
 dbUser="postgres"
 dbPass="postgres"
 
-lgdPath="~/Projects/Eclipse/linkedgeodata-parent"
-postgisPath="/usr/share/postgresql/9.1/contrib/postgis-1.5/"
 
-source ./config.ini
+lgdBasePath="/home/raven/Projects/Eclipse/linkedgeodata-parent"
+lgdSqlPath="$lgdBasePath/linkedgeodata-core/src/main/sql/"
+
+postgisPath="/usr/share/postgresql/9.1/contrib/postgis-2.0"
+
+osmosisSqlPath="/usr/share/doc/osmosis/examples/"
+
+
+# Use a config.ini file to override any of the settings of this file
+[ -f "./config.ini" ] && source ./config.ini
 
 
 # Simple function to echo to stderr
@@ -40,7 +47,7 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 # Initialize our own variables:
 
-while getopts "?h:U:P:d:f:" opt; do
+while getopts "?h:U:W:d:f:" opt; do
     case "$opt" in
         \?)
             echoerr "$usage"
@@ -50,7 +57,7 @@ while getopts "?h:U:P:d:f:" opt; do
             ;;
         U)  dbUser="$OPTARG"
             ;;
-        P)  dbPass="$OPTARG"
+        W)  dbPass="$OPTARG"
             ;;
         d)  dbName="$OPTARG"
             ;;
@@ -63,41 +70,29 @@ shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
 
-
-#$osmosisVersion="0.42"
-#$postgisPath="/usr/share/postgresql/9.1/contrib/postgis-1.5/"
-#$osmosisBase="~/osmosis"
-#$osmosisPath="$osmosisBasePath/$osmosisVersion"
-
-
-
-#if [ ! -f "$osmosisPath" ]; then
-#  wget "http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-$osmosisVersion.tgz" -O /tmp
-#  tar -zxvf "/tmp/osmosis-$osmosisVersion.tgz"
-#  mv "/tmp/osmosis-$osmosisVersion" "$osmosis"
-#fi
-
-
-#ln -s osmosis-0.41/ osmosis
-
+# Install all required dependencies
 sudo apt-get install postgresql postgresql-contrib-9.1 postgis postgresql-9.1-postgis osmosis
 
-osmosisSqlBasePath="/usr/share/doc/osmosis/examples/"
 
-# Add a password to ~/.pgpass if not exists
-passLine="127.0.0.1:*:*:postgres:postgres"
+# Determine if we have to add a password to ~/.pgpass
+passLine="$dbHost:*:*:$dbUser:$dbPass"
 
-passLineExists=`grep -Fxc "$passLine" ~/.pgpass`
-
-# Download LGD Path if neccessary
-
-lgdPathExists=0
-if [ -d "$lgdPath" ]; then
-    lgdPathExists=1
+if [ -f ~/.pgpass ]; then
+    passLineExists=`grep -Fxc "$passLine" ~/.pgpass`
+else
+    passLineExists=0
 fi
 
 
-# Validate settings and confirm continuation
+# Determine whether we have to checkout the LinkedGeoData git repo
+lgdBasePathExists=0
+if [ -d "$lgdBasePath" ]; then
+    lgdBasePathExists=1
+fi
+
+
+# Confirm settings before continuation
+echo "-------------------------------------------------------------------"
 echo "Your settings are:"
 echo "Database"
 echo "  Name: $dbName"
@@ -107,37 +102,36 @@ echo "  Password: $dbPass"
 echo "  Password already configured: $passLineExists"
 
 echo "Paths:"
-echo "  LinkedGeoData Git Repo: $lgdPath (exists: $lgdPathExists)"
-echo "  Osmosis SQL files: $osmosisSqlBasePath"
+echo "  LinkedGeoData Git Repo: $lgdBasePath (exists: $lgdBasePathExists)"
+echo "  Osmosis SQL files: $osmosisSqlPath"
 echo "  PostGIS files: $postgisPath"
 
-
-read -p "Press [Enter] key to start loading..."
+echo "-------------------------------------------------------------------"
+read -p "Press [Enter] key to start loading"
 
 if [ $passLineExists -eq 0 ]; then
-    echo "$passLine" > ~/.pgpass
+    echo "$passLine" >> ~/.pgpass
+    chmod 600 ~/.pgpass
 fi
 
-if [ $lgdPathExists -eq 0 ]; then
-     git clone git@github.com:GeoKnow/LinkedGeoData.git "$lgdPath"
+if [ $lgdBasePathExists -eq 0 ]; then
+     git clone git@github.com:GeoKnow/LinkedGeoData.git "$lgdBasePath"
 fi
 
+createdb -h "$dbHost" -U "$dbUser" "$dbName"
+createlang -h "$dbHost" -U "$dbUser" plpgsql "$dbName"
+psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/postgis.sql"
+psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/spatial_ref_sys.sql"
 
-
-#http://ubuntuforums.org/showthread.php?t=1565533
-#awk '/string1/{f=1}END{ if (!f) {print "string2"}}1' file
-
-createdb -h "$dbHost" -U "$dbUser" -P "$dbPass" "$dbName"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d"$dbName" -f "$postgisPath/postgis.sql"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d"$dbName" -f "$postgisPath/spatial_ref_sys.sql"
-
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d"$dbName" -f"$osmosisSqlBasePath/pgsimple_schema_0.6.sql"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d"$dbName" -f"$osmosisSqlBasePath/pgsimple_schema_0.6_linestring.sql"
+psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6.sql"
+psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6_linestring.sql"
 
 # TODO Only load a file if specified
 #wget http://download.geofabrik.de/openstreetmap/europe/germany/sachsen.osm.bz2
 
-bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
+#if [ ! -z "$osmFile" ]; then
+#    bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
+#fi
 
 #svn checkout https://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata --username RavenArkadon@gmail.com
 #svn checkout http://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata
@@ -146,10 +140,10 @@ bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="
 #git clone git@github.com:GeoKnow/LinkedGeoData.git
 
 # LGD Modifications
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d "$dbName" -f "$lgdPath/linkedgeodata-core/src/main/sql/LinkedGeoData3\ Physical\ Schema.sql"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d "$dbName" -f "$lgdPath/linkedgeodata-core/src/main/sql/LinkedGeoData3\ Individual\ Views.sql"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d "$dbName" -f "$lgdPath/linkedgeodata-core/src/main/sql/ExtraOsmIndexes.sql"
-psql -h "$dbHost" -U "$dbUser" -P "$dbPass" -d "$dbName" -f "$lgdPath/linkedgeodata-core/src/main/sql/TranslateWikiLabels.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Physical Schema.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Individual Views.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOsmIndexes.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
 
 
 
