@@ -14,8 +14,10 @@ where:
     -h  postgres host name
     -d  postgres database name
     -u  postgres user name
-    -p  postgres password"
+    -p  postgres password
+    -Q  SPARQL query string"
 
+queryString='Construct {?s ?p ?o } {?s ?p ?o } Limit 10'
 
 source config.ini.dist
 
@@ -35,7 +37,7 @@ echoerr() { echo "$@" 1>&2; }
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
-while getopts "?h:U:W:d:" opt; do
+while getopts "?h:U:W:d:Q:" opt; do
     case "$opt" in
         \?)
             echoerr "$usage"
@@ -49,6 +51,9 @@ while getopts "?h:U:W:d:" opt; do
             ;;
         d)  dbName="$OPTARG"
             ;;
+        Q)  queryString="$OPTARG"
+            ;;
+
     esac
 done
 
@@ -70,10 +75,10 @@ echoerr "Paths:"
 echoerr "  Sparqlify path: $sparqlifyJarFile"
 
 echoerr "-------------------------------------------------------------------"
-read -p "Press [Enter] key to start loading"
+#read -p "Press [Enter] key to start loading"
 
 
-java -cp "$sparqlifyJarFile" org.aksw.sparqlify.web.Main -h "$dbHost" -u "$dbUser" -p "$dbPass" -d "$dbName" -c ../linkedgeodata-core/src/main/sparqlify/LinkedGeoData-Triplify-IndividualViews.sparqlify -D
+java -cp "$sparqlifyJarFile" org.aksw.sparqlify.web.Main -h "$dbHost" -u "$dbUser" -p "$dbPass" -d "$dbName" -c ../linkedgeodata-core/src/main/sparqlify/LinkedGeoData-Triplify-IndividualViews.sparqlify -Q "$queryString"
 
 
 #java -cp target/sparqlify-core-jar-with-dependencies.jar org.aksw.sparqlify.web.Main -h localhost -u postgres -p postgres -d lgd  -t 10 -c ./mappings/LinkedGeoData-Triplify-IndividualViews.sparqlify -Q 'Construct { ?s ?p ?o } { ?s ?p ?o . Filter(?p = <http://www.opengis.net/rdf#asWKT>) }'
