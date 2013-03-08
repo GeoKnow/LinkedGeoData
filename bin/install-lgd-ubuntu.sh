@@ -8,7 +8,7 @@
 #
 #
 
-usage="$(basename "$0") options -- program to load a osm.gz file into a postgres database and apply the modifications of lgd to it
+usage="$(basename "$0") options -- program to load a PBF file into a postgres database and apply the modifications of lgd to it
 
 where:
     -h  postgres host name
@@ -17,15 +17,9 @@ where:
     -p  password !!!will be added to ~/.pgpass if not exists!!!
     -f  osm.gz file to load (other formats currently not supported)"
 
-osmFile="$1"
+source config.ini.dist
 
-dbHost="localhost"
-dbName="osm"
-dbUser="postgres"
-dbPass="postgres"
-
-
-lgdBasePath="/home/raven/Projects/Eclipse/linkedgeodata-parent"
+lgdBasePath="../"
 lgdSqlPath="$lgdBasePath/linkedgeodata-core/src/main/sql/"
 
 postgisPath="/usr/share/postgresql/9.1/contrib/postgis-2.0"
@@ -129,9 +123,10 @@ psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.
 # TODO Only load a file if specified
 #wget http://download.geofabrik.de/openstreetmap/europe/germany/sachsen.osm.bz2
 
-#if [ ! -z "$osmFile" ]; then
+if [ ! -z "$osmFile" ]; then
 #    bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
-#fi
+    osmosis --read-pbf "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
+fi
 
 #svn checkout https://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata --username RavenArkadon@gmail.com
 #svn checkout http://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata

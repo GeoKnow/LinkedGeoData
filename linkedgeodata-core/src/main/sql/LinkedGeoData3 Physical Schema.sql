@@ -3,7 +3,7 @@
  * Stored Procedures                                                        *
  ****************************************************************************/
 
-DROP FUNCTION lgd_tryparse_boolean(v TEXT);
+DROP FUNCTION IF EXISTS lgd_tryparse_boolean(v TEXT);
 CREATE FUNCTION lgd_tryparse_boolean(v TEXT) RETURNS BOOL AS
 $$
 DECLARE
@@ -22,7 +22,7 @@ $$
     
 
     
-DROP FUNCTION lgd_tryparse_int(str TEXT);
+DROP FUNCTION IF EXISTS lgd_tryparse_int(str TEXT);
 CREATE FUNCTION lgd_tryparse_int(str TEXT) RETURNS INT8 AS
 $$
 DECLARE
@@ -38,7 +38,7 @@ $$
     RETURNS NULL ON NULL INPUT;
 
     
-DROP FUNCTION lgd_tryparse_float(str TEXT);
+DROP FUNCTION IF EXISTS lgd_tryparse_float(str TEXT);
 CREATE FUNCTION lgd_tryparse_float(str TEXT) RETURNS FLOAT AS
 $$
 DECLARE
