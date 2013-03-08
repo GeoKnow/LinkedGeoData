@@ -14,7 +14,7 @@ where:
     -h  postgres host name
     -d  postgres database name
     -u  postgres user name
-    -p  password !!!will be added to ~/.pgpass if not exists!!!"
+    -p  postgres password"
 
 
 source config.ini.dist
