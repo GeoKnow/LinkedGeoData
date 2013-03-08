@@ -20,12 +20,7 @@ where:
 source config.ini.dist
 
 
-lgdBasePath="../"
-lgdSqlPath="$lgdBasePath/linkedgeodata-core/src/main/sql/"
-
-postgisPath="/usr/share/postgresql/9.1/contrib/postgis-2.0"
-
-osmosisSqlPath="/usr/share/doc/osmosis/examples/"
+#lgdBasePath="../"
 sparqlifyJarFile="./sparqlify-parent/sparqlify-core/target/sparqlify-core-jar-with-dependencies.jar"
 
 
@@ -60,6 +55,23 @@ done
 shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
+
+
+# Confirm settings before continuation
+echoerrerr "-------------------------------------------------------------------"
+echoerr "Your settings are:"
+echoerr "Database"
+echoerr "  Name: $dbName"
+echoerr "  Host: $dbHost"
+echoerr "  Username: $dbUser"
+echoerr "  Password: $dbPass"
+
+echoerr "Paths:"
+echoerr "  Sparqlify path: $sparqlifyJarFile"
+
+echoerr "-------------------------------------------------------------------"
+read -p "Press [Enter] key to start loading"
+
 
 java -cp "$sparqlifyJarFile" org.aksw.sparqlify.web.Main -h "$dbHost" -u "$dbUser" -p "$dbPass" -d "$dbName" -c ../linkedgeodata-core/src/main/sparqlify/LinkedGeoData-Triplify-IndividualViews.sparqlify -D
 
