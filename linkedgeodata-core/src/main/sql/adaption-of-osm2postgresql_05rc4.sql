@@ -20,6 +20,7 @@ CREATE UNIQUE INDEX idx_simple_polys_way_id ON simple_polys (way_id);
 
 
 -- TODO Check the code below
+-- I would prefer to get rid of the mods of the orginal schema
 
 -- ADD polygons to TABLE relations
 -- Use the geometry datatype here, and only cast back to geography when done with
@@ -94,7 +95,7 @@ or outerring_linestring IS NULL -- about 16000 (relations between simple nodes?)
 -- The above must be done before what follows, because if less than 3 points, test may crash
 UPDATE relations SET poly_type= 'no valid outerring' WHERE 
 poly_type = 'unknown'
-and NOT IsClosed( outerring_linestring); -- 136 are buggy in italy.osm
+and NOT ST_IsClosed( outerring_linestring); -- 136 are buggy in italy.osm
 
 UPDATE relations SET poly_type= 'no valid outerring' WHERE 
 poly_type = 'unknown'
@@ -112,7 +113,7 @@ and innerring_linestring IS NULL
 -- Innering must be closed
 UPDATE relations SET poly_type= 'no valid inerring'
 WHERE poly_type = 'unknown'
-and (NOT ISClosed(ST_LineMerge(ST_Collect(innerring_linestring ))))
+and (NOT ST_IsClosed(ST_LineMerge(ST_Collect(innerring_linestring ))))
 ; -- 44 more are buggy
 
 -- Innering must be big enough
@@ -131,7 +132,7 @@ and ST_NPoints(ST_LineMerge(ST_Collect(innerring_linestring ))) <4
 UPDATE relations SET poly_type= 'valid innerring'
 WHERE poly_type = 'unknown'
 and ( ST_IsClosed(ST_LineMerge(ST_Collect(innerring_linestring ))))
-and NPoints(ST_LineMerge(ST_Collect(innerring_linestring ))) > 3
+and ST_NPoints(ST_LineMerge(ST_Collect(innerring_linestring ))) > 3
 ; 
 
 -- SELECT id,poly_type FROM relations WHERE ISClosed(ST_LineMerge(ST_Collect(innerring_linestring ))) and NPoints(ST_LineMerge(ST_Collect(innerring_linestring )))=3; --should give no result if OSM data were perfect; not the case (2 results for italy.osm).
@@ -145,7 +146,7 @@ and ST_GeometryType(outerring_linestring) ='LINESTRING';
 
 
 -- Create simple polygon not having (valid) innering(s)
-UPDATE relations SET polygon = MakePolygon(outerring_linestring)::geography
+UPDATE relations SET polygon = ST_MakePolygon(outerring_linestring)::geography
 WHERE (poly_type = 'no valid inerring'
 OR poly_type = 'unknown')
 --   and id=1309665
@@ -193,14 +194,16 @@ WHERE
 -- UPDATE dumped_multilinestring SET idint4 = relation_id*1000 + lineseq; --*might* create duplicate id if more than 999 linestrings in a single multilinestring AND if bad luck
 
 -- Put all polygons in a single table
+/*
 DROP TABLE IF EXISTS polygons ;
 CREATE TABLE polygons AS ( 
-  SELECT id as relation_id, polygon, NULL::text as class  FROM relations
+  SELECT id as relation_id, polygon, NULL::text as class FROM relations
  UNION ALL
-  SELECT polygon, NULL::int4  as relation_id, NULL::text as class  FROM simple_polys
+  SELECT polygon, NULL::int4  as relation_id, NULL::text as class FROM simple_polys
  UNION ALL
-  SELECT outerring_polygon, relation_id, NULL::text as class  FROM dumped_multilinestring
+  SELECT outerring_polygon, relation_id, NULL::text as class FROM dumped_multilinestring
 );
+*/
 
 
 
