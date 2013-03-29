@@ -4,7 +4,7 @@ LinkedGeoData (LGD) is an effort to add a spatial dimension to the Web of Data /
 The project web site can be found [here](http://linkedgeodata.org).
 
 ### Do it yourself data conversion
-If you are running [Ubuntu](http://www.ubuntu.com) then this repository contains everything you need to transform OpenStreetMap data to RDF yourself.
+If you are running [Ubuntu](http://www.ubuntu.com) then this repository contains everything you need to transform OpenStreetMap data to RDF yourself. Make sure to read the section on database tuning when dealing with larger datasets.
 For other systems please consider contributing adaptions of the existing scripts.
 
 As for obtaining datasets, a very good source for OSM datasets in bite-size chunks is [GeoFabrik](http://download.geofabrik.de). For full dumps, refer to the [planet downloads](http://planet.openstreetmap.org/). Note that currently only .pbf files are supported.
@@ -56,6 +56,35 @@ Examples:
 
 Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.
 
+
+### Postgresql Database Tuning
+It is recommended to tune the database according to [http://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server](these recommendations). Here is a brief summary:
+Edit `/etc/postgresql/9.1/main/postgresql.conf` and set the following properties:
+
+    shared_buffers       = 2GB #recommended values between 25% - 40% of available RAM, setting assumes 8GB RAM
+    effective_cache_size = 4GB #recommended values between 50% - 75% of available RAM, setting assumes 8GB RAM
+    checkpoint_segments  = 256
+    checkpoint_completion_target = 0.9
+    autovacuum = off # This can be re-enabled once loading has completed
+
+    work_mem             = 256MB (This memory is used for sorting, so each user may use this amount of memory for his sorts; You may want to use a significantly lower value if there are many connections doing sorts)
+    maintainance_work_mem = 256MB
+
+
+Furthermore, allow more shared memory, otherwise postgres won't start:
+Append the following line to `/etc/sysctl.conf`:
+
+    #Use more shared memory max
+    kernel.shmmax=4294967296
+
+    # Note: The amount (specified in bytes) for kernel.shmmax must be greater than the shared_buffers settings obove
+    #4GB = 4294967296
+    #8GB = 8589934592
+
+Make the changes take effect:
+
+    sudo sysctl -p
+    sudo service postgresql restart
 
 ## License
 Will be clarified shortly.
