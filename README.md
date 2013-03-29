@@ -54,7 +54,7 @@ Examples:
     ./run-query-lgd.sh -h localhost -d lgd -u postgres -p mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
     ./run-query-lgd.sh -Q 'Select * { ?s ?p ?o . Filter(?s = <http://linkedgeodata.org/triplify/node2028098486>) }'
 
-Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still graph patterns and filters using equals constraint should be working fine.
+Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.
 
 
 ## License
