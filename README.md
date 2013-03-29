@@ -7,6 +7,8 @@ The project web site can be found [here](http://linkedgeodata.org).
 If you are running [Ubuntu](http://www.ubuntu.com) then this repository contains everything you need to transform OpenStreetMap data to RDF yourself.
 For other systems please consider contributing adaptions of the existing scripts.
 
+As for obtaining datasets, a very good source for OSM datasets in bite-size chunks is [GeoFabrik](http://download.geofabrik.de). For full dumps, refer to the [planet downloads](http://planet.openstreetmap.org/). Note that currently only .pbf files are supported.
+
 In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/bin) you find several scripts.
 All of them are configured via `config.ini.dist`. You can override the default settings without changing this file by creating a `config.ini` file.
 
