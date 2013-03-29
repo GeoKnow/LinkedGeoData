@@ -58,7 +58,7 @@ Again, note that Sparqlify is still in development and the supported features ar
 
 
 ### Postgresql Database Tuning
-It is recommended to tune the database according to [http://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server](these recommendations). Here is a brief summary:
+It is recommended to tune the database according to [these recommendations](http://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server). Here is a brief summary:
 Edit `/etc/postgresql/9.1/main/postgresql.conf` and set the following properties:
 
     shared_buffers       = 2GB #recommended values between 25% - 40% of available RAM, setting assumes 8GB RAM
