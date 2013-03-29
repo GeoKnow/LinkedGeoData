@@ -22,6 +22,7 @@ All of them are configured via `config.ini.dist`. You can override the default s
   * -f  .pbf file to load (other formats currently not supported)
 
 Example:
+
     wget http://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
     `./createdb-lgd.sh -h localhost -d lgd -u postgres -p mypwd -f bremen-latest.osm.pbf
 
@@ -46,7 +47,8 @@ With the next Sparqlify release we will switch to the debian package that become
   * -p  postgres password (will be added to ~/.pgpass if not exists)
   * -Q  SPARQL query string
 
-Example:
+Examples:
+
     ./run-query-lgd.sh -h localhost -d lgd -u postgres -p mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
     ./run-query-lgd.sh -Q 'Select * { ?s ?p ?o . Filter(?s = <http://linkedgeodata.org/triplify/node2028098486>) }'
 
