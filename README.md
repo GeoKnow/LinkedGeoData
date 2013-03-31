@@ -87,6 +87,5 @@ Make the changes take effect:
     sudo service postgresql restart
 
 ## License
-The content of this project are licensed under the [GPL v3 License](http://example.org).
-
+The content of this project are licensed under the [GPL v3 License](https://github.com/GeoKnow/LinkedGeoData/blob/master/LICENSE).
 
