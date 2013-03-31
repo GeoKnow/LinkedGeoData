@@ -87,7 +87,6 @@ Make the changes take effect:
     sudo service postgresql restart
 
 ## License
-Will be clarified shortly.
-
+The content of this project are licensed under the [GPL v3 License](http://example.org).
 
 
