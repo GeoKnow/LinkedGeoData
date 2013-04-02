@@ -131,7 +131,7 @@ Create View lgd_nodes As
 		?d = typedLiteral(?tstamp, xsd:dateTime)
 		?c = typedLiteral(?changeset_id, xsd:int)
 		?g = uri(concat(lgd-geom:node, ?id))
-		?o = typedLiteral(?geom, ogc:WKTLiteral)
+		?o = typedLiteral(?geom, ogc:wktLiteral)
 		//?g = typedLiteral(?geom, virtrdf:geometry)
 		?xx = typedLiteral(?x, xsd:double)
 		?yy = typedLiteral(?y, xsd:double)
@@ -161,7 +161,7 @@ Create View lgd_node_geometries As
     }
     With
         ?n = uri(concat(lgd-geom:node, ?id)) 
-        ?o = typedLiteral(?geom, ogc:WKTLiteral)
+        ?o = typedLiteral(?geom, ogc:wktLiteral)
     From
         nodes;
 */
@@ -289,7 +289,7 @@ Create View lgd_ways_linestrings As
     With
 		//?w = uri(concat(lgd:way, ?id))
 		?w = uri(concat(lgd-geom:way, ?id))
-		?g = typedLiteral(?linestring, ogc:WKTLiteral)
+		?g = typedLiteral(?linestring, ogc:wktLiteral)
 	From
 		[[SELECT id, linestring FROM ways a WHERE a.id NOT IN (SELECT way_id FROM simple_polys)]];
     
@@ -302,7 +302,7 @@ Create View ways_polygons As
 	With
 		//?w = uri(concat(lgd:way, ?way_id))
 		?w = uri(concat(lgd-geom:way, ?way_id))
-		?g = typedLiteral(?polygon, ogc:WKTLiteral)
+		?g = typedLiteral(?polygon, ogc:wktLiteral)
 	From
 		simple_polys;
 	
