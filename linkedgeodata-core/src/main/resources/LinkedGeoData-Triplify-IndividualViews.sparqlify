@@ -7,7 +7,7 @@
 
 // Prefixes (these will also be used in the query responses)
 Prefix spy:<http://aksw.org/sparqlify/>
-Prefix ogc:<http://www.opengis.net/rdf#>
+Prefix ogc:<http://www.opengis.net/ont/geosparql#>
 
 #Prefix dc:<http://purl.org/dc/elements/1.1/>
 Prefix dcterms:<http://purl.org/dc/terms/>

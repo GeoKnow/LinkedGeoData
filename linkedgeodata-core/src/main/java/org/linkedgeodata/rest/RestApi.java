@@ -170,7 +170,7 @@ public class RestApi {
 
 		// Flat
 		String query
-				= "Prefix meta:<http://linkedgeodata.org/meta/> Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/rdf#> "
+				= "Prefix meta:<http://linkedgeodata.org/meta/> Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/ont/geosparql#> "
 				+ "Construct { ?s ?p ?o } {\n"
 				+ "?s a ?t . "
 				+ "Filter(?t = meta:Node || ?t = meta:Way) ."
@@ -191,19 +191,19 @@ public class RestApi {
 */
 		// Intersects as sub-query
 		// String query =
-		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/rdf#> Construct { ?s ?p ?o } { "
+		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/ont/geosparql#> Construct { ?s ?p ?o } { "
 		// + typeTriple +
 		// " ?s ?p ?o . { Select ?s { ?s geom:geometry ?x . ?x ogc:asWKT ?geo . "
 		// + filter + "} } } Limit 1000";
 
 		// Test query
 		// String query =
-		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/rdf#> Construct { ?s ?p ?o } { ?s ?p ?o . ?s geom:geometry ?x . ?x ogc:asWKT ?geo . "
+		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/ont/geosparql#> Construct { ?s ?p ?o } { ?s ?p ?o . ?s geom:geometry ?x . ?x ogc:asWKT ?geo . "
 		// + filter + "} Order By ?s Limit 1000";
 
 		// ???
 		// String query =
-		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/rdf#> Construct { ?s ?p ?o } { { Select ?s { "
+		// "Prefix geom:<http://geovocab.org/geometry#> Prefix ogc:<http://www.opengis.net/ont/geosparql#> Construct { ?s ?p ?o } { { Select ?s { "
 		// + typeTriple +
 		// " ?s geom:geometry ?x . ?x ogc:asWKT ?geo } Order By Asc(?s) Limit 1000 }. ?s ?p ?o . "
 		// + filter + "} Order By Asc(?s) Limit 1000";
@@ -271,7 +271,7 @@ public class RestApi {
 		String query
 			= "Prefix meta:<http://linkedgeodata.org/meta/>\n"
 			+ "Prefix geom:<http://geovocab.org/geometry#>\n"
-			+ "Prefix ogc:<http://www.opengis.net/rdf#>\n"
+			+ "Prefix ogc:<http://www.opengis.net/ont/geosparql#>\n"
 			+ "PREFIX bif: <http://www.openlinksw.com/schemas/bif#>\n"
 			+ "Construct { ?s ?p ?o } {\n"
 			+ "?s a ?t .\n"
