@@ -1,12 +1,16 @@
 #!/bin/bash
 
-service="$1"
-typ="$2"
+#
+# Note: This script relies on a config.ini(.dist) in <project-root>/bin
+#
 
-if [ -z "$service" ]; then
-    echo "Please specify the service from which to dump, e.g. http://localhost:7531/sparql"
-    exit 1
-fi
+#service="$1"
+typ="$1"
+
+#if [ -z "$service" ]; then
+#    echo "Please specify the service from which to dump, e.g. http://localhost:7531/sparql"
+#    exit 1
+#fi
 
 
 if [ -z "$typ" ]; then
@@ -80,5 +84,7 @@ Union {
 
 #echo "$query"
 
-sparql-nt "$service" "$query"
+#sparql-nt "$service" "$query"
+cd ../../bin/
+./run-query-lgd.sh -Q "$query"
 
