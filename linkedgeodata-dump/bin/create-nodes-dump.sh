@@ -20,7 +20,7 @@ sed -r '/(^#)|($\s*^)/ d' | while read line; do
     typ="http://linkedgeodata.org/ontology/$line"
     file="$date-$line.nodes.sorted.nt.bz2"
 
-    ./dump-nodes.sh "$typ" | sort -u | bzip2 -c > "$targetDir/$file"
+    ./dump-nodes.sh "$typ" | sort -u -S 256M | bzip2 -c > "$targetDir/$file"
 
     echoerr "$line"
 done
