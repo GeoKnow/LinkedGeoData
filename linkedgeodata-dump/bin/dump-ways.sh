@@ -56,6 +56,9 @@ Construct {
 }"
 
 
+cd ../../bin/
+
+
 query="PREFIX geom: <http://geovocab.org/geometry#>
 PREFIX lgdo: <http://linkedgeodata.org/ontology/>
 PREFIX meta: <http://linkedgeodata.org/meta/>
@@ -63,28 +66,58 @@ Construct {
     ?s ?p ?o .
 }
 {
-{
-    ?s a meta:Node .
+    ?s a meta:Way .
     ?s a ?t .
     ?s ?p ?o .
 
     Filter(?t = <$typ>)
+}"
+
+./run-query-lgd.sh -Q "$query"
+
+query="PREFIX geom: <http://geovocab.org/geometry#>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX meta: <http://linkedgeodata.org/meta/>
+Construct {
+    ?s ?p ?o .
 }
-Union {
-    ?x a meta:Node .
+{
+    ?x a meta:Way .
     ?x a ?t .
     ?x geom:geometry ?s .
     ?s ?p ?o .
 
     Filter(?t = <$typ>)
-}
 }"
 
+./run-query-lgd.sh -Q "$query"
 
 
-echoerr "Query:\n$query"
+query="PREFIX geom: <http://geovocab.org/geometry#>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX meta: <http://linkedgeodata.org/meta/>
+Construct {
+    ?s ?p ?o .
+    ?o ?a ?b .
+}
+{
+    ?x a meta:Way .
+    ?x a ?t .
+    ?x geom:geometry ?y .
+    ?y lgdo:posSeq ?s .
+    ?s ?p ?o .
+    ?o ?a ?b .
+
+    Filter(?t = <$typ>)
+}"
+
+./run-query-lgd.sh -Q "$query"
+
+
+
+#echoerr "Query:\n$query"
 
 #sparql-nt "$service" "$query"
-cd ../../bin/
-./run-query-lgd.sh -Q "$query"
+#cd ../../bin/
+#./run-query-lgd.sh -Q "$query"
 

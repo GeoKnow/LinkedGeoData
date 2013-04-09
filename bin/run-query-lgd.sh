@@ -19,12 +19,11 @@ where:
 
 queryString='Construct {?s ?p ?o } {?s ?p ?o } Limit 10'
 
-source config.ini.dist
-
 
 #lgdBasePath="../"
 sparqlifyJarFile="./sparqlify-parent/sparqlify-core/target/sparqlify-core-jar-with-dependencies.jar"
 
+source config.ini.dist
 
 # Use a config.ini file to override any of the settings of this file
 [ -f "./config.ini" ] && source ./config.ini
