@@ -109,6 +109,7 @@ PREFIX meta: <http://linkedgeodata.org/meta/>
 Construct {
     ?s ?p ?o .
 }
+{
     ?x a meta:Node .
     ?x a ?t .
     ?x geom:geometry ?s .
