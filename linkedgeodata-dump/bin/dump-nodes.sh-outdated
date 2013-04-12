@@ -11,7 +11,7 @@ typ="$1"
 #    echo "Please specify the service from which to dump, e.g. http://localhost:7531/sparql"
 #    exit 1
 #fi
-
+echoerr() { echo "$@" 1>&2; }
 
 if [ -z "$typ" ]; then
     echo "Please specify a type for which to dump the nodes, e.g. http://linkedgeodata.org/ontology/Amenity"
@@ -37,6 +37,9 @@ fi
 #}"
 
 
+cd ../../bin/
+
+
 query="PREFIX geom: <http://geovocab.org/geometry#>
 PREFIX lgdo: <http://linkedgeodata.org/ontology/>
 PREFIX meta: <http://linkedgeodata.org/meta/>
@@ -55,6 +58,7 @@ Construct {
     Filter(?t = <$typ>)
 }"
 
+./run-query-lgd.sh -Q "$query"
 
 query="PREFIX geom: <http://geovocab.org/geometry#>
 PREFIX lgdo: <http://linkedgeodata.org/ontology/>
@@ -81,45 +85,11 @@ Union {
 }"
 
 
+./run-query-lgd.sh -Q "$query"
 
-query="PREFIX geom: <http://geovocab.org/geometry#>
-PREFIX lgdo: <http://linkedgeodata.org/ontology/>
-PREFIX meta: <http://linkedgeodata.org/meta/>
-Construct {
-    ?s ?p ?o .
-}
-{
-    ?s a meta:Node .
-    ?s a ?t .
-    ?s ?p ?o .
-
-    Filter(?t = <$typ>)
-}"
-
-#echo "$query"
+#echoerr "Query:\n$query"
 
 #sparql-nt "$service" "$query"
-cd ../../bin/
-./run-query-lgd.sh -Q "$query"
-
-
-query="PREFIX geom: <http://geovocab.org/geometry#>
-PREFIX lgdo: <http://linkedgeodata.org/ontology/>
-PREFIX meta: <http://linkedgeodata.org/meta/>
-Construct {
-    ?s ?p ?o .
-}
-    ?x a meta:Node .
-    ?x a ?t .
-    ?x geom:geometry ?s .
-    ?s ?p ?o .
-
-    Filter(?t = <$typ>)
-}"
-
-
-./run-query-lgd.sh -Q "$query"
-
-
-
+#cd ../../bin/
+#./run-query-lgd.sh -Q "$query"
 
