@@ -40,7 +40,7 @@ Prefix geom:<http://geovocab.org/geometry#>
 Create View users As
   Construct {
     ?s
-      a dcterms:Agent .
+      a dcterms:Agent ;
       rdfs:label ?l .
   }
   With
