@@ -183,3 +183,17 @@ CREATE VIEW lgd_resource_label AS
    FROM lgd_map_label a
    JOIN lgd_map_resource_kv b USING (k, v);
 
+
+   
+/* Interlinks */
+DROP TABLE IF EXISTS lgd_interlinks;
+CREATE TABLE lgd_interlinks (
+	s TEXT NOT NULL,
+	o TEXT NOT NULL, 
+
+	/* Avoid duplicates */
+	UNIQUE(s, o)
+);
+
+   
+   

@@ -32,6 +32,23 @@ Prefix geom:<http://geovocab.org/geometry#>
 
 //Prefix virtrdf:<http://www.openlinksw.com/schemas/virtrdf#>
 
+/**********
+ * Interlinks
+ **********/
+ 
+Create View interlinks As
+  Construct {
+    ?s owl:sameAs ?o
+  }
+  With
+    ?s = uri(?s)
+    ?o = uri(?o)
+  Constrain
+    ?s prefix "http://linkedgeodata.org"
+    ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
+  From
+    lgd_interlinks
+ 
 
 /**********
  * Ontology

@@ -47,9 +47,14 @@ CREATE INDEX idx_relation_tags_int ON relation_tags(lgd_tryparse_int(v)) WHERE l
 CREATE INDEX idx_relation_tags_float ON relation_tags(lgd_tryparse_float(v)) WHERE lgd_tryparse_float(v) IS NOT NULL;
 
 
-CREATE INDEX idx_nodes_tstamp on nodes(tstamp);
-CREATE INDEX idx_ways_tstamp on ways(tstamp);
-CREATE INDEX idx_relations_tstamp on relations(tstamp);
+CREATE INDEX idx_nodes_tstamp ON nodes(tstamp);
+CREATE INDEX idx_nodes_user_id ON nodes(user_id);
+
+CREATE INDEX idx_ways_tstamp ON ways(tstamp);
+CREATE INDEX idx_ways_user_id ON ways(user_id);
+
+CREATE INDEX idx_relations_tstamp ON relations(tstamp);
+CREATE INDEX idx_relations_user_id ON relations(user_id);
 
 
 --CREATE INDEX idx_nodes_geom on nodes USING GIST(geom);
