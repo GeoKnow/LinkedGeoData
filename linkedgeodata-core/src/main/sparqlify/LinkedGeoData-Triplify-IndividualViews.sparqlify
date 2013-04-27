@@ -32,6 +32,23 @@ Prefix geom:<http://geovocab.org/geometry#>
 
 //Prefix virtrdf:<http://www.openlinksw.com/schemas/virtrdf#>
 
+
+
+/**********
+ * Users
+ **********/
+Create View users As
+  Construct {
+    ?s
+      a dcterms:Agent .
+      rdfs:label ?l .
+  }
+  With
+    ?s = uri(lgd:user, ?id)
+    ?l = plainLiteral(?name)
+  From
+    users
+
 /**********
  * Interlinks
  **********/
