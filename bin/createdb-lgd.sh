@@ -127,12 +127,15 @@ fi
 #git clone git://github.com/jnphilipp/LGDEditTool.git
 #git clone git@github.com:GeoKnow/LinkedGeoData.git
 
+
+./prepare-interlinks.sh > "interlinks.sql"
+
 # LGD Modifications
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Physical Schema.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Individual Views.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOsmIndexes.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Mappings.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
-
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "interlinks.sql"
 
 
