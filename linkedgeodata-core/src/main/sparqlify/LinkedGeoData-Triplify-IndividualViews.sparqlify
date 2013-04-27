@@ -144,7 +144,7 @@ Create View lgd_nodes As
 	With
 		?n = uri(concat(lgd:node, ?id))
 		?v = typedLiteral(?version, xsd:int)
-		?u = uri(concat(lgdo:user, ?user_id))
+		?u = uri(concat(lgd:user, ?user_id))
 		?d = typedLiteral(?tstamp, xsd:dateTime)
 		?c = typedLiteral(?changeset_id, xsd:int)
 		?g = uri(concat(lgd-geom:node, ?id))

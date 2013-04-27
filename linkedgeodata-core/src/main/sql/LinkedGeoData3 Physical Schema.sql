@@ -194,6 +194,7 @@ CREATE TABLE lgd_interlinks (
 	/* Avoid duplicates */
 	UNIQUE(s, o)
 );
-
+CREATE INDEX idx_lgd_interlinks_s ON lgd_interlinks(s);
+CREATE INDEX idx_lgd_interlinks_o ON lgd_interlinks(o);
    
    
