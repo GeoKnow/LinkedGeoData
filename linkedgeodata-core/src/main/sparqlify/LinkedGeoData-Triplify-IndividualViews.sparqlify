@@ -620,7 +620,7 @@ Create View lgd_relation_tags_text As
 		?s ?p ?o .
 	}
 	With
-		?s = uri(concat(lgd:way, ?relation_id)) 
+		?s = uri(concat(lgd:relation, ?relation_id)) 
 		?p = uri(?property)
 		?o = plainLiteral(?v, ?language)
 	Constrain

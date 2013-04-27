@@ -82,7 +82,10 @@ DROP INDEX IF EXISTS idx_lgd_map_datatype;
 CREATE INDEX idx_lgd_map_datatype_k ON lgd_map_datatype(k);
 
 DROP INDEX IF EXISTS idx_lgd_map_datatype_datatype;
-CREATE INDEX idx_lgd_map_datatype_datatype_k ON lgd_map_datatype(datatype, k);
+CREATE INDEX idx_lgd_map_datatype_datatype ON lgd_map_datatype(datatype);
+
+--DROP INDEX IF EXISTS idx_lgd_map_datatype_datatype;
+--CREATE INDEX idx_lgd_map_datatype_datatype_k ON lgd_map_datatype(datatype, k);
 
 DROP TABLE IF EXISTS lgd_map_literal;
 CREATE TABLE lgd_map_literal (
@@ -95,8 +98,10 @@ CREATE TABLE lgd_map_literal (
 );
 
 CREATE INDEX idx_lgd_map_literal_k ON lgd_map_literal(k);
-CREATE INDEX idx_lgd_map_literal_property_language ON lgd_map_literal(property, language);
-CREATE INDEX idx_lgd_map_literal_language_property ON lgd_map_literal(language, property);
+CREATE INDEX idx_lgd_map_literal_property ON lgd_map_literal(property);
+CREATE INDEX idx_lgd_map_literal_language ON lgd_map_literal(language);
+--CREATE INDEX idx_lgd_map_literal_property_language ON lgd_map_literal(property, language);
+--CREATE INDEX idx_lgd_map_literal_language_property ON lgd_map_literal(language, property);
 
 
 DROP TABLE IF EXISTS lgd_map_label;
@@ -111,13 +116,17 @@ CREATE TABLE lgd_map_label (
 );
 
 /* Index for searching by label */ 
-CREATE INDEX idx_lgd_map_label_label_language ON lgd_map_label(label, language);
+CREATE INDEX idx_lgd_map_label_label ON lgd_map_label(label);
+--CREATE INDEX idx_lgd_map_label_label_language ON lgd_map_label(label, language);
 
 /* Index for searching by language */
-CREATE INDEX idx_lgd_map_label_language_label ON lgd_map_label(language, label);
+CREATE INDEX idx_lgd_map_label_language ON lgd_map_label(language);
+--CREATE INDEX idx_lgd_map_label_language_label ON lgd_map_label(language, label);
 
 /* Index for joins on (k, v) */
-CREATE INDEX idx_lgd_map_label_k_v ON lgd_map_label(v, k);
+CREATE INDEX idx_lgd_map_label_k ON lgd_map_label(k);
+CREATE INDEX idx_lgd_map_label_v ON lgd_map_label(v);
+--CREATE INDEX idx_lgd_map_label_k_v ON lgd_map_label(v, k);
 
 
 DROP TABLE IF EXISTS lgd_map_resource_k; 
@@ -128,8 +137,10 @@ CREATE TABLE lgd_map_resource_k (
 );
 
 CREATE INDEX idx_lgd_map_resource_k_k ON lgd_map_resource_k USING btree (k);
-CREATE INDEX idx_lgd_map_resource_k_property_object ON lgd_map_resource_k USING btree (property, object);
-CREATE INDEX idx_lgd_map_resource_k_object_property ON lgd_map_resource_k USING btree (object, property);
+CREATE INDEX idx_lgd_map_resource_k_property ON lgd_map_resource_k USING btree (property);
+CREATE INDEX idx_lgd_map_resource_k_object ON lgd_map_resource_k USING btree (object);
+--CREATE INDEX idx_lgd_map_resource_k_property_object ON lgd_map_resource_k USING btree (property, object);
+--CREATE INDEX idx_lgd_map_resource_k_object_property ON lgd_map_resource_k USING btree (object, property);
 
 
 
