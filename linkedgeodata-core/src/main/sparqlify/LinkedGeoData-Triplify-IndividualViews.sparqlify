@@ -501,55 +501,54 @@ Create View lgd_relations As
 		?c = typedLiteral(?changeset_id, xsd:int)
 		//?g = uri(concat(lgd-geom:relation, ?id))
 		
-		?m = uri(concat(lgd:relation, ?id, "/members"))  
+		?m = uri(lgd:rmembers, ?id)  
 		
 	From
 		[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]]; 
 
+
+Create View lgd_relation_members_all As
+  Construct {
+		?m ?p ?i .      
+		?i lgdo:role ?r .
+  }
+  With
+		?m = uri(lgd:rmembers, ?relation_id)  
+		?p = uri(rdf:_, ?sequence_id)
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?r = plainLiteral(?member_role)  
+  From
+    relation_members
+
   
 Create View lgd_relation_members_seq_nodes As
 	Construct {
-		?m ?p ?i .
-		?i lgdo:role ?r .
-		?i lgdo:ref  ?n
+		?i lgdo:ref ?n
 	}
 	With
-		?m = uri(concat(lgd:relation, ?relation_id, "/members"))  
-		?p = uri(concat(rdf:_, ?sequence_id))
-		?i = uri(concat(lgd:relation, ?relation_id, "/member", ?sequence_id))
-		?r = plainLiteral(?member_role)  
-		?n = uri(concat(lgd:node, ?member_id))
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?n = uri(lgd:node, ?member_id)
 	From
 		[[SELECT * FROM relation_members WHERE member_type = 'N']];
 
 Create View lgd_relation_members_seq_ways As
 	Construct {
-		?m ?p ?i .
-		?i lgdo:role ?r .
-		?i lgdo:ref  ?n
+		?i lgdo:ref ?w
 	}
 	With
-		?m = uri(concat(lgd:relation, ?relation_id, "/members"))  
-		?p = uri(concat(rdf:_, ?sequence_id))
-		?i = uri(concat(lgd:relation, ?relation_id, "/member", ?sequence_id))
-		?r = plainLiteral(?member_role)  
-		?n = uri(concat(lgd:way, ?member_id))
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?w = uri(lgd:way, ?member_id)
 	From
 		[[SELECT * FROM relation_members WHERE member_type = 'W']];
 
 
 Create View lgd_relation_members_seq_relations As
 	Construct {
-		?m ?p ?i .
-		?i lgdo:role ?r .
-		?i lgdo:ref  ?n
+		?i lgdo:ref ?r
 	}
 	With
-		?m = uri(concat(lgd:relation, ?relation_id, "/members"))  
-		?p = uri(concat(rdf:_, ?sequence_id))
-		?i = uri(concat(lgd:relation, ?relation_id, "/member", ?sequence_id))
-		?r = plainLiteral(?member_role)  
-		?n = uri(concat(lgd:relation, ?member_id))
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?r = uri(lgd:relation, ?member_id)
 	From
 		[[SELECT * FROM relation_members WHERE member_type = 'R']];
 
