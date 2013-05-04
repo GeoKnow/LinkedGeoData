@@ -53,10 +53,31 @@ Create View nodes_wiki_en As
   From
     [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia' || k = 'wikipedia:en' ]]
   
+Create View ways_wiki_en As
+  Construct {
+    ?w owl:sameAs ?l .
+    ?l owl:sameAs ?d .
+  }
+  With
+    ?w = uri('http://linkedgeodata.org/wp/', ?v)
+    ?l = uri(lgd:way, ?way_id)
+    ?d = uri('http://dbpedia.org/resource/', ?v)
+  From
+    [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia' || k = 'wikipedia:en' ]]
+
+Create View relations_wiki_en As
+  Construct {
+    ?w owl:sameAs ?l .
+    ?l owl:sameAs ?d .
+  }
+  With
+    ?w = uri('http://linkedgeodata.org/wp/', ?v)
+    ?l = uri(lgd:way, ?way_id)
+    ?d = uri('http://dbpedia.org/resource/', ?v)
+  From
+    [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia' || k = 'wikipedia:en' ]]
   
     
-//Create View ways_wiki_en As Construct { ?s owl:sameAs ?o } With ?s = uri(lgd:way, ?way_id) ?o = uri('http://dbpedia.org/resource/', ?v) From [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia:en']]
-//Create View relations_wiki_en As Construct { ?s owl:sameAs ?o } With ?s = uri(lgd:relation, ?way_id) ?o = uri('http://dbpedia.org/resource/', ?v) From [[SELECT way_id, k, v FROM lgd_relation_tags_wiki WHERE k = 'wikipedia:en']]
     
     
     
