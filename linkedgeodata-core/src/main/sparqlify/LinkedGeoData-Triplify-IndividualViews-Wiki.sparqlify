@@ -51,7 +51,7 @@ Create View nodes_wiki_en As
     ?l = uri(lgd:node, ?node_id)
     ?d = uri('http://dbpedia.org/resource/', ?v)
   From
-    [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia:en']]
+    [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia' || k = 'wikipedia:en' ]]
   
   
     
