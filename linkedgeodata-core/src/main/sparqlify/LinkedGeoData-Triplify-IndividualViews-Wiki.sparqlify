@@ -49,7 +49,7 @@ Create View nodes_wiki_en As
   With
     ?w = uri('http://linkedgeodata.org/wp/', ?v)
     ?l = uri(lgd:node, ?node_id)
-    ?o = uri('http://dbpedia.org/resource/', ?v)
+    ?d = uri('http://dbpedia.org/resource/', ?v)
   From
     [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia:en']]
   
