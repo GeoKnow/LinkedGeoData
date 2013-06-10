@@ -43,6 +43,7 @@ Prefix geom:<http://geovocab.org/geometry#>
 
 Create View nodes_wiki_en As
   Construct {
+    ?w a lgdm:WikiLink .
     ?w owl:sameAs ?l .
     ?l owl:sameAs ?d .
   }
@@ -51,10 +52,11 @@ Create View nodes_wiki_en As
     ?l = uri(lgd:node, ?node_id)
     ?d = uri('http://dbpedia.org/resource/', ?v)
   From
-    [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en' ]]
+    [[SELECT node_id, k, v FROM lgd_node_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en']]
   
 Create View ways_wiki_en As
   Construct {
+    ?w a lgdm:WikiLink .
     ?w owl:sameAs ?l .
     ?l owl:sameAs ?d .
   }
@@ -63,19 +65,20 @@ Create View ways_wiki_en As
     ?l = uri(lgd:way, ?way_id)
     ?d = uri('http://dbpedia.org/resource/', ?v)
   From
-    [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en' ]]
+    [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en']]
 
 Create View relations_wiki_en As
   Construct {
+    ?w a lgdm:WikiLink .
     ?w owl:sameAs ?l .
     ?l owl:sameAs ?d .
   }
   With
     ?w = uri('http://linkedgeodata.org/wp/', ?v)
-    ?l = uri(lgd:way, ?way_id)
+    ?l = uri(lgd:relation, ?relation_id)
     ?d = uri('http://dbpedia.org/resource/', ?v)
   From
-    [[SELECT way_id, k, v FROM lgd_way_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en' ]]
+    [[SELECT relation_id, k, v FROM lgd_relation_tags_wiki WHERE k = 'wikipedia' OR k = 'wikipedia:en']]
   
     
     

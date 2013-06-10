@@ -504,7 +504,8 @@ Create View lgd_relations As
 		?m = uri(lgd:rmembers, ?id)  
 		
 	From
-		[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]]; 
+		relations
+		//[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]]; 
 
 
 Create View lgd_relation_members_all As

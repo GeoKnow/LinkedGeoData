@@ -10,8 +10,13 @@
  * individually by k and v is sufficient. Also, I set the default statistics target to maximum (10000). 
  */
 
-CREATE INDEX idx_node_tags_k on node_tags(k);
-CREATE INDEX idx_node_tags_v on node_tags(v);
+/**
+ * Note: the text_pattern_ops enable efficient prefix lookups, e.g. k LIKE 'wiki%'
+ * Without them, you will only get table scans
+ */
+
+CREATE INDEX idx_node_tags_k on node_tags(k text_pattern_ops);
+CREATE INDEX idx_node_tags_v on node_tags(v text_pattern_ops);
 --CREATE INDEX idx_node_tags_k_v on node_tags(k, v);
 --CREATE INDEX idx_node_tags_v_k on node_tags(v, k);
 
@@ -23,8 +28,8 @@ CREATE INDEX idx_node_tags_int ON node_tags(lgd_tryparse_int(v)) WHERE lgd_trypa
 CREATE INDEX idx_node_tags_float ON node_tags(lgd_tryparse_float(v)) WHERE lgd_tryparse_float(v) IS NOT NULL;
 
 
-CREATE INDEX idx_way_tags_k on way_tags(k);
-CREATE INDEX idx_way_tags_v on way_tags(v);
+CREATE INDEX idx_way_tags_k on way_tags(k text_pattern_ops);
+CREATE INDEX idx_way_tags_v on way_tags(v text_pattern_ops);
 --CREATE INDEX idx_way_tags_k_v ON way_tags(k, v);
 --CREATE INDEX idx_way_tags_v_k on way_tags(v, k);
 --CREATE INDEX idx_way_tags_k_boolean ON way_tags(k, lgd_tryparse_boolean(v)) WHERE lgd_tryparse_boolean(v) IS NOT NULL;
@@ -35,8 +40,8 @@ CREATE INDEX idx_way_tags_int ON way_tags(lgd_tryparse_int(v)) WHERE lgd_trypars
 CREATE INDEX idx_way_tags_float ON way_tags(lgd_tryparse_float(v)) WHERE lgd_tryparse_float(v) IS NOT NULL;
 
 
-CREATE INDEX idx_relation_tags_k on relation_tags(k);
-CREATE INDEX idx_relation_tags_v on relation_tags(v);
+CREATE INDEX idx_relation_tags_k on relation_tags(k text_pattern_ops);
+CREATE INDEX idx_relation_tags_v on relation_tags(v text_pattern_ops);
 --CREATE INDEX idx_relation_tags_k_v ON relation_tags(k, v);
 --CREATE INDEX idx_relation_tags_v_k on relation_tags(v, k);
 --CREATE INDEX idx_relation_tags_k_boolean ON relation_tags(k, lgd_tryparse_boolean(v)) WHERE lgd_tryparse_boolean(v) IS NOT NULL;
