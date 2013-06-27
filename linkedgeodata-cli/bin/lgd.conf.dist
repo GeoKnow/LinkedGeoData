@@ -1,0 +1,8 @@
+#!/bin/bash
+source ../../linkedgeodata-debian/src/deb/resources/etc/linkedgeodata/lgd.conf.dist
+
+lgdPrepareInterlinksCmd="./lgd-prepare-interlinks.sh"
+
+lgdSqlPath="../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql"
+lgdSmlPath="../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml"
+

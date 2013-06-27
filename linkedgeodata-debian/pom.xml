@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>linkedgeodata-debian</artifactId>
+	<packaging>jar</packaging>
+
+
+	<name>LinkedGeoData - Debian Packaging</name>
+	<url>http://aksw.org/Projects/LinkedGeoData</url>
+
+
+	<parent>
+		<groupId>org.aksw.linkedgeodata</groupId>
+		<artifactId>linkedgeodata-parent</artifactId>
+		<version>0.4-SNAPSHOT</version>
+	</parent>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- This plugin's configuration must come *before* the Debian Maven 
+					Plugin. -->
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy-deb-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<overwrite>true</overwrite>
+							<outputDirectory>${project.build.directory}/deb</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/deb/resources</directory>
+									<!-- Uncomment the following line to enable Velocity filtering. -->
+									<!-- <filtering>true</filtering> -->
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<!-- This plugin's configuration must come *after* the Maven Resources 
+					Plugin, and *before* the Debian Maven Plugin. -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>copy-deb-resources</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<copy
+									todir="${project.build.directory}/deb/usr/share/linkedgeodata/sql">
+									<fileset
+										dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql">
+										<include name="**" />
+									</fileset>
+								</copy>
+								<copy
+									todir="${project.build.directory}/deb/usr/share/linkedgeodata/sml">
+									<fileset
+										dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml">
+										<include name="**" />
+									</fileset>
+								</copy>
+								<copy
+									todir="${project.build.directory}/deb/usr/share/linkedgeodata">
+									<fileset dir="${basedir}/../linkedgeodata-cli/bin">
+										<include name="lgd-createdb.sh" />
+										<include name="lgd-prepare-interlinks.sh" />
+										<include name="lgd-query.sh" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+
+					<execution>
+						<id>fix-permissions</id>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<chmod perm="ugo+x">
+									<fileset dir="${project.build.directory}/deb">
+										<include name="**/bin/**" />
+										<include name="**/sbin/**" />
+										<include name="DEBIAN/post*" />
+										<include name="DEBIAN/pre*" />
+									</fileset>
+								</chmod>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+
+					<!-- A hacky execution for making the DEBIAN directory lower case -->
+					<!-- NOTE The maven plugin creates a deb, so this is fine at this stage, -->
+					<!-- Renaming to lower case is done in the continuous integration server -->
+					<!-- <execution> -->
+					<!-- <phase>verify</phase> -->
+					<!-- <goals> -->
+					<!-- <goal>run</goal> -->
+					<!-- </goals> -->
+					<!-- <configuration> -->
+					<!-- <tasks> -->
+					<!-- <copy todir="${project.build.directory}/deb/debian"> -->
+					<!-- <fileset dir="${project.build.directory}/deb/DEBIAN"> -->
+					<!-- <include name="**" /> -->
+					<!-- </fileset> -->
+					<!-- </copy> -->
+					<!-- <delete dir="${project.build.directory}/deb/DEBIAN" /> -->
+					<!-- </tasks> -->
+					<!-- </configuration> -->
+					<!-- </execution> -->
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>net.sf.debian-maven</groupId>
+				<artifactId>debian-maven-plugin</artifactId>
+				<version>1.0.5</version>
+				<configuration>
+					<packageName>linkedgeodata</packageName>
+					<packagePriority>extra</packagePriority>
+					<packageSection>web</packageSection>
+					<packageDependencies>
+						<packageDependency>postgis</packageDependency>
+						<packageDependency>sparqlify</packageDependency>
+					</packageDependencies>
+					<maintainerName>${project.parent.developers[0].name}</maintainerName>
+					<maintainerEmail>${project.parent.developers[0].email}</maintainerEmail>
+					<!-- <packageName>my-package</packageName> <packageVersion>1.0.0</packageVersion> 
+						... -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<dependencies>
+		<!-- <dependency> <groupId>org.aksw.linkedgeodata</groupId> <artifactId>linkedgeodata-core</artifactId> 
+			</dependency> -->
+	</dependencies>
+</project>
+

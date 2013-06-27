@@ -1,0 +1,1 @@
+LinkedGeoData-Triplify-IndividualViews-Wiki.sml
