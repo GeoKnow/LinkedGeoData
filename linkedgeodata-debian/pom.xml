@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>linkedgeodata-debian</artifactId>
@@ -14,7 +13,7 @@
 	<parent>
 		<groupId>org.aksw.linkedgeodata</groupId>
 		<artifactId>linkedgeodata-parent</artifactId>
-		<version>0.4-SNAPSHOT</version>
+		<version>0.4</version>
 	</parent>
 
 
@@ -60,22 +59,17 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<copy
-									todir="${project.build.directory}/deb/usr/share/linkedgeodata/sql">
-									<fileset
-										dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql">
+								<copy todir="${project.build.directory}/deb/usr/share/linkedgeodata/sql">
+									<fileset dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql">
 										<include name="**" />
 									</fileset>
 								</copy>
-								<copy
-									todir="${project.build.directory}/deb/usr/share/linkedgeodata/sml">
-									<fileset
-										dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml">
+								<copy todir="${project.build.directory}/deb/usr/share/linkedgeodata/sml">
+									<fileset dir="${project.build.directory}/../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml">
 										<include name="**" />
 									</fileset>
 								</copy>
-								<copy
-									todir="${project.build.directory}/deb/usr/share/linkedgeodata">
+								<copy todir="${project.build.directory}/deb/usr/share/linkedgeodata">
 									<fileset dir="${basedir}/../linkedgeodata-cli/bin">
 										<include name="lgd-createdb.sh" />
 										<include name="lgd-prepare-interlinks.sh" />
