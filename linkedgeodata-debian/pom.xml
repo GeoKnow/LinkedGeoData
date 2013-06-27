@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.aksw.linkedgeodata</groupId>
 		<artifactId>linkedgeodata-parent</artifactId>
-		<version>0.4</version>
+		<version>0.4.1-SNAPSHOT</version>
 	</parent>
 
 
