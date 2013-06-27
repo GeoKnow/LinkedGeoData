@@ -31,7 +31,7 @@ import org.aksw.commons.sparql.api.delay.extra.DelayerDefault;
 import org.aksw.commons.sparql.api.http.QueryExecutionFactoryHttp;
 import org.aksw.commons.sparql.api.pagination.core.QueryExecutionFactoryPaginated;
 import org.aksw.commons.util.strings.StringUtils;
-import org.hibernate.engine.jdbc.StreamUtils;
+import org.apache.log4j.lf5.util.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public class RestApi {
 
 	private static LGDVocab vocab = new LGDVocabDefault();
 
-	private QueryExecutionFactory<?> qeFactory;
+	private QueryExecutionFactory qeFactory;
 
 	private Map<String, String> prefixMap = new HashMap<String, String>();
 
@@ -71,7 +71,7 @@ public class RestApi {
 		// String service =
 		// "http://[2001:638:902:2010:0:168:35:123]:7531/sparql";
 
-		QueryExecutionFactory<?> tmp = new QueryExecutionFactoryHttp(serviceUrl);
+		QueryExecutionFactory tmp = new QueryExecutionFactoryHttp(serviceUrl);
 
 		CacheCoreEx cacheBackend = CacheCoreH2.create("sparql",
 				24l * 60l * 60l * 1000l, true);
