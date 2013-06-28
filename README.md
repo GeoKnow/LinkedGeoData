@@ -55,7 +55,7 @@ If you are using the following scripts from the git repo, invoke them with `./sc
 Example:
 
     wget http://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
-    lgd-createdb -h localhost -d lgd -u postgres -p mypwd -f bremen-latest.osm.pbf
+    lgd-createdb -h localhost -d lgd -U postgres -W mypwd -f bremen-latest.osm.pbf
 
 The reason we chose Bremen for the example is simply that it is a small file (around 8MB).
 
@@ -79,7 +79,7 @@ Examples:
 
     lgd-query ontology
     lgd-query dump
-    lgd-query -h localhost -d lgd -u postgres -p mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
+    lgd-query -h localhost -d lgd -U postgres -W mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
     lgd-query -Q 'Select * { ?s ?p ?o . Filter(?s = <http://linkedgeodata.org/triplify/node2028098486>) }'
 
 Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.

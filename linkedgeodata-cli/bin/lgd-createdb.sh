@@ -146,8 +146,11 @@ fi
 #git clone git://github.com/jnphilipp/LGDEditTool.git
 #git clone git@github.com:GeoKnow/LinkedGeoData.git
 
+lgdTmpDir="/tmp/linkedgeodata"
 
-"$lgdPrepareInterlinksCmd" > "/tmp/linkedgeodata/interlinks.sql"
+rm -rf "$lgdTmpDir"
+mkdir -p "$lgdTmpDir"
+"$lgdPrepareInterlinksCmd" > "$lgdTmpDir/interlinks.sql"
 
 # LGD Modifications
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Physical Schema.sql"

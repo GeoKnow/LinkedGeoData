@@ -136,7 +136,7 @@
 					<packagePriority>extra</packagePriority>
 					<packageSection>web</packageSection>
 					<packageDependencies>
-						<packageDependency>postgis</packageDependency>
+						<packageDependency>postgresql-9.1-postgis</packageDependency>
 						<packageDependency>sparqlify</packageDependency>
 					</packageDependencies>
 					<maintainerName>${project.parent.developers[0].name}</maintainerName>
