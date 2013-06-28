@@ -9,11 +9,10 @@
 usage="$(basename "$0") options -- program to dump a LinkedGeoData database
 
 where:
-    -P  profile name ('default' if not specified)
     -h  postgres host name
     -d  postgres database name
-    -u  postgres user name
-    -p  postgres password
+    -U  postgres user name
+    -W  postgres password
     -Q  SPARQL query string
 
 If the query string is the last argument, -Q can be omitted.

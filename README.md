@@ -48,8 +48,8 @@ If you are using the following scripts from the git repo, invoke them with `./sc
 * `lgd-createdb`: Creates and loads a LGD database
   * -h  postgres host name
   * -d  postgres database name
-  * -u  postgres user name
-  * -p  postgres password (will be added to ~/.pgpass if not exists)
+  * -U  postgres user name
+  * -W  postgres password (will be added to ~/.pgpass if not exists)
   * -f  .pbf file to load (other formats currently not supported)
 
 Example:
@@ -63,8 +63,8 @@ The reason we chose Bremen for the example is simply that it is a small file (ar
 * `lgd-query`: Run a SPARQL query on the database.
   * -h  postgres host name
   * -d  postgres database name
-  * -u  postgres user name
-  * -p  postgres password (will be added to ~/.pgpass if not exists)
+  * -U  postgres user name
+  * -W  postgres password (will be added to ~/.pgpass if not exists)
   * -Q  SPARQL query string or named query
 
 A named query is just a SPARQL query that is referenced by a name.

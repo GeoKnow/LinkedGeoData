@@ -8,3 +8,7 @@
 config.ini
 sparqlify-parent
 test.txt
+
+pom.xml.releaseBackup
+release.properties
+

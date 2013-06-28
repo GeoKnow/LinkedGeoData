@@ -9,8 +9,8 @@ usage="$(basename "$0") options -- program to load a PBF file into a postgres da
 where:
     -h  postgres host name
     -d  postgres database name
-    -u  postgres user name
-    -p  password !!!will be added to ~/.pgpass if not exists!!!
+    -U  postgres user name
+    -W  password !!!will be added to ~/.pgpass if not exists!!!
     -f  .pbf file to load (other formats currently not supported)"
 
 #
