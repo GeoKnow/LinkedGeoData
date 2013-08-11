@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<description></description>
+
+	<bean id="pooledDataSource" scope="prototype"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="jdbcUrl" value="${jpa.url}" />
+		<property name="user" value="${jpa.username}" />
+		<property name="password" value="${jpa.password}" />
+		<property name="initialPoolSize" value="1" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="3" />
+		<property name="idleConnectionTestPeriod" value="500" />
+		<property name="acquireIncrement" value="1" />
+		<property name="maxStatements" value="50" />
+		<property name="numHelperThreads" value="1" />
+	</bean>
+
+
+</beans>
+        

@@ -12,3 +12,8 @@ test.txt
 pom.xml.releaseBackup
 release.properties
 
+.project
+.classpath
+.settings
+
+target

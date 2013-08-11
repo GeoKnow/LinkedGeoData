@@ -20,7 +20,7 @@ function loadArchive {
             bzip2 -d "$fileName"
          fi
 
-         tar -xvf "$tarFile"
+         tar -xf "$tarFile"
     fi
 
     find "$baseName" | grep links.nt | xargs cat | sed -r 's|<([^>]*)>\s*<[^>]*>\s*<([^>]*)>.*|\1\t\2|g' | sort -u
