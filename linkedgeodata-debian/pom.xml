@@ -136,6 +136,7 @@
 					<packagePriority>extra</packagePriority>
 					<packageSection>web</packageSection>
 					<packageDependencies>
+						<packageDependency>osmosis</packageDependency>
 						<packageDependency>postgresql-9.1-postgis</packageDependency>
 						<packageDependency>sparqlify</packageDependency>
 					</packageDependencies>
