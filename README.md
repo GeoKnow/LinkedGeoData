@@ -117,3 +117,4 @@ Make the changes take effect:
 ## License
 The content of this project are licensed under the [GPL v3 License](https://github.com/GeoKnow/LinkedGeoData/blob/master/LICENSE).
 
+
