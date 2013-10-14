@@ -108,7 +108,7 @@ Create View classes_kv As
     }
     With
         ?s = uri(?object)
-        ?t = uri(concat(?object, "/key/", ?k, "/value/", ?v))
+        ?t = uri(?object, "/key/", spy:urlEncode(?k), "/value/", spy:urlEncode(?v))
         ?k = plainLiteral(?k)
         ?v = plainLiteral(?v)
     Constrain
