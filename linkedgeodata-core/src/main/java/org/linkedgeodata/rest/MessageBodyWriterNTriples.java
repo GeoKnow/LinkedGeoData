@@ -12,11 +12,12 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.jena.riot.WebContent;
+
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.engine.http.HttpParams;
 
 @Provider
-@Produces({HttpParams.contentTypeNTriples})
+@Produces({WebContent.contentTypeNTriples})
 //@Consumes({HttpParams.contentTypeNTriples})
 public class MessageBodyWriterNTriples
 	//extends AbstractModelMessageReaderWriterProvider

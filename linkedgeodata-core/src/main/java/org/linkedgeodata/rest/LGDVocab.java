@@ -4,7 +4,6 @@ import java.awt.geom.RectangularShape;
 
 import org.openstreetmap.osmosis.core.domain.v0_6.Entity;
 
-import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 

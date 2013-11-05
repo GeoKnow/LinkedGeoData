@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.aksw.linkedgeodata</groupId>
@@ -9,10 +10,10 @@
 	<description>linkedgeodata.org - Adding a spatial dimension to the Web of Data.</description>
 	<packaging>pom</packaging>
 
-        <scm>
-                <connection>scm:git:git@github.com:GeoKnow/LinkedGeoData.git</connection>
-    <tag>HEAD</tag>
-  </scm>
+	<scm>
+		<connection>scm:git:git@github.com:GeoKnow/LinkedGeoData.git</connection>
+		<tag>HEAD</tag>
+	</scm>
 
 
 	<developers>
@@ -27,26 +28,30 @@
 	</developers>
 
 	<modules>
-		<!-- core module is broken, and actually there is no real need for a REST API anyway -->
+		<!-- core module is broken, and actually there is no real need for a REST 
+			API anyway -->
 		<!-- <module>linkedgeodata-core</module> -->
-		<module>linkedgeodata-debian</module>		
+		<module>linkedgeodata-debian</module>
 	</modules>
 
 	<properties>
-                <maven.compiler.source>1.6</maven.compiler.source>
-                <maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 
-                <!-- project defaults -->
-                <java.version>1.6</java.version>
-                <java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
-                <file.encoding>UTF-8</file.encoding>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- project defaults -->
+		<java.version>1.6</java.version>
+		<java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
+		<file.encoding>UTF-8</file.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 
-                <jersey.version>1.8</jersey.version>
-                <spring.version>3.1.2.RELEASE</spring.version>
-                <aksw.commons.version>0.5-SNAPSHOT</aksw.commons.version>
+		<jersey.version>1.8</jersey.version>
+		<spring.version>3.1.2.RELEASE</spring.version>
+
+		<jena-sparql-api.version>2.10.0-20</jena-sparql-api.version>
+
+		<!-- <aksw.commons.version>0.5-SNAPSHOT</aksw.commons.version> -->
 	</properties>
 
 	<build>
@@ -105,20 +110,20 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.6.v20120903</version>
-				<configuration>
-					<systemProperties>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>8080</value>
-						</systemProperty>
-					</systemProperties>
-					<reload>manual</reload>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.mortbay.jetty</groupId> -->
+			<!-- <artifactId>jetty-maven-plugin</artifactId> -->
+			<!-- <version>8.1.6.v20120903</version> -->
+			<!-- <configuration> -->
+			<!-- <systemProperties> -->
+			<!-- <systemProperty> -->
+			<!-- <name>jetty.port</name> -->
+			<!-- <value>8080</value> -->
+			<!-- </systemProperty> -->
+			<!-- </systemProperties> -->
+			<!-- <reload>manual</reload> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 
 			<plugin>
 				<groupId>org.codehaus.groovy.maven</groupId>
@@ -165,18 +170,31 @@
 			<dependency>
 				<groupId>org.aksw.sparqlify</groupId>
 				<artifactId>sparqlify-core</artifactId>
-				<version>0.2-SNAPSHOT</version>
+				<version>0.6.5-SNAPSHOT</version>
 				<type>jar</type>
 				<scope>compile</scope>
 			</dependency>
 
-	                <!-- Gson: Java to Json conversion -->
-        	        <dependency>
-                	        <groupId>com.google.code.gson</groupId>
-                        	<artifactId>gson</artifactId>
-	                        <version>2.2.2</version>
-        	                <scope>compile</scope>
-	                </dependency>
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-server</artifactId>
+				<version>${jena-sparql-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openstreetmap.osmosis</groupId>
+				<artifactId>osmosis-core</artifactId>
+				<version>0.43.1</version>
+			</dependency>
+
+
+			<!-- Gson: Java to Json conversion -->
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.2.2</version>
+				<scope>compile</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>

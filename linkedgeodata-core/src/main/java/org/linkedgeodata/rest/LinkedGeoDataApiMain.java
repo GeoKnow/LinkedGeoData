@@ -9,10 +9,9 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.log4j.PropertyConfigurator;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.ServletHolder;
-import org.mortbay.util.MultiPartWriter;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,16 +106,7 @@ public class LinkedGeoDataApiMain {
 		
 		ServletHolder sh = new ServletHolder(ServletContainer.class);
 
-		
-		
-		/*
-		 * For 0.8 and later the "com.sun.ws.rest" namespace has been renamed to
-		 * "com.sun.jersey". For 0.7 or early use the commented out code instead
-		 */
-		// sh.setInitParameter("com.sun.ws.rest.config.property.resourceConfigClass",
-		// "com.sun.ws.rest.api.core.PackagesResourceConfig");
-		// sh.setInitParameter("com.sun.ws.rest.config.property.packages",
-		// "jetty");
+
 		sh.setInitParameter(
 				"com.sun.jersey.config.property.resourceConfigClass",
 				"com.sun.jersey.api.core.PackagesResourceConfig");
@@ -126,7 +116,9 @@ public class LinkedGeoDataApiMain {
 		sh.setInitParameter("serviceUrl", serviceUrl);
 
 		Server server = new Server(port);
-		Context context = new Context(server, "/", Context.SESSIONS);
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		server.setHandler(context);
 		context.addServlet(sh, "/*");
 		
 
