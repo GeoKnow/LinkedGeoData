@@ -73,7 +73,6 @@
 									<fileset dir="${basedir}/../linkedgeodata-cli/bin">
 										<include name="lgd-createdb.sh" />
 										<include name="lgd-prepare-interlinks.sh" />
-										<include name="lgd-query.sh" />
 									</fileset>
 								</copy>
 							</tasks>

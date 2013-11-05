@@ -4,14 +4,22 @@
 # Script for creating a LinkedGeoData database on Postgres
 #
 
-usage="$(basename "$0") options -- program to load a PBF file into a postgres database and apply the modifications of lgd to it
+# Mapping of file extensions to osmosis options
+declare -A extToReadMode
+
+extToReadMode["bz2"]="--fast-read-xml"
+extToReadMode["gz"]="--fast-read-xml"
+extToReadMode["pbf"]="--read-pbf"
+
+
+usage="$(basename "$0") options -- program to load an OpenStreetMap file (in PBF or XML format) into a postgres database and apply the modifications of lgd to it
 
 where:
     -h  postgres host name
     -d  postgres database name
     -U  postgres user name
     -W  password !!!will be added to ~/.pgpass if not exists!!!
-    -f  .pbf file to load (other formats currently not supported)"
+    -f  the OSM file to load (must have one of these extensions: ${!extToReadMode[@]})"
 
 #
 # Hard coded profile paths, with folder precedence order: local > home > etc
@@ -26,14 +34,6 @@ for configFile in "${configFiles[@]}"; do
 done
 
 
-#source config.ini.dist
-#lgdSqlPath="$lgdBasePath/linkedgeodata-core/src/main/sql/"
-#postgisPath="/usr/share/postgresql/9.1/contrib/postgis-2.0"
-#osmosisSqlPath="/usr/share/doc/osmosis/examples/"
-# Use a config.ini file to override any of the settings of this file
-#[ -f "./config.ini" ] && source ./config.ini
-
-
 # Simple function to echo to stderr
 echoerr() { echo "$@" 1>&2; }
 
@@ -42,19 +42,6 @@ echoerr() { echo "$@" 1>&2; }
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
-# Initialize our own variables:
-
-#while getopts "?P:" opt; do
-#    case "$opt" in
-#        P)  profileName="$OPTARG"
-#            ;;
-#    esac
-#done
-
-#for profilePath in "${profilePaths[@]}"; do
-#        profileFile="$profilePath/$profileName.conf"
-#        [ -f "$profileFile" ] && source "$profileFile"
-#done
 
 while getopts "?h:U:W:d:f:" opt; do
     case "$opt" in
@@ -79,6 +66,22 @@ shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
 
+
+# Determine whether we have a pbf or xml file
+declare -A extToReadMode
+
+extToReadMode["bz2"]="--fast-read-xml"
+extToReadMode["gz"]="--fast-read-xml"
+extToReadMode["pbf"]="--read-pbf"
+
+osmFileExt=${osmFile##*.}
+
+readMode=${extToReadMode["$osmFileExt"]}
+
+if [ -z "$readMode" ]; then
+    echoerr "File extension not supported. Must be one of ${!extToReadMode[@]}"
+    exit 1
+fi
 
 
 # Determine if we have to add a password to ~/.pgpass
@@ -112,6 +115,8 @@ echoerr "-------------------------------------------------------------------"
 
 if [ -z "$osmFile" ]; then
     echoerr "Error: No osm file specified for loading"
+    echoerr ""
+    echoerr "$usage"
     exit 1
 fi
 
@@ -137,7 +142,7 @@ psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.
 
 if [ ! -z "$osmFile" ]; then
 #    bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
-    osmosis --read-pbf "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
+    osmosis "$readMode" "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
 fi
 
 #svn checkout https://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata --username RavenArkadon@gmail.com

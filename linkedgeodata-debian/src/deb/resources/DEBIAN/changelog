@@ -1,4 +1,11 @@
-sparqlify (0.2) lod2; urgency=low
+linkedgeodata (0.7.0) lod2; urgency=low
+
+  * Re-using profile management from Sparqlify.
+
+ -- Claus Stadler <cstadler@informatik.uni-leipzig.de>  Tue, 05 Nov 2013 14:23:46 +0200
+
+
+linkedgeodata (0.4.5) lod2; urgency=low
 
   * Initial version.
 
