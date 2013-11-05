@@ -1,5 +1,5 @@
 #!/bin/bash
-#source ../../linkedgeodata-debian/src/deb/resources/etc/linkedgeodata/lgd.conf.dist
+source ../../linkedgeodata-debian/src/deb/resources/etc/linkedgeodata/lgd.conf.dist
 
 lgdPrepareInterlinksCmd="./lgd-prepare-interlinks.sh"
 

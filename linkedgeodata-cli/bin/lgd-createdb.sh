@@ -43,7 +43,7 @@ echoerr() { echo "$@" 1>&2; }
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 
-while getopts "?h:U:W:d:f:" opt; do
+while getopts "?h:U:W:d:f:P:" opt; do
     case "$opt" in
         \?)
             echoerr "$usage"
@@ -59,29 +59,21 @@ while getopts "?h:U:W:d:f:" opt; do
             ;;
         f)  osmFile="$OPTARG"
             ;;
+	P)  profileName="$OPTARG"
+            profileFile="/etc/sparqlify/profiles.d/${profileName}.conf"
+            if [ ! -f "$profileFile" ]; then
+              echoerr "Profile file $profileFile does not exist"
+              exit 1
+            fi
+
+            source "$profileFile"
+            ;;
     esac
 done
 
 shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
-
-
-# Determine whether we have a pbf or xml file
-declare -A extToReadMode
-
-extToReadMode["bz2"]="--fast-read-xml"
-extToReadMode["gz"]="--fast-read-xml"
-extToReadMode["pbf"]="--read-pbf"
-
-osmFileExt=${osmFile##*.}
-
-readMode=${extToReadMode["$osmFileExt"]}
-
-if [ -z "$readMode" ]; then
-    echoerr "File extension not supported. Must be one of ${!extToReadMode[@]}"
-    exit 1
-fi
 
 
 # Determine if we have to add a password to ~/.pgpass
@@ -120,7 +112,19 @@ if [ -z "$osmFile" ]; then
     exit 1
 fi
 
+# Determine whether we have a pbf or xml file
+osmFileExt=${osmFile##*.}
 
+readMode=${extToReadMode["$osmFileExt"]}
+
+if [ -z "$readMode" ]; then
+    echoerr "File extension not supported. Must be one of: ${!extToReadMode[@]}"
+    exit 1
+fi
+
+
+
+# Wait fo the user to press a key
 read -p "Press [Enter] key to start loading"
 
 
