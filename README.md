@@ -41,7 +41,7 @@ As for obtaining datasets, a very good source for OSM datasets in bite-size chun
 
 In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/linkedgeodata-cli/bin) you find several scripts. Essentially they are designed to work both from a cloned LinkedGeoData Git repo and wrapped up as a debian package.
 All of them are configured via `lgd.conf.dist`. You can override the default settings without changing this file by creating a `lgd.conf` file.
-If you installed the debian package, this file is located under `/etc/linkedgeodata/lgd.conf.dist`.
+If you installed the debian package, instead of the lgd.conf.dist file, the file /etc/sparqlify/sparqlify.conf` is used.
 If you are using the following scripts from the git repo, invoke them with `./scriptname.sh` (i.e. don't forget the `./` and `.sh`).
 
 * `lgd-createdb`: Creates and loads an LGD database
@@ -59,12 +59,12 @@ Example:
 The reason we chose Bremen for the example is simply that it is a small file (around 8MB).
 
 
-* `sparqlify-tool`: Small wrapper for sparqlify that features a simple profile system and supports running SPARQL queries on the database.
-  * -P profile name. Settings will be loaded from such a file (see below).
-  * -h  postgres host name
-  * -d  postgres database name
-  * -U  postgres user name
-  * -W  postgres password (will be added to ~/.pgpass if not exists)
+* `sparqlify-tool`: This is a small wrapper for `sparqlify` command that adds a simple profile system for convenience.
+  * -P  profile name. Settings will be loaded from such a file (see below) and can be overridden by further options.
+  * -h  database host name
+  * -d  database name
+  * -U  database user name
+  * -W  database password (will be added to ~/.pgpass if not exists)
   * -Q  SPARQL query string or named query
 
 
