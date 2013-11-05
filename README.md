@@ -16,15 +16,14 @@ You can download both packages here:
 * [LinkedGeoData Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/l/linkedgeodata/)
 
 After installing these packages, the following essential commands will be available:
-* `lgd-createdb`
-* `lgd-query`
+* `lgd-createdb` (provided by linkedgeodata)
+* `sparqlify-tool` (provided by sparqlify, supersedes the former lgd-query command)
+
 
 Read the section on data conversion for their documentation.
 
 ### Alternative set up
-In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/linkedgeodata-cli/bin) you find the following setup helper scripts.
-
-The following ones are aimed at easing the LinkedGeoData setup:
+In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/linkedgeodata-cli/bin) you find the following setup helper scripts which are aimed at easing the LinkedGeoData setup directly from source; without a debian package:
 
 * `lgd-apt-get.sh`: Installs all required system packages using apt-get (postgres, postgis, osmosis, git and maven)
 
@@ -38,14 +37,14 @@ The following scripts are just helpers to build and/or install the Sparqlify deb
 This section describes how to create and query a LinkedGeoData database. After you installed the LinkedGeoData scripts, you need to obtain an OpenStreetMap dataset which you want to load.
 Note: Make sure to read the section on database tuning when dealing with larger datasets!
 
-As for obtaining datasets, a very good source for OSM datasets in bite-size chunks is [GeoFabrik](http://download.geofabrik.de). For full dumps, refer to the [planet downloads](http://planet.openstreetmap.org/). Note that currently only .pbf files are supported.
+As for obtaining datasets, a very good source for OSM datasets in bite-size chunks is [GeoFabrik](http://download.geofabrik.de). For full dumps, refer to the [planet downloads](http://planet.openstreetmap.org/).
 
 In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/linkedgeodata-cli/bin) you find several scripts. Essentially they are designed to work both from a cloned LinkedGeoData Git repo and wrapped up as a debian package.
 All of them are configured via `lgd.conf.dist`. You can override the default settings without changing this file by creating a `lgd.conf` file.
 If you installed the debian package, this file is located under `/etc/linkedgeodata/lgd.conf.dist`.
 If you are using the following scripts from the git repo, invoke them with `./scriptname.sh` (i.e. don't forget the `./` and `.sh`).
 
-* `lgd-createdb`: Creates and loads a LGD database
+* `lgd-createdb`: Creates and loads an LGD database
   * -h  postgres host name
   * -d  postgres database name
   * -U  postgres user name
@@ -60,15 +59,27 @@ Example:
 The reason we chose Bremen for the example is simply that it is a small file (around 8MB).
 
 
-* `lgd-query`: Run a SPARQL query on the database.
+* `sparqlify-tool`: Small wrapper for sparqlify that features a simple profile system and supports running SPARQL queries on the database.
+  * -P profile name. Settings will be loaded from such a file (see below).
   * -h  postgres host name
   * -d  postgres database name
   * -U  postgres user name
   * -W  postgres password (will be added to ~/.pgpass if not exists)
   * -Q  SPARQL query string or named query
 
+
+Here is an example of a profile file, which is assumed to be located at `/etc/sparqlify/profiles.d/lgd-example.conf`.
+This file will be deployed when installing the linkedgeodata debian package.
+
+        dbHost="localhost"
+        dbName="lgd"
+        dbUser="postgres"
+        dbPass="postgres"
+        mappingFile="/usr/share/linkedgeodata/sml/lgd-default.sml"
+
+
 A named query is just a SPARQL query that is referenced by a name.
-The mapping of a name to a SPARQL is configured via `lgd.conf.dist`.
+The mapping of a name to a SPARQL is configured via `/etc/sparqlify/sparqlify.conf`.
 
 Currently, the following named queries exist:
 
@@ -77,10 +88,10 @@ Currently, the following named queries exist:
 
 Examples:
 
-    lgd-query ontology
-    lgd-query dump
-    lgd-query -h localhost -d lgd -U postgres -W mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
-    lgd-query -Q 'Select * { ?s ?p ?o . Filter(?s = <http://linkedgeodata.org/triplify/node2028098486>) }'
+        sparqlify-tool -P lgd-example ontology
+        sparqlify-tool -P lgd-example dump
+        sparqlify-tool -h localhost -d lgd -U postgres -W mypwd -Q 'Construct { ?s ?p ?o } { ?s a <http://linkedgeodata.org/ontology/Pub> . ?s ?p ?o }'
+        sparqlify-tool -P lgd-example -Q 'Select * { ?s ?p ?o . Filter(?s = <http://linkedgeodata.org/triplify/node2028098486>) }'
 
 Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.
 
@@ -89,30 +100,30 @@ Again, note that Sparqlify is still in development and the supported features ar
 It is recommended to tune the database according to [these recommendations](http://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server). Here is a brief summary:
 Edit `/etc/postgresql/9.1/main/postgresql.conf` and set the following properties:
 
-    shared_buffers       = 2GB #recommended values between 25% - 40% of available RAM, setting assumes 8GB RAM
-    effective_cache_size = 4GB #recommended values between 50% - 75% of available RAM, setting assumes 8GB RAM
-    checkpoint_segments  = 256
-    checkpoint_completion_target = 0.9
-    autovacuum = off # This can be re-enabled once loading has completed
+        shared_buffers       = 2GB #recommended values between 25% - 40% of available RAM, setting assumes 8GB RAM
+        effective_cache_size = 4GB #recommended values between 50% - 75% of available RAM, setting assumes 8GB RAM
+        checkpoint_segments  = 256
+        checkpoint_completion_target = 0.9
+        autovacuum = off # This can be re-enabled once loading has completed
 
-    work_mem             = 256MB (This memory is used for sorting, so each user may use this amount of memory for his sorts; You may want to use a significantly lower value if there are many connections doing sorts)
-    maintainance_work_mem = 256MB
+        work_mem             = 256MB (This memory is used for sorting, so each user may use this amount of memory for his sorts; You may want to use a significantly lower value if there are many connections doing sorts)
+        maintainance_work_mem = 256MB
 
 
 Furthermore, allow more shared memory, otherwise postgres won't start:
 Append the following line to `/etc/sysctl.conf`:
 
-    #Use more shared memory max
-    kernel.shmmax=4294967296
+        #Use more shared memory max
+        kernel.shmmax=4294967296
 
-    # Note: The amount (specified in bytes) for kernel.shmmax must be greater than the shared_buffers settings obove
-    #4GB = 4294967296
-    #8GB = 8589934592
+        # Note: The amount (specified in bytes) for kernel.shmmax must be greater than the shared_buffers settings obove
+        #4GB = 4294967296
+        #8GB = 8589934592
 
 Make the changes take effect:
 
-    sudo sysctl -p
-    sudo service postgresql restart
+        sudo sysctl -p
+        sudo service postgresql restart
 
 ## License
 The content of this project are licensed under the [GPL v3 License](https://github.com/GeoKnow/LinkedGeoData/blob/master/LICENSE).
