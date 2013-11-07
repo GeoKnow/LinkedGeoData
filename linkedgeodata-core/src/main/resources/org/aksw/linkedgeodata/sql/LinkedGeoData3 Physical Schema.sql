@@ -197,15 +197,19 @@ CREATE VIEW lgd_resource_label AS
 
    
 /* Interlinks */
-DROP TABLE IF EXISTS lgd_interlinks;
-CREATE TABLE lgd_interlinks (
-	s TEXT NOT NULL,
-	o TEXT NOT NULL, 
+DROP TABLE IF EXISTS "lgd_interlinks";
+CREATE TABLE "lgd_interlinks" (
+        "source" text,
 
-	/* Avoid duplicates */
-	UNIQUE(s, o)
+        "s" text NOT NULL,
+        "o" text NOT NULL,
+
+        "o_local_name" text
+
+        /* Avoid duplicates per source*/
+        UNIQUE(s, o, source)
 );
-CREATE INDEX idx_lgd_interlinks_s ON lgd_interlinks(s);
-CREATE INDEX idx_lgd_interlinks_o ON lgd_interlinks(o);
-   
-   
+
+CREATE INDEX "idx_lgd_interlinks_s" ON "lgd_interlinks"("s");
+CREATE INDEX "idx_lgd_interlinks_o" ON "lgd_interlinks"("o");
+
