@@ -247,7 +247,7 @@ Create View lgd_nodes As
 		?n wgs:long ?xx .
 		?n wgs:lat ?yy .
 		
-		?n owl:sameAs ?gadm .
+		?n lgdo:gadmSameAs ?gadm .
 	}
 	With
 		?n = uri(concat(lgd:node, ?id))
