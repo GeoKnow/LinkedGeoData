@@ -204,10 +204,10 @@ CREATE TABLE "lgd_interlinks" (
         "s" text NOT NULL,
         "o" text NOT NULL,
 
-        "o_local_name" text
+        "o_local_name" text,
 
         /* Avoid duplicates per source*/
-        UNIQUE(s, o, source)
+        UNIQUE("s", "o", "source")
 );
 
 CREATE INDEX "idx_lgd_interlinks_s" ON "lgd_interlinks"("s");
