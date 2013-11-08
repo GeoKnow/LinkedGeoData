@@ -32,6 +32,7 @@ Prefix geom:<http://geovocab.org/geometry#>
 
 //Prefix virtrdf:<http://www.openlinksw.com/schemas/virtrdf#>
 
+Prefix lu: <http://id.sirf.net/def/lu#>
 
 
 /**********
@@ -55,11 +56,13 @@ Create View users As
  
 Create View interlinks As
   Construct {
-    ?s owl:sameAs ?o
+    ?s owl:sameAs ?o .
+    ?o lu:shortid ?os .
   }
   With
     ?s = uri(?s)
     ?o = uri(?o)
+    ?os = plainLiteral(?o_local_name)
   Constrain
     ?s prefix "http://linkedgeodata.org"
     ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
