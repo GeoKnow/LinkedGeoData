@@ -35,6 +35,11 @@ Prefix geom:<http://geovocab.org/geometry#>
 Prefix lu: <http://id.sirf.net/def/lu#>
 
 
+
+Set defaultGraph = "http://linkedgeodata.org/osm/"
+
+
+
 /**********
  * Users
  **********/

@@ -37,7 +37,8 @@ Prefix gadm-o: <http://linkedgeodata.org/gadm2/ontology/>
 Prefix gadm-r: <http://linkedgeodata.org/gadm2/resource/>
 
 
-
+// All patterns below should go to this graph.
+Set defaultGraph = "http://linkedgeodata.org/gadm2/"
 
 /*
  * Features
@@ -173,7 +174,7 @@ Create View gadm_lvl_1_data As
   Construct {
     ?lvl
       a gadm-o:Level ;
-      gadm-o:parentLevel ?plvl ;      
+      lgd-mo:parentLevel ?plvl ;      
       gadm-o:level 1 ;
       
       a ?t ;
@@ -238,7 +239,7 @@ Create View gadm_lvl_2_data As
   Construct {
     ?lvl
       a gadm-o:Level ;
-      gadm-o:parentLevel ?plvl ;      
+      lgd-mo:parentLevel ?plvl ;      
       gadm-o:level 2 ;
       
       a ?t ;
@@ -302,7 +303,7 @@ Create View gadm_lvl_3_data As
   Construct {
     ?lvl
       a gadm-o:Level ;
-      gadm-o:parentLevel ?plvl ;      
+      lgd-mo:parentLevel ?plvl ;      
       gadm-o:level 3 ;
       
       a ?t ;
@@ -366,7 +367,7 @@ Create View gadm_lvl_4_data As
   Construct {
     ?lvl
       a gadm-o:Level ;
-      gadm-o:parentLevel ?plvl ;      
+      lgd-mo:parentLevel ?plvl ;      
       gadm-o:level 4 ;
       
       a ?t ;
@@ -425,7 +426,7 @@ Create View gadm_lvl_5_data As
   Construct {
     ?lvl
       a gadm-o:Level ;
-      gadm-o:parentLevel ?plvl ;      
+      lgd-mo:parentLevel ?plvl ;
       gadm-o:level 5 ;
       
       a ?t ;
