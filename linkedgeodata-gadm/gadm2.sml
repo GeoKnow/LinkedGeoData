@@ -31,14 +31,14 @@ Prefix geom: <http://geovocab.org/geometry#>
 
 
 // LinkedGeoData Meta Vocabulary (cross-dataset vocab)
-Prefix lgd-mo: <http://linkedgeodata.org/meta/ontology/>
+Prefix lgd-mo: <http://linkedgeodata.org/ld/meta/ontology/>
 
-Prefix gadm-o: <http://linkedgeodata.org/gadm2/ontology/>
-Prefix gadm-r: <http://linkedgeodata.org/gadm2/resource/>
+Prefix gadm-o: <http://linkedgeodata.org/ld/gadm2/ontology/>
+Prefix gadm-r: <http://linkedgeodata.org/ld/gadm2/resource/>
 
 
 // All patterns below should go to this graph.
-Set defaultGraph = "http://linkedgeodata.org/gadm2/"
+Set defaultGraph = "http://linkedgeodata.org/ld/gadm2/"
 
 /*
  * Features
@@ -443,9 +443,6 @@ Create View gadm_lvl_5_data As
     ?et = uri(gadm-o:, 'engType/', sml:urlEncode(?engtype_5))
     
     ?lbl = plainLiteral(?name_5)
-    ?cmt = plainLiteral(?remarks_5)
-    ?vfr = plainLiteral(?validfr_5)
-    ?vto = plainLiteral(?validto_5)
   From
     "lgd_gadm2_lvl_5_data"
 
