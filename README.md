@@ -9,6 +9,7 @@ For other systems please consider contributing adaptions of the existing scripts
 ### Debian package now available!
 Technically, LinkedGeoData is set of SQL files, database-to-rdf (RDB2RDF) mappings, and bash scripts.
 The actual RDF conversion is carried out by the SPARQL-to-SQL rewriter [Sparqlify](https://github.com/AKSW/Sparqlify).
+You can [view the Sparqlify Mappings for LinkedGeoData here](https://raw.github.com/GeoKnow/LinkedGeoData/master/linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml/LinkedGeoData-Triplify-IndividualViews.sml).
 Therefore, if you want to install the LinkedGeoData debian package, you also need to install the Sparqlify one:
 
 You can download both packages here:
