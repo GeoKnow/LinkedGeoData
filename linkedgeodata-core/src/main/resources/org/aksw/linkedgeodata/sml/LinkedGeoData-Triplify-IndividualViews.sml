@@ -146,7 +146,7 @@ Create View view_resource_labels As
 Create View view_properties_k As
     Construct {
         ?s
-            a owl:Property ;
+            a rdf:Property ;
             a owl:ObjectProperty ;
             rdfs:domain spatial:Feature ;
             rdfs:range owl:Thing .
@@ -163,7 +163,7 @@ Create View view_properties_k As
 Create View view_object_properties As
     Construct {
         ?s
-        	a owl:Property ;
+        	a rdf:Property ;
             a owl:ObjectProperty ;
             rdfs:domain spatial:Feature ;
             rdfs:range lgdo:Sport .
@@ -189,7 +189,7 @@ Create View static_properties As
 Create View property_int As
     Construct {
         ?s
-        	a owl:Property ;
+        	a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:integer .
     }
@@ -204,7 +204,7 @@ Create View property_int As
 Create View property_double As
     Construct {
         ?s
-        	a owl:Property ;
+        	a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:double .
     }
@@ -219,7 +219,7 @@ Create View property_double As
 Create View property_boolean As
     Construct {
         ?s
-        	a owl:Property ;
+        	a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:boolean .
     }
