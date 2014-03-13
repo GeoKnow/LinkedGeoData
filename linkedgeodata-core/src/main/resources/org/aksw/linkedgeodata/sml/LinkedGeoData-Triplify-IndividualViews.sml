@@ -388,6 +388,19 @@ Create View lgd_node_tags_string As
 		lgd_node_tags_string
 
 
+Create View lgd_node_tags_uri_objects As
+	Construct {
+		?s ?p ?o .
+	}
+	With
+		?s = uri(lgd:node, ?node_id)
+		?p = uri(?property)
+		?o = uri(?object)
+	Constrain
+		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+	From
+		lgd_node_tags_property
+
 
 /*************
  * Ways
@@ -573,6 +586,20 @@ Create View lgd_way_tags_string As
 		lgd_way_tags_string
 
 
+Create View lgd_way_tags_uri_objects As
+	Construct {
+		?s ?p ?o .
+	}
+	With
+		?s = uri(lgd:way, ?way_id)
+		?p = uri(?property)
+		?o = uri(?object)
+	Constrain
+		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+	From
+		lgd_way_tags_property
+
+
 
 /*********
  * RELATIONS
@@ -755,6 +782,19 @@ Create View lgd_relation_tags_string As
 	From
 		lgd_relation_tags_string
 
+
+Create View lgd_relation_tags_uri_objects As
+	Construct {
+		?s ?p ?o .
+	}
+	With
+		?s = uri(lgd:relation, ?relation_id)
+		?p = uri(?property)
+		?o = uri(?object)
+	Constrain
+		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+	From
+		lgd_relation_tags_property
 
 
 /*
