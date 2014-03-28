@@ -1,4 +1,4 @@
-package org.linkedgeodata.rest;
+package org.linkedgeodata.web.api;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -58,6 +58,8 @@ public class AbstractModelMessageReaderWriterProvider
 		}
 		*/
 		
+	    
+	    
 		RDFWriter writer = ModelFactory.createDefaultModel().getWriter(format);
 
 		return writer;

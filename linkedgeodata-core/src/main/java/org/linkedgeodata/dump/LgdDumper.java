@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 import org.aksw.commons.collections.SinglePrefetchIterator;
 import org.aksw.commons.util.strings.StringUtils;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
@@ -36,7 +35,6 @@ import org.apache.commons.validator.UrlValidator;
 import org.apache.jena.atlas.lib.Sink;
 import org.apache.jena.riot.out.SinkTripleOutput;
 import org.apache.log4j.PropertyConfigurator;
-import org.postgis.PGgeometry;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,15 +50,15 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.sparql.expr.NodeValue;
 import com.hp.hpl.jena.vocabulary.RDF;
 
-interface GeometryRdfSerializer {
-	void write(PGgeometry geometry, Sink<Triple> sink);
-}
-
-class GeoVocabRdfSerializer implements GeometryRdfSerializer {
-
-	public void write(PGgeometry geometry, Sink<Triple> sink) {
-	}
-}
+//interface GeometryRdfSerializer {
+//	void write(PGgeometry geometry, Sink<Triple> sink);
+//}
+//
+//class GeoVocabRdfSerializer implements GeometryRdfSerializer {
+//
+//	public void write(PGgeometry geometry, Sink<Triple> sink) {
+//	}
+//}
 
 class ValidatingSink
 	implements Sink<Triple>
@@ -334,7 +332,7 @@ public class LgdDumper {
 		 * FileInputStream("jdklog.properties"));
 		 */
 
-		CommandLineParser cliParser = new GnuParser();
+		GnuParser cliParser = new GnuParser();
 
 		/*
 		cliOptions.addOption("t", "type", true,

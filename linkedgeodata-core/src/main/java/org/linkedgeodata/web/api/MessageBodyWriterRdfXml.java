@@ -1,4 +1,4 @@
-package org.linkedgeodata.rest;
+package org.linkedgeodata.web.api;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -6,11 +6,8 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.jena.riot.WebContent;
 
-//@Produces({HttpParams.contentTypeTextPlain})
-//@Consumes({HttpParams.contentTypeTextPlain})
 @Provider
-@Produces({WebContent.contentTypeRDFXML, MediaType.TEXT_PLAIN, "*/*"})
-//@Consumes({HttpParams.contentTypeRDFXML})
+@Produces({WebContent.contentTypeRDFXML, MediaType.APPLICATION_XML, "*/*"})
 public class MessageBodyWriterRdfXml
 	extends AbstractModelMessageReaderWriterProvider
 {

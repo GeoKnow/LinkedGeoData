@@ -1,4 +1,4 @@
-package org.linkedgeodata.rest;
+package org.linkedgeodata.web.api;
 
 import java.io.FileInputStream;
 import java.util.logging.LogManager;

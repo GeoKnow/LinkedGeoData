@@ -1,4 +1,4 @@
-package org.linkedgeodata.rest;
+package org.linkedgeodata.web.api;
 
 import java.awt.geom.RectangularShape;
 

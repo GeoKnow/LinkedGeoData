@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.linkedgeodata.rest;
+package org.linkedgeodata.web.api;
 
 import java.awt.geom.RectangularShape;
 import java.util.Date;
