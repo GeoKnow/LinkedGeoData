@@ -138,7 +138,7 @@ public class RDFWriterHtml
 			out.write("<tr class='even'><td colspan='2'>&nbsp;</td></tr>\n"); 				
 		}
 	
-		out.write("<table>\n");
+		out.write("</table>\n");
 	
 		out.flush();
 	}
