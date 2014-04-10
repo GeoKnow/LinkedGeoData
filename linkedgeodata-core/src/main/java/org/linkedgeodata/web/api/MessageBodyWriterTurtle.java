@@ -6,7 +6,7 @@ import javax.ws.rs.ext.Provider;
 import org.apache.jena.riot.WebContent;
 
 @Provider
-@Produces({WebContent.contentTypeTurtle})
+@Produces({WebContent.contentTypeTurtle, WebContent.contentTypeTurtleAlt1, WebContent.contentTypeTurtleAlt2})
 public class MessageBodyWriterTurtle
 	extends AbstractModelMessageReaderWriterProvider
 {
