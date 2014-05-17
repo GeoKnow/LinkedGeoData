@@ -15,7 +15,7 @@ if [ ! -f 'gadm2.shp' ]; then
 
 fi
 
-shp2pgsql -W 'LATIN1' -s4326 'gadm2.shp' 'lgd_gadm2_raw'  | psql -h "$dbHost" -d "$dbName" -U "$dbUser"
+shp2pgsql -W 'LATIN1' -g 'the_geom' -s '4326' 'gadm2.shp' 'lgd_gadm2_raw'  | psql -h "$dbHost" -d "$dbName" -U "$dbUser"
 
 psql -h "$dbHost" -d "$dbName" -U "$dbUser" -f 'gadm2.sql'
 
