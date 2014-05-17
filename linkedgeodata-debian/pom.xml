@@ -136,8 +136,8 @@
 					<packageSection>web</packageSection>
 					<packageDependencies>
 						<packageDependency>osmosis</packageDependency>
-						<packageDependency>postgresql-9.1-postgis</packageDependency>
-						<packageDependency>sparqlify</packageDependency>
+						<packageDependency>postgresql-9.1-postgis | postgresql-9.3-postgis-2.1</packageDependency>
+						<packageDependency>sparqlify-cli</packageDependency>
 					</packageDependencies>
 					<maintainerName>${project.parent.developers[0].name}</maintainerName>
 					<maintainerEmail>${project.parent.developers[0].email}</maintainerEmail>
