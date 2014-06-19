@@ -48,7 +48,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_0_only_id_0" ON "lgd_gadm2_lvl_0_only"("id_0");
 
 CREATE TABLE "lgd_gadm2_lvl_0_data" AS
     SELECT DISTINCT "id_0", "name_0", "iso"
-    FROM "lgd_gadm2_raw";
+    FROM "lgd_gadm2_raw"
     WHERE "id_0" <> 0 AND "id_1" = 0 AND "id_2" = 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_0_data_id_0" ON "lgd_gadm2_lvl_0_data"("id_0");
