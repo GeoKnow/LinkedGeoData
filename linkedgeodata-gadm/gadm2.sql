@@ -49,6 +49,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_0_only_id_0" ON "lgd_gadm2_lvl_0_only"("id_0");
 CREATE TABLE "lgd_gadm2_lvl_0_data" AS
     SELECT DISTINCT "id_0", "name_0", "iso"
     FROM "lgd_gadm2_raw";
+    WHERE "id_0" <> 0 AND "id_1" = 0 AND "id_2" = 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_0_data_id_0" ON "lgd_gadm2_lvl_0_data"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_0_data_name_0" ON "lgd_gadm2_lvl_0_data"("name_0");
@@ -72,7 +73,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_1_only_id_1" ON "lgd_gadm2_lvl_1_only"("id_1");
 CREATE TABLE "lgd_gadm2_lvl_1_data" AS
     SELECT DISTINCT "id_0", "id_1", "name_1", "type_1", "engtype_1", "validfr_1", "validto_1", "remarks_1", "hasc_1", "cc_1"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" = 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_1_data_id_0" ON "lgd_gadm2_lvl_1_data"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_1_data_id_1" ON "lgd_gadm2_lvl_1_data"("id_1");
@@ -89,7 +90,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_1_data_cc_1" ON "lgd_gadm2_lvl_1_data"("cc_1");
 CREATE TABLE "lgd_gadm2_lvl_1_altlabels" AS
     SELECT DISTINCT "id_0", "id_1", unnest(string_to_array("varname_1", '|')) "varname_1"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" = 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_1_altlabels_id_0" ON "lgd_gadm2_lvl_1_altlabels"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_1_altlabels_id_1" ON "lgd_gadm2_lvl_1_altlabels"("id_1");
@@ -112,7 +113,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_2_only_id_2" ON "lgd_gadm2_lvl_2_only"("id_2");
 CREATE TABLE "lgd_gadm2_lvl_2_data" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", "name_2", "type_2", "engtype_2", "validfr_2", "validto_2", "remarks_2", "hasc_2", "cc_2"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_2_data_id_0" ON "lgd_gadm2_lvl_2_data"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_2_data_id_1" ON "lgd_gadm2_lvl_2_data"("id_1");
@@ -130,7 +131,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_2_data_cc_2" ON "lgd_gadm2_lvl_2_data"("cc_2");
 CREATE TABLE "lgd_gadm2_lvl_2_altlabels" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", unnest(string_to_array("varname_2", '|')) "varname_2"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" = 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_2_altlabels_id_0" ON "lgd_gadm2_lvl_2_altlabels"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_2_altlabels_id_1" ON "lgd_gadm2_lvl_2_altlabels"("id_1");
@@ -155,7 +156,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_3_only_id_3" ON "lgd_gadm2_lvl_3_only"("id_3");
 CREATE TABLE "lgd_gadm2_lvl_3_data" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", "id_3", "name_3", "type_3", "engtype_3", "validfr_3", "validto_3", "remarks_3", "hasc_3"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_3_data_id_0" ON "lgd_gadm2_lvl_3_data"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_3_data_id_1" ON "lgd_gadm2_lvl_3_data"("id_1");
@@ -173,7 +174,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_3_data_hasc_3" ON "lgd_gadm2_lvl_3_data"("hasc_3
 CREATE TABLE "lgd_gadm2_lvl_3_altlabels" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", "id_3", unnest(string_to_array("varname_3", '|')) "varname_3"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" = 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_3_altlabels_id_0" ON "lgd_gadm2_lvl_3_altlabels"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_3_altlabels_id_1" ON "lgd_gadm2_lvl_3_altlabels"("id_1");
@@ -201,7 +202,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_4_only_id_4" ON "lgd_gadm2_lvl_4_only"("id_4");
 CREATE TABLE "lgd_gadm2_lvl_4_data" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", "id_3", "id_4", "name_4", "type_4", "engtype_4", "validfr_4", "validto_4", "remarks_4"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" <> 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_4_data_id_0" ON "lgd_gadm2_lvl_4_data"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_4_data_id_1" ON "lgd_gadm2_lvl_4_data"("id_1");
@@ -219,7 +220,7 @@ CREATE INDEX "idx_lgd_gadm2_lvl_4_data_remarks_4" ON "lgd_gadm2_lvl_4_data"("rem
 CREATE TABLE "lgd_gadm2_lvl_4_altlabels" AS
     SELECT DISTINCT "id_0", "id_1", "id_2", "id_3", "id_4", unnest(string_to_array("varname_4", '|')) "varname_4"
     FROM "lgd_gadm2_raw"
-    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" <> 0;
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" <> 0 AND "id_4" <> 0 AND "id_5" = 0;
 
 CREATE INDEX "idx_lgd_gadm2_lvl_4_altlabels_id_0" ON "lgd_gadm2_lvl_4_altlabels"("id_0");
 CREATE INDEX "idx_lgd_gadm2_lvl_4_altlabels_id_1" ON "lgd_gadm2_lvl_4_altlabels"("id_1");
