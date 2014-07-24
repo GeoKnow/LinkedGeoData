@@ -44,6 +44,7 @@ public class LGDVocabDefault
 
 	public static final String NODE = RESOURCE + "node";
 	public static final String WAY = RESOURCE + "way";
+    public static final String RELATION = RESOURCE + "relation";
 	
 	public static final String ONTOLOGY_NS = NS + "ontology/";
 	
@@ -95,6 +96,20 @@ public class LGDVocabDefault
 	{
 		return createNIRWayURI(id);
 	}
+
+	
+	@Override
+	public Resource createOSMRelationURI(long id)
+	{
+	    return createNIRRelationURI(id);
+	}
+	
+	@Override
+    public Resource createNIRRelationURI(long id)
+    {
+        //return WAY + "/_" + id;
+        return ResourceFactory.createResource(RELATION + id);
+    }   
 
 	@Override
 	public String getBaseNS()

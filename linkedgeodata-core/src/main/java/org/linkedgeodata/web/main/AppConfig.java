@@ -61,6 +61,7 @@ public class AppConfig {
 
         DataSource dsBean = null;
 
+        Exception firstException = null;
         try {
 
             String jndiName = "java:comp/env/jdbc/linkedGeoDataDs";
@@ -68,8 +69,11 @@ public class AppConfig {
             dsBean = (DataSource) ctx.lookup(jndiName);
             
         } catch (NamingException e) {
-            logger.info("Exception on retrieving initial JNDI context - trying a different method", e);
+            logger.info("Exception on retrieving initial JNDI context - trying a different method");
+            firstException = e;
         }
+        
+        // TODO If the second attempt fails, also log the first exception
 
         if(dsBean == null) {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -106,6 +110,12 @@ public class AppConfig {
         return result;
     }
 
+    @Bean
+    public String lgdSparqlServiceUrl() {
+        return lgdServiceUrl;
+    }
+    
+    
     @Bean
     @Autowired
     public QueryExecutionFactory queryExecutionFactory(SparqlServiceFactory sparqlServiceFactory) {

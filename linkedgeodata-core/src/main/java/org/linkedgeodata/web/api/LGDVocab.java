@@ -25,11 +25,15 @@ public interface LGDVocab
 	
 	
 	// NIR = Non-Information-Resource
-	Resource createNIRNodeURI(long id);
 	Resource createOSMNodeURI(long id);	
-	Resource createNIRWayURI(long id);
 	Resource createOSMWayURI(long id);
- 
+    Resource createOSMRelationURI(long id);
+
+    Resource createNIRNodeURI(long id);
+    Resource createNIRWayURI(long id);
+	Resource createNIRRelationURI(long id);
+
+	
 	Resource createResource(Entity entity);
 	
 	String getOntologyNS();

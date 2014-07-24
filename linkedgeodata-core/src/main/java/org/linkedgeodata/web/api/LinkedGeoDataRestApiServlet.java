@@ -8,23 +8,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.UriBuilder;
 
 import org.aksw.commons.util.StreamUtils;
 import org.aksw.commons.util.strings.StringUtils;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.delay.extra.Delayer;
 import org.aksw.jena_sparql_api.delay.extra.DelayerDefault;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -62,6 +63,8 @@ public class LinkedGeoDataRestApiServlet {
     @Autowired
     private QueryExecutionFactory qef;
 
+    @javax.annotation.Resource(name="lgdSparqlServiceUrl")    
+    private String lgdSparqlServiceUrl;
     
     public LinkedGeoDataRestApiServlet() {
         
@@ -292,12 +295,22 @@ public class LinkedGeoDataRestApiServlet {
 
         // queryString = StringUtils.urlDecode(queryString);
 
-        String geocodeService = "http://open.mapquestapi.com/nominatim/v1/search";
+        String geocodeServiceUri = "http://open.mapquestapi.com/nominatim/v1/search";
         // http://nominatim.openstreetmap.org/search
+        URL url = UriBuilder.fromUri(geocodeServiceUri)
+                .queryParam("q", queryString)
+                .queryParam("format", "json")
+                .build()
+                .toURL();
+        
+//        List<NameValuePair> newQsArgs = new ArrayList<NameValuePair>();
+//        newQsArgs.add(new BasicNameValuePair("q", queryString));
+//        newQsArgs.add(new BasicNameValuePair("q", queryString));
+//        String newQs = URLEncodedUtils.format(newQsArgs, "UTF8");
+        
+//        String uri = geocodeServiceUri + "?format=json&q=" + queryString;
 
-        String uri = geocodeService + "?format=json&q=" + queryString;
-
-        URL url = new URL(uri);
+        //URL url = new URL(uri);
         URLConnection c = url.openConnection();
         c.setRequestProperty("User-Agent",
                 "http://linkedgeodata.org, mailto:cstadler@informatik.uni-leipzig.de");
@@ -318,7 +331,8 @@ public class LinkedGeoDataRestApiServlet {
 
         // gson.fromJson(json, JsonResponseItem.class);
 
-        List<Resource> resources = new ArrayList<Resource>();
+        //List<Resource> resources = new ArrayList<Resource>();
+        List<Node> nodes = new ArrayList<Node>();
         for (JsonResponseItem item : items) {
             Resource resource = null;
 
@@ -326,29 +340,33 @@ public class LinkedGeoDataRestApiServlet {
                 resource = vocab.createNIRNodeURI(item.getOsm_id());
             } else if (item.getOsm_type().equals("way")) {
                 resource = vocab.createNIRWayURI(item.getOsm_id());
-            } else {
+            } else if (item.getOsm_type().equals("relation")) {
+                resource = vocab.createNIRRelationURI(item.getOsm_id());
+            }
+            else {
                 continue;
             }
 
-            resources.add(resource);
+            nodes.add(resource.asNode());
         }
 
         Model result = createModel();
 
         // String lgdService = "http://live.linkedgeodata.org/sparql";
-        String lgdService = "http://test.linkedgeodata.org/sparql";
-        QueryExecutionFactoryHttp qef = new QueryExecutionFactoryHttp(
-                lgdService, Collections.singleton("http://linkedgeodata.org"));
+        //QueryExecutionFactoryHttp sparqlService = new QueryExecutionFactoryHttp(lgdService, Collections.singleton("http://linkedgeodata.org"));
 
-        for (Resource resource : resources) {
+        //LookupService lookupService = new LookupServiceSparqlQuery(sparqlService, query, var);
+        
+        
+        for (Node node : nodes) {
             // QueryExecution qe = qef.createQueryExecution("Describe <" +
             // resource.toString() + ">");
             // qe.execDescribe(result);
 
             // Workaround for Virtuoso returning invalid XML (which means we
             // can't use the query execution
-            String serviceUri = "http://test.linkedgeodata.org/sparql?format=text%2Fplain&default-graph-uri=http%3A%2F%2Flinkedgeodata.org&query=DESCRIBE+<"
-                    + StringUtils.urlEncode(resource.toString()) + ">";
+            String serviceUri = lgdSparqlServiceUrl + "?format=text%2Fplain&default-graph-uri=http%3A%2F%2Flinkedgeodata.org&query=DESCRIBE+<"
+                    + StringUtils.urlEncode(node.getURI()) + ">";
 
             URL serviceUrl = new URL(serviceUri);
             URLConnection conn = serviceUrl.openConnection();

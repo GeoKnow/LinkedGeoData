@@ -49,7 +49,7 @@
 		<jersey.version>1.8</jersey.version>
 		<spring.version>3.2.4.RELEASE</spring.version>
 
-		<jena-sparql-api.version>2.10.0-43</jena-sparql-api.version>
+		<jena-sparql-api.version>2.11.2-55</jena-sparql-api.version>
 
 		<!-- <aksw.commons.version>0.5-SNAPSHOT</aksw.commons.version> -->
 	</properties>
@@ -231,6 +231,17 @@
 				<version>0.43.1</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.jolbox</groupId>
+				<artifactId>bonecp</artifactId>
+				<version>0.8.0.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>1</version>
+			</dependency>
 
 			<!-- Gson: Java to Json conversion -->
 			<dependency>
