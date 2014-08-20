@@ -27,8 +27,9 @@ Import the public key with
     wget -O - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key | apt-key add -
 
 
-Now you can install
+Now you can install LinkedGeoData using
 
+    sudo apt-get update
     sudo apt-get install linkedgeodata
 
 
