@@ -10,11 +10,32 @@ For other systems please consider contributing adaptions of the existing scripts
 Technically, LinkedGeoData is set of SQL files, database-to-rdf (RDB2RDF) mappings, and bash scripts.
 The actual RDF conversion is carried out by the SPARQL-to-SQL rewriter [Sparqlify](https://github.com/AKSW/Sparqlify).
 You can [view the Sparqlify Mappings for LinkedGeoData here](https://raw.github.com/GeoKnow/LinkedGeoData/master/linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml/LinkedGeoData-Triplify-IndividualViews.sml).
-Therefore, if you want to install the LinkedGeoData debian package, you also need to install the Sparqlify one:
+Therefore, if you want to install the LinkedGeoData debian package, you also  Sparqlify one.
 
-You can download both packages here:
+For the latest version of LinkedGeoData package, perform the following steps to set up the package source:
+
+Create the file
+
+    /etc/apt/sources.list.d/cstadler.aksw.org.list
+
+and add the content
+
+    deb     http://cstadler.aksw.org/repos/apt precise main contrib non-free
+
+Import the public key with
+
+    wget -O - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key | apt-key add -
+
+
+Now you can install
+
+    sudo apt-get install linkedgeodata
+
+
+Alternatively You can download both packages manually:
 * [Sparqlify Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/s/sparqlify/)
 * [LinkedGeoData Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/l/linkedgeodata/)
+
 
 After installing these packages, the following essential commands will be available:
 * `lgd-createdb` (provided by linkedgeodata)
