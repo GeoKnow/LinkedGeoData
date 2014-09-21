@@ -96,11 +96,11 @@ Construct {
     Filter(?t = <$typ>)
 }"
 
-#echo "$query"
+echo "$query"
 
 #sparql-nt "$service" "$query"
-cd ../../bin/
-./run-query-lgd.sh -Q "$query"
+#cd ../../bin/
+#a./run-query-lgd.sh -Q "$query"
 
 
 query="PREFIX geom: <http://geovocab.org/geometry#>
@@ -119,8 +119,9 @@ Construct {
 }"
 
 
-./run-query-lgd.sh -Q "$query"
+#./run-query-lgd.sh -Q "$query"
 
+./
 
 
 

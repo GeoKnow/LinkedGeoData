@@ -18,9 +18,9 @@ mkdir -p "$targetDir"
 sed -r '/(^#)|($\s*^)/ d' | while read line; do
 
     typ="http://linkedgeodata.org/ontology/$line"
-    file="$date-$line.nodes.sorted.nt.bz2"
+    file="$date-$line.ways.sorted.nt.bz2"
 
-    ./dump-nodes.sh "$typ" | sort -u -S 256M | bzip2 -c > "$targetDir/$file"
+    ./dump-ways.sh "$typ" | sort -u -S 256M | bzip2 -c > "$targetDir/$file"
 
     echoerr "$line"
 done
