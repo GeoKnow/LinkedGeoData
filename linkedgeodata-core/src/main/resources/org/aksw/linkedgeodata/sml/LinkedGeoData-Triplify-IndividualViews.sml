@@ -493,10 +493,10 @@ Create View view_waynodes As
 	}
 	With
 		?wn = uri(concat(lgd-geom:posSeq, ?way_id))
-		?p = uri(concat(rdf:_, ?sequence_id))
+		?p = uri(concat(rdf:_, ?sid))
 		?n = uri(concat(lgd-geom:node, ?node_id))  
 	From
-		way_nodes;
+		[[SELECT *, sequence_id + 1 AS sid FROM way_nodes]]
 
 
 Create View lgd_way_tags_resource_k As
@@ -641,11 +641,11 @@ Create View lgd_relation_members_all As
   }
   With
 		?m = uri(lgd:rmembers, ?relation_id)  
-		?p = uri(rdf:_, ?sequence_id)
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?p = uri(rdf:_, ?sid)
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
 		?r = plainLiteral(?member_role)  
   From
-    relation_members
+    [[SELECT *, sequence_id + 1 AS sid FROM relation_members]]
 
   
 Create View lgd_relation_members_seq_nodes As
@@ -653,20 +653,20 @@ Create View lgd_relation_members_seq_nodes As
 		?i lgdo:ref ?n
 	}
 	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
 		?n = uri(lgd:node, ?member_id)
 	From
-		[[SELECT * FROM relation_members WHERE member_type = 'N']];
+		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'N']];
 
 Create View lgd_relation_members_seq_ways As
 	Construct {
 		?i lgdo:ref ?w
 	}
 	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
 		?w = uri(lgd:way, ?member_id)
 	From
-		[[SELECT * FROM relation_members WHERE member_type = 'W']];
+		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'W']];
 
 
 Create View lgd_relation_members_seq_relations As
@@ -674,10 +674,10 @@ Create View lgd_relation_members_seq_relations As
 		?i lgdo:ref ?r
 	}
 	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sequence_id)
+		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
 		?r = uri(lgd:relation, ?member_id)
 	From
-		[[SELECT * FROM relation_members WHERE member_type = 'R']];
+		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'R']];
 
 
 /*
