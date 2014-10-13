@@ -22,6 +22,6 @@ uri="http://linkedgeodata.org/ontology/$typ"
 file="$folder-$typ.$entity.sorted.nt.bz2"
 
 "./create-queries-${entity}s.sh" "$uri" | while read line; do
-    echo "sparqlify-tool $options -Q '$line' | sort -u -S 256M | bzip2 -c > '$targetDir/$file'"
+    echo "sparqlify-tool $options -Q '$line' | sort -u -S 1024M | rapper -i ntriples - http://example.org/ | bzip2 -c > '$targetDir/$file'"
 done
 
