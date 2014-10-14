@@ -1,0 +1,12 @@
+Package: linkedgeodata
+Version: [[version]]
+Section: web
+Priority: optional
+Architecture: all
+Depends: sparqlify-cli
+Maintainer: Claus Stadler <cstadler@informatik.uni-leipzig.de>
+Description: LinkedGeoData tools
+Distribution: development
+Homepage: http://aksw.org/Projects/Sparqlify
+Vcs-Git: git://github.com/GeoKnow/LinkedGeoData.git
+Vcs-Browser: https://github.com/GeoKnow/LinkedGeoData
