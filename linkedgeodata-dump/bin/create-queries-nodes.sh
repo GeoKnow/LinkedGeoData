@@ -23,3 +23,22 @@ Construct {
 
 echo `echo "$query" | tr '\n' ' '`
 
+
+query="PREFIX geom: <http://geovocab.org/geometry#>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX meta: <http://linkedgeodata.org/meta/>
+Construct {
+    ?s ?p ?o .
+}
+{
+    ?x a meta:Node .
+    ?x a ?t .
+    ?x geom:geometry ?s .
+    ?s ?p ?o .
+
+    Filter(?t = <$typ>)
+}"
+
+echo `echo "$query" | tr '\n' ' '`
+
+
