@@ -21,7 +21,13 @@ mkdir -p "$targetDir"
 uri="http://linkedgeodata.org/ontology/$typ"
 file="$folder-$typ.$entity.sorted.nt.bz2"
 
+tempfile=`tempfile`
+
 "./create-queries-${entity}s.sh" "$uri" | while read line; do
-    echo "sparqlify-tool $options -Q '$line' | sort -u -S 1024M | rapper -i ntriples - http://example.org/ | pbzip2 -c > '$targetDir/$file'"
+#    echo "sparqlify-tool $options -Q '$line' | sort -u -S 1024M | rapper -i ntriples - http://example.org/ | pbzip2 -c > '$targetDir/$file'"
+    echo "sparqlify-tool $options -Q '$line' >> '$tempfile'"
 done
+
+echo "cat $tempfile | sort -u -S 1024M | rapper -i ntriples - http://example.org/ | pbzip2 -c > '$targetDir/$file'"
+echo "rm '$tempfile'"
 
