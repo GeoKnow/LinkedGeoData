@@ -1,2 +1,2 @@
-release date=18:18 14.10.2014,version=0.8.1,urgency=low,by=Claus Stadler <cstadler@informatik.uni-leipzig.de>,distribution=lod2
+release date=18:18 14.10.2014,version=0.8.1,urgency=low,by=Claus Stadler <cstadler@informatik.uni-leipzig.de>,distribution=ldstack-nightly
  * Several general bug fixes
