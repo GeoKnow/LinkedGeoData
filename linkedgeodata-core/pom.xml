@@ -31,7 +31,7 @@
 
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
-			<artifactId>jena-sparql-api-servlets</artifactId>
+			<artifactId>jena-sparql-api-web</artifactId>
 		</dependency>
 
 		<dependency>
