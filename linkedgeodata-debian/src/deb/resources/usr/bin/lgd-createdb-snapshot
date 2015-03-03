@@ -1,4 +1,4 @@
 #!/bin/bash
 
-/bin/bash /usr/share/linkedgeodata/lgd-createdb-snapshot.sh "$@"
+/bin/bash /usr/share/lib/linkedgeodata/lgd-createdb-snapshot.sh "$@"
 
