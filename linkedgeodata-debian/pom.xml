@@ -131,7 +131,27 @@
                                     <src>${project.build.directory}/${deb.jarFile}</src>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/share/lib/${deb.packageName}</prefix>
+                                        <prefix>/usr/share/${deb.packageName}</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                        <prefix>/usr/share/${deb.packageName}/sql</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                        <prefix>/usr/share/${deb.packageName}/sml</prefix>
                                     </mapper>
                                 </data>
 
@@ -142,15 +162,15 @@
                                     <mapper>
                                         <type>perm</type>
                                         <filemode>755</filemode>
-                                        <prefix>/usr/share/lib/${deb.packageName}</prefix>
+                                        <prefix>/usr/share/${deb.packageName}</prefix>
                                     </mapper>
                                 </data>
 
                                 <data>
                                     <type>link</type>
                                     <symlink>true</symlink>
-                                    <linkName>/usr/share/lib/${deb.packageName}/${deb.packageName}.jar</linkName>
-                                    <linkTarget>/usr/share/lib/${deb.packageName}/${deb.jarFile}</linkTarget>
+                                    <linkName>/usr/share/${deb.packageName}/${deb.packageName}.jar</linkName>
+                                    <linkTarget>/usr/share/${deb.packageName}/${deb.jarFile}</linkTarget>
                                 </data>
 
                             </dataSet>
