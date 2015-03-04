@@ -34,8 +34,8 @@ Now you can install LinkedGeoData using
 
 
 Alternatively You can download both packages manually:
-* [Sparqlify Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/s/sparqlify/)
-* [LinkedGeoData Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/l/linkedgeodata/)
+* [sparqlify-cli Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/s/sparqlify-cli/)
+* [linkedgeodata Debian Package](http://cstadler.aksw.org/repos/apt/pool/main/l/linkedgeodata/)
 
 
 After installing these packages, the following essential commands will be available:
