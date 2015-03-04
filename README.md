@@ -40,6 +40,7 @@ Alternatively You can download both packages manually:
 
 After installing these packages, the following essential commands will be available:
 * `lgd-createdb` (provided by linkedgeodata)
+* `lgd-createdb-snapshot` (provided by linkedgeodata)
 * `sparqlify-tool` (provided by sparqlify, supersedes the former lgd-query command)
 
 
@@ -66,6 +67,8 @@ In [/bin](https://github.com/GeoKnow/LinkedGeoData/tree/master/linkedgeodata-cli
 All of them are configured via `lgd.conf.dist`. You can override the default settings without changing this file by creating a `lgd.conf` file.
 If you installed the debian package, instead of the lgd.conf.dist file, the file /etc/sparqlify/sparqlify.conf` is used.
 If you are using the following scripts from the git repo, invoke them with `./scriptname.sh` (i.e. don't forget the `./` and `.sh`).
+
+* `lgd-createdb-snapshot`: A slightly experimental, but possibly much faster, version of the `lgd-createdb` script. Probably the `lgd-createdb` command will eventually refer to this version.
 
 * `lgd-createdb`: Creates and loads an LGD database
   * -h  postgres host name
