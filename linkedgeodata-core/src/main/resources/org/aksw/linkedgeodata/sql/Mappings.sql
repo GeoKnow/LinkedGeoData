@@ -167,6 +167,9 @@ departures_board	boolean
 --
 
 COPY lgd_map_literal (k, property, language) FROM stdin;
+castleType	http://linkedgeodata.org/ontology/castleType	
+postal_code	http://linkedgeodata.org/ontology/postalCode	
+post_code	http://linkedgeodata.org/ontology/postCode	
 name	http://www.w3.org/2000/01/rdf-schema#label	
 name:en	http://www.w3.org/2000/01/rdf-schema#label	en
 name:ja	http://www.w3.org/2000/01/rdf-schema#label	ja
@@ -655,6 +658,7 @@ leisure	sauna	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeoda
 leisure	skate_park	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/SkatePark
 leisure	social_club	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/SocialClub
 leisure	sport	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Sport
+amenity	planetarium	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Planetarium
 amenity	advertisement	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Advertisement
 amenity	advertising	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Advertising
 amenity	air_fill	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AirFill
@@ -1339,7 +1343,10 @@ tourism	viewpoint	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedg
 tourism	zoo	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Zoo
 tourism	yes	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/PointOfInterest
 tourism	hanami	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Hanami
-building	1	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Building
+building	temple	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Temple
+building	cathedral	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Cathedral
+building	synagogue	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Synagogue
+building	yes	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/UnclassifiedBuilding
 building	apartments	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ApartmentBuilding
 building	barn	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingBarn
 building	building	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingBuilding
@@ -1360,7 +1367,7 @@ building	fortress	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedg
 building	garage	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingGarage
 building	hall	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHall
 building	hospital	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHospital
-building	house	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHouse
+building	house	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/House
 building	hut	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHut
 building	kiosk	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingKiosk
 building	monastery	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingMonastery
@@ -1772,8 +1779,6 @@ payment:notes	http://linkedgeodata.org/ontology/payment/notes
 payment:telephone_cards	http://linkedgeodata.org/ontology/payment/telephoneCards
 permissive	http://linkedgeodata.org/ontology/permissive
 population	http://linkedgeodata.org/ontology/population
-postal_code	http://linkedgeodata.org/ontology/postalCode
-post_code	http://linkedgeodata.org/ontology/postCode
 produced	http://linkedgeodata.org/ontology/produced
 public	http://linkedgeodata.org/ontology/public
 rail	http://linkedgeodata.org/ontology/rail
