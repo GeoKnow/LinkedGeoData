@@ -56,7 +56,6 @@ permissive	boolean
 osmarender:renderRef	boolean
 oneway:bicycle	boolean
 openGeoDB:loc_id	int
-building	boolean
 toilet	boolean
 ele	float
 step_count	int
