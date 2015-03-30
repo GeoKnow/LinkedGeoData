@@ -50,7 +50,6 @@ family_spaces	int
 recycling:glass	boolean
 payment:coins	boolean
 horse	boolean
-post_code	int
 park_ride	boolean
 lit	boolean
 permissive	boolean
@@ -101,9 +100,7 @@ fuel:cng	boolean
 bus	boolean
 stars	int
 backrest	boolean
-postal_code	int
 public	boolean
-addr:postcode	int
 oneway	boolean
 blz	int
 disused	boolean
