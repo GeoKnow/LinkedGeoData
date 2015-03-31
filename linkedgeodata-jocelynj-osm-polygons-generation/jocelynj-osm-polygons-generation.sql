@@ -11,7 +11,7 @@ DECLARE BEGIN
 END
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION lgd_create_polygon(rel_id integer) RETURNS geometry
+CREATE OR REPLACE FUNCTION lgd_create_polygon(rel_id BIGINT) RETURNS geometry
 AS $BODY$
 DECLARE
   line RECORD;
@@ -71,7 +71,24 @@ END
 $BODY$
 LANGUAGE 'plpgsql' ;
 
-CREATE OR REPLACE FUNCTION lgd_create_polygon2(rel_id integer) RETURNS geometry
+
+
+CREATE OR REPLACE FUNCTION lgd_try_create_polygon(rel_id BIGINT) RETURNS geometry AS
+$$
+DECLARE
+BEGIN
+    RETURN lgd_create_polygon(rel_id);
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN NULL;
+END;
+$$
+    LANGUAGE 'plpgsql'
+    RETURNS NULL ON NULL INPUT;
+
+
+
+CREATE OR REPLACE FUNCTION lgd_create_polygon2(rel_id BIGINT) RETURNS geometry
 AS $BODY$
 DECLARE
   line RECORD;

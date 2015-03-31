@@ -95,8 +95,9 @@ CREATE VIEW lgd_node_tags_resource_k AS
  SELECT a.node_id, b.property, b.object
    FROM node_tags a
    JOIN lgd_map_resource_k b ON (b.k = a.k)
- WHERE
-  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
+;
+-- WHERE
+--  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
 
 /*
 -- Gives worse plans than the version below
@@ -244,8 +245,9 @@ CREATE VIEW lgd_way_tags_resource_k AS
  SELECT a.way_id, b.property, b.object
    FROM way_tags a
    JOIN lgd_map_resource_k b ON (b.k = a.k)
- WHERE
-  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
+;
+-- WHERE
+--  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
 
 /*
 Gives worse plans than the version below
@@ -263,8 +265,9 @@ CREATE VIEW lgd_way_tags_resource_kv AS
   SELECT a.way_id, b.property, b.object
    FROM way_tags a
    JOIN lgd_map_resource_kv b ON (b.k, b.v) = (a.k, a.v)
- WHERE
-  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
+;
+-- WHERE
+--  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
 
 
 
@@ -375,8 +378,9 @@ CREATE VIEW lgd_relation_tags_resource_k AS
  SELECT a.relation_id, b.property, b.object
    FROM relation_tags a
    JOIN lgd_map_resource_k b ON (b.k = a.k)
- WHERE
-  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
+;
+-- WHERE
+--  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
 
 
 /*
