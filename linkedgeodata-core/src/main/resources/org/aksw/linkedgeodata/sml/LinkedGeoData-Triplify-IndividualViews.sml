@@ -645,7 +645,7 @@ Create View lgd_relation_geoms As
     ?g = uri(lgd-geom:relation, ?relation_id)
     ?o = typedLiteral(?geom, ogc:wktLiteral)
   From
-    relation_geoms
+    lgd_relation_geoms
 
 
 Create View lgd_relation_members_all As
