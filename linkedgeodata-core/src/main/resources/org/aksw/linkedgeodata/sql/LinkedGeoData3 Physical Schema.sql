@@ -221,4 +221,4 @@ CREATE TABLE lgd_relation_geoms(
 ;
 
 SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
-CREATE INDEX idx_simple_polys_polygon ON simple_polys USING GIST(polygon);
+CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);
