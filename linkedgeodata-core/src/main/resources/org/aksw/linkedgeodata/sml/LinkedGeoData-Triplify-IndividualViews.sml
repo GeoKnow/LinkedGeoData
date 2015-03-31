@@ -641,7 +641,7 @@ Create View lgd_relation_geoms As
     ?g ogc:asWKT ?o .
   }
   With
-    ?s = uri(lgd:relation, ?id)
+    ?s = uri(lgd:relation, ?relation_id)
     ?g = uri(lgd-geom:relation, ?relation_id)
     ?o = typedLiteral(?geom, ogc:wktLiteral)
   From
