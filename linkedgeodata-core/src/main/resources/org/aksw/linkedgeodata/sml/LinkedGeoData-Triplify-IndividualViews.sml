@@ -419,7 +419,7 @@ Create View lgd_ways As
     With
         ?w = uri(concat(lgd:way, ?id))
         ?v = typedLiteral(?version, xsd:int)
-        ?u = uri(concat(lgdo:user, ?user_id))
+        ?u = uri(concat(lgd:user, ?user_id))
         ?d = typedLiteral(?tstamp, xsd:dateTime)
         ?c = typedLiteral(?changeset_id, xsd:int)
         //?g = typedLiteral(?geom, virtrdf:geometry)
@@ -622,7 +622,7 @@ Create View lgd_relations As
     With
         ?s = uri(concat(lgd:relation, ?id))
         ?v = typedLiteral(?version, xsd:int)
-        ?u = uri(concat(lgdo:user, ?user_id))
+        ?u = uri(concat(lgd:user, ?user_id))
         ?d = typedLiteral(?tstamp, xsd:dateTime)
         ?c = typedLiteral(?changeset_id, xsd:int)
         //?g = uri(concat(lgd-geom:relation, ?id))
