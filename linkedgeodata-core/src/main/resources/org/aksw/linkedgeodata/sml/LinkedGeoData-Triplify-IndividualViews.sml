@@ -59,6 +59,8 @@ Create View users As
  * Interlinks
  **********/
 
+/*
+//This view is superseded by lgd_{osmEntity}_interlinks
 Create View interlinks As
   Construct {
     ?s owl:sameAs ?o .
@@ -73,6 +75,57 @@ Create View interlinks As
     ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
   From
     lgd_interlinks
+*/
+
+
+Create View lgd_node_interlinks As
+  Construct {
+    ?s owl:sameAs ?o .
+    ?o lu:shortid ?os .
+  }
+  With
+    ?s = uri(lgd:node, ?node_id)
+    ?o = uri(?o)
+    ?os = plainLiteral(?o_local_name)
+  Constrain
+    ?s prefix "http://linkedgeodata.org"
+    ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
+  From
+    lgd_node_interlinks
+
+
+Create View lgd_way_interlinks As
+  Construct {
+    ?s owl:sameAs ?o .
+    ?o lu:shortid ?os .
+  }
+  With
+    ?s = uri(lgd:way, ?way_id)
+    ?o = uri(?o)
+    ?os = plainLiteral(?o_local_name)
+  Constrain
+    ?s prefix "http://linkedgeodata.org"
+    ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
+  From
+    lgd_way_interlinks
+
+
+Create View lgd_relation_interlinks As
+  Construct {
+    ?s owl:sameAs ?o .
+    ?o lu:shortid ?os .
+  }
+  With
+    ?s = uri(lgd:relation, ?relation_id)
+    ?o = uri(?o)
+    ?os = plainLiteral(?o_local_name)
+  Constrain
+    ?s prefix "http://linkedgeodata.org"
+    ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
+  From
+    lgd_relation_interlinks
+
+
 
 
 /**********

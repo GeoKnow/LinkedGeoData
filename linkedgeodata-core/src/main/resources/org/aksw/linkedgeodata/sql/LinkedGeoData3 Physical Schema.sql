@@ -214,6 +214,59 @@ CREATE INDEX "idx_lgd_interlinks_s" ON "lgd_interlinks"("s");
 CREATE INDEX "idx_lgd_interlinks_o" ON "lgd_interlinks"("o");
 
 
+
+DROP TABLE IF EXISTS "lgd_node_interlinks";
+CREATE TABLE "lgd_node_interlinks" (
+        "node_id" BIGINT NOT NULL,
+        "source" text,
+
+        "o" text NOT NULL,
+        "o_local_name" text NOT NULL,
+
+        /* Avoid duplicates per source*/
+        UNIQUE("node_id", "o", "source")
+);
+
+CREATE INDEX "idx_lgd_node_interlinks_node_id" ON "lgd_node_interlinks"("node_id");
+CREATE INDEX "idx_lgd_node_interlinks_o" ON "lgd_node_interlinks"("o");
+
+
+DROP TABLE IF EXISTS "lgd_way_interlinks";
+CREATE TABLE "lgd_way_interlinks" (
+        "way_id" BIGINT NOT NULL,
+        "source" text,
+
+        "o" text NOT NULL,
+        "o_local_name" text NOT NULL,
+
+        /* Avoid duplicates per source*/
+        UNIQUE("way_id", "o", "source")
+);
+
+CREATE INDEX "idx_lgd_way_interlinks_way_id" ON "lgd_way_interlinks"("way_id");
+CREATE INDEX "idx_lgd_way_interlinks_o" ON "lgd_way_interlinks"("o");
+
+
+
+DROP TABLE IF EXISTS "lgd_relation_interlinks";
+CREATE TABLE "lgd_relation_interlinks" (
+        "relation_id" BIGINT NOT NULL,
+        "source" text,
+
+        "o" text NOT NULL,
+        "o_local_name" text NOT NULL,
+
+        /* Avoid duplicates per source*/
+        UNIQUE("relation_id", "o", "source")
+);
+
+CREATE INDEX "idx_lgd_relation_interlinks_relation_id" ON "lgd_relation_interlinks"("way_id");
+CREATE INDEX "idx_lgd_relation_interlinks_o" ON "lgd_relation_interlinks"("o");
+
+
+
+
+
 CREATE TABLE lgd_relation_geoms(
     relation_id BIGINT PRIMARY KEY NOT NULL
 --    geom geometry NOT NULL
