@@ -9,7 +9,8 @@ Prefix owl:<http://www.w3.org/2002/07/owl#>
 
 //Prefix lgd:<http://linkedgeodata.org/triplify/>
 Prefix lgdneo:<http://linkedgeodata.org/ne/ontology/>
-Prefix lgdne:<http://linkedgeodata.org/ne/>
+Prefix lgdne:<http://linkedgeodata.org/ne/resource/>
+Prefix lgdnegeom:<http://linkedgeodata.org/ne/geometry/>
 
 Prefix spatial:<http://geovocab.org/spatial#>
 Prefix geom:<http://geovocab.org/geometry#>
@@ -39,7 +40,9 @@ Create View german_states_general_info As
                 rdfs:label ?label ;
                 skos:altLabel ?alabl ;
                 skos:altLabel ?abbrv ;
-                lgdneo:country ?cntry .
+                lgdneo:country ?cntry ;
+                ogc:hasGeometry ?geom .
+        ?geom ogc:asWKT ?wkt .
     }
     With
         ?type  = uri(lgdneo:, ?type_en)
@@ -51,6 +54,8 @@ Create View german_states_general_info As
         ?alabl = plainLiteral(?name_alt)
         ?abbrv = plainLiteral(?postal)
         ?cntry = uri(lgdne:, 'country/', ?adm0_a3)
+        ?geom = uri(lgdnegeom:, 'state', ?objectid_1)
+        ?wkt  = typedLiteral(?geom, ogc:wktLiteral)
     From
         [[
             SELECT
@@ -62,36 +67,8 @@ Create View german_states_general_info As
                 name_alt,
                 type_en,
                 postal,
-                adm0_a3
-            FROM
-                ne_10m_admin_1_states_provinces
-            WHERE iso_a2='DE'
-        ]]
-
-
-Create View german_states_geom As
-    Construct {
-        ?state lgdneo:boundary ?bndry .
-        ?bndry  a rdf:Bag ;
-                ?numbr ?bpart .
-        
-        ?bpart  a spatial:Feature ;
-                a geom:Geometry ;
-                ogc:asWKT ?geom .
-                
-    }
-    With
-        ?state = uri(lgdne:, 'state', ?objectid_1)
-        ?bndry = bNode(?objectid_1)
-        ?numbr = uri(rdf:, '_', ?path)
-        ?bpart = bNode(?geom)
-        ?geom  = typedLiteral(?geom, ogc:wktLiteral)
-    From
-        [[
-            SELECT
-                objectid_1,
-                (ST_Dump(geom)).geom AS geom,
-                (ST_Dump(geom)).path[1] AS path
+                adm0_a3,
+                geom
             FROM
                 ne_10m_admin_1_states_provinces
             WHERE iso_a2='DE'
