@@ -10,6 +10,10 @@
 		<LABEL>rdfs</LABEL>
 	</PREFIX>
 	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2003/01/geo/wgs84_pos#</NAMESPACE>
+		<LABEL>wgs84</LABEL>
+	</PREFIX>
+	<PREFIX>
 		<NAMESPACE>http://geovocab.org/geometry#</NAMESPACE>
 		<LABEL>geom</LABEL>
 	</PREFIX>
@@ -58,7 +62,7 @@
 		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
 		<PROPERTY>geom:geometry/ocg:asWKT RENAME wkt</PROPERTY>
 	</TARGET>
-<!-- The mean metric determines the center point for both resources and then calculates the orthodromic distance between the centers. 
+<!-- The mean metric determines the center point for both resources and then calculates the orthodromic distance between the centers.
 The orthodromic value is 1/(1+d) where d is the distance in degrees of latitude and longitude, change the threshold as you need
 km to threshold lookup table: https://docs.google.com/spreadsheets/d/1PB-0SCI6x8y-z1DOLLFFPyz0-C_MvY4ZMV1WW-Vh204
 -->
