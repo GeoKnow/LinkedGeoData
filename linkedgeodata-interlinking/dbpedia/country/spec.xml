@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LIMES SYSTEM "limes.dtd">
+<LIMES>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
+		<LABEL>rdf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/resource/Grenada</NAMESPACE>
+		<LABEL>dbr</LABEL>
+	</PREFIX>
+
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2000/01/rdf-schema#</NAMESPACE>
+		<LABEL>rdfs</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://geovocab.org/geometry#</NAMESPACE>
+		<LABEL>geom</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2003/01/geo/wgs84_pos#</NAMESPACE>
+		<LABEL>wgs84</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
+		<LABEL>ocg</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://xmlns.com/foaf/0.1/</NAMESPACE>
+		<LABEL>foaf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
+		<LABEL>owl</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://purl.org/dc/terms/</NAMESPACE>
+		<LABEL>dc</LABEL>
+	</PREFIX>
+	<PREFIX>
+			<NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
+			<LABEL>lgdo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/ontology/</NAMESPACE>
+		<LABEL>dbo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/property/</NAMESPACE>
+		<LABEL>dbp</LABEL>
+	</PREFIX>
+	<SOURCE>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Country</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>	</SOURCE>
+	<TARGET>
+		<ID>linkedgeodata</ID>
+		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
+		<VAR>?y</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?y rdf:type lgdo:Country</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>geom:geometry/ocg:asWKT RENAME wkt</PROPERTY>
+	</TARGET>
+	<!-- orthodromic value is 1/(1+d) where d is the distance in degrees of latitude and longitude, change the threshold as you need
+km to threshold lookup table: https://docs.google.com/spreadsheets/d/1PB-0SCI6x8y-z1DOLLFFPyz0-C_MvY4ZMV1WW-Vh204
+-->
+<METRIC>AND(mean(x.wkt,y.wkt)|0.0001,trigrams(x.label,y.label)|0.8)</METRIC>
+<!--<METRIC>trigrams(x.label,y.label)</METRIC>-->
+<!--Use only trigrams if no geospatial matching is needed (e.g. airports using international codes) -->
+	<ACCEPTANCE>
+		<THRESHOLD>0</THRESHOLD>
+		<FILE>links.ttl</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</ACCEPTANCE>
+	<REVIEW>
+		<THRESHOLD>0</THRESHOLD>
+		<FILE>review.ttl</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</REVIEW>
+	<EXECUTION>Simple</EXECUTION>
+	<OUTPUT>TTL</OUTPUT>
+</LIMES>
