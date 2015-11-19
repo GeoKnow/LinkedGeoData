@@ -50,15 +50,6 @@
 		<LABEL>meta</LABEL>
 	</PREFIX>
 	<SOURCE>
-		<ID>dbpedia</ID>
-		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
-		<VAR>?x</VAR>
-		<PAGESIZE>1000</PAGESIZE>
-		<RESTRICTION>?x rdf:type dbo:Airport. OPTIONAL {?x dbo:iataLocationIdentifier ?iata.}. filter(!bound(?iata))</RESTRICTION>
-		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
-		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>
-	</SOURCE>
-	<TARGET>
 		<ID>linkedgeodata</ID>
 		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
 		<VAR>?y</VAR>
@@ -67,6 +58,15 @@
 		<RESTRICTION>?y rdf:type meta:Node</RESTRICTION>
 		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
 		<PROPERTY>geom:geometry/ocg:asWKT RENAME wkt</PROPERTY>
+	</SOURCE>
+	<TARGET>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Airport. OPTIONAL {?x dbo:iataLocationIdentifier ?iata.}. filter(!bound(?iata))</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>
 	</TARGET>
 <!--<METRIC>AND(mean(x.wkt,y.wkt)|0.957,trigrams(x.label,y.label)|0.8)</METRIC>-->
 <METRIC>AND(mean(x.wkt,y.wkt)|0.5,trigrams(x.label,y.label)|0.8)</METRIC>
