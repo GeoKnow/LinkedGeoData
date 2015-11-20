@@ -46,15 +46,6 @@
 		<LABEL>meta</LABEL>
 	</PREFIX>
 	<SOURCE>
-		<ID>dbpedia</ID>
-		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
-		<VAR>?x</VAR>
-		<PAGESIZE>1000</PAGESIZE>
-		<RESTRICTION>?x rdf:type dbo:Airport</RESTRICTION>
-		<PROPERTY>dbo:iataLocationIdentifier RENAME iata</PROPERTY>
-<!--		<PROPERTY>dbo:icaoLocationIdentifier RENAME icao</PROPERTY>-->
-	</SOURCE>
-	<TARGET>
 		<ID>linkedgeodata</ID>
 		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
 		<VAR>?y</VAR>
@@ -63,7 +54,17 @@
 		<RESTRICTION>?y rdf:type meta:Node</RESTRICTION>
 		<PROPERTY>lgdo:iata RENAME iata</PROPERTY>
 <!--		<PROPERTY>lgdo:icao RENAME icao</PROPERTY>-->
+	</SOURCE>
+	<TARGET>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Airport</RESTRICTION>
+		<PROPERTY>dbo:iataLocationIdentifier RENAME iata</PROPERTY>
+<!--		<PROPERTY>dbo:icaoLocationIdentifier RENAME icao</PROPERTY>-->
 	</TARGET>
+
 <!-- have to figure out how to include optional properties in LIMES-->
 <!--<METRIC>OR(jaro(x.iata,y.iata)|1,OR(jaro(x.icao,y.icao)|1)</METRIC>-->
 <METRIC>jaro(x.iata,y.iata)</METRIC>

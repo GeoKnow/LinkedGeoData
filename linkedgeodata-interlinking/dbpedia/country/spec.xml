@@ -51,14 +51,6 @@
 		<LABEL>dbp</LABEL>
 	</PREFIX>
 	<SOURCE>
-		<ID>dbpedia</ID>
-		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
-		<VAR>?x</VAR>
-		<PAGESIZE>1000</PAGESIZE>
-		<RESTRICTION>?x rdf:type dbo:Country</RESTRICTION>
-		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
-		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>	</SOURCE>
-	<TARGET>
 		<ID>linkedgeodata</ID>
 		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
 		<VAR>?y</VAR>
@@ -66,7 +58,17 @@
 		<RESTRICTION>?y rdf:type lgdo:Country</RESTRICTION>
 		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
 		<PROPERTY>geom:geometry/ocg:asWKT RENAME wkt</PROPERTY>
+	</SOURCE>
+	<TARGET>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Country</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>
 	</TARGET>
+
 	<!-- orthodromic value is 1/(1+d) where d is the distance in degrees of latitude and longitude, change the threshold as you need
 km to threshold lookup table: https://docs.google.com/spreadsheets/d/1PB-0SCI6x8y-z1DOLLFFPyz0-C_MvY4ZMV1WW-Vh204
 -->
