@@ -51,10 +51,11 @@
 		<VAR>?y</VAR>
 		<PAGESIZE>1000</PAGESIZE>
 		<RESTRICTION>?y rdf:type lgdo:Airport</RESTRICTION>
-		<RESTRICTION>?y lgdo:iata ?iata. filter(regex(?iata,"^[A-Z]{3}$")).</RESTRICTION>
+		<RESTRICTION>OPTIONAL {?y lgdo:iata ?iata.} filter(!bound(?iata)||regex(?iata,"^[A-Z]{3}$")).</RESTRICTION>
+		<RESTRICTION>OPTIONAL {?y lgdo:icao ?icao.} filter(!bound(?icao)||regex(?icao,"^[A-Z]{4}$")).</RESTRICTION>
 		<RESTRICTION>?y rdf:type meta:Node</RESTRICTION>
 		<PROPERTY>lgdo:iata RENAME iata</PROPERTY>
-<!--		<PROPERTY>lgdo:icao RENAME icao</PROPERTY>-->
+		<PROPERTY>lgdo:icao RENAME icao</PROPERTY>
 	</SOURCE>
 	<TARGET>
 		<ID>dbpedia</ID>
@@ -63,13 +64,14 @@
 		<PAGESIZE>1000</PAGESIZE>
 		<RESTRICTION>?x rdf:type dbo:Airport</RESTRICTION>
 		<RESTRICTION>?x dbo:iataLocationIdentifier ?iata. filter(regex(?iata,"^[A-Z]{3}$")).</RESTRICTION>
+		<RESTRICTION>?x dbo:icaoLocationIdentifier ?icao. filter(regex(?icao,"^[A-Z]{4}$")).</RESTRICTION>
 		<PROPERTY>dbo:iataLocationIdentifier RENAME iata</PROPERTY>
-<!--		<PROPERTY>dbo:icaoLocationIdentifier RENAME icao</PROPERTY>-->
+		<PROPERTY>dbo:icaoLocationIdentifier RENAME icao</PROPERTY>
 	</TARGET>
 
 <!-- have to figure out how to include optional properties in LIMES-->
-<!--<METRIC>OR(jaro(x.iata,y.iata)|1,OR(jaro(x.icao,y.icao)|1)</METRIC>-->
-<METRIC>jaro(x.iata,y.iata)</METRIC>
+<METRIC>OR(jaro(x.iata,y.iata)|1,(jaro(x.icao,y.icao)|1)</METRIC>
+<!--<METRIC>jaro(x.iata,y.iata)</METRIC>-->
 	<ACCEPTANCE>
 		<THRESHOLD>1</THRESHOLD>
 		<FILE>links.nt</FILE>
