@@ -71,6 +71,6 @@ Create View german_states_general_info As
                 geom
             FROM
                 ne_10m_admin_1_states_provinces
-            WHERE iso_a2='DE'
         ]]
+//            WHERE iso_a2='DE'
 
