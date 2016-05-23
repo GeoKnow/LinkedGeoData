@@ -33,7 +33,7 @@ if [ ! -f $configFileName ]; then
 fi
 
 if ! source $configFileName; then
-	m_error "Could not load '$configFileName'"
+	m_error "Could not load config file: '$configFileName'"
 fi
 
 mkdir -p "$targetPath"
@@ -54,6 +54,11 @@ fi
 
 
 function applyChanges {
+    h="$dbHost"
+    if [ ! -z "$dbPort" ]; then
+        h="$dbHost:$dbPort"
+    fi
+
     if [ -f "$targetPath/diff.osc" ]; then
         "$osmosis" --read-xml-change file="$targetPath/diff.osc" --write-pgsimp-change host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
 
