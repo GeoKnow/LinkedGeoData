@@ -1,0 +1,49 @@
+The derived SQL tables are a little bit broken because the the hasC column does not relate 1:1 to the ids
+I.e. There is a 1:n relation between ids and hasC values
+
+What the hack is hasC???
+
+select id_0, id_1, id_2, count(*) from lgd_gadm2_lvl_2_data Group By id_0, id_1, id_2 HAving count(*) > 1;
+
+select * from lgd_gadm2_lvl_2_data where (id_0, id_1, id_2) = (157,1, 2);
+
+=============
+Check cardinality between hasC and hasCC values:
+
+select id_0, id_1, id_2, count(distinct cc_2) as v from lgd_gadm2_lvl_2_data group by id_0, id_1, id_2 order by count(distinct cc_2) desc;
+
+  74 |    1 |    1 | 5
+
+select * from lgd_gadm2_lvl_2_data where (id_0, id_1, id_2) = (74, 1, 1);
+
+
+
+select id_0, id_1, id_2, count(distinct hasc_2) as v from lgd_gadm2_lvl_2_data group by id_0, id_1, id_2 order by count(distinct hasc_2) desc;
+ 
+ 157 |    1 |    1 | 8
+
+select * from lgd_gadm2_lvl_2_data where (id_0, id_1, id_2) = (157, 1, 1) Order By id_0, id_1, id_2;
+select * from lgd_gadm2_raw where (id_0, id_1, id_2) = (157, 1, 1) Order By id_0, id_1, id_2, id_3, id_4, id_5;
+
+
+=================================================
+
+
+
+data for 74, 1, 1:
+select id_0, id_1, id_2, id_3, id_4, id_5, cc_2 from lgd_gadm2_raw where (id_0, id_1, id_2) = (74, 1, 1);
+
+[data shows, that id_3 is different from 0, thus it shouldn't be in lvl2:
+Probably this is a bug in the query, it should be:
+
+
+
+
+CREATE TABLE "lgd_gadm2_lvl_2_data" AS
+    SELECT DISTINCT "id_0", "id_1", "id_2", "name_2", "type_2", "engtype_2", "validfr_2", "validto_2", "remarks_2", "hasc_2", "cc_2"
+    FROM "lgd_gadm2_raw"
+    WHERE "id_0" <> 0 AND "id_1" <> 0 AND "id_2" <> 0 AND "id_3" = 0 AND "id_4" = 0 and "id_5" = 0;
+
+
+
+select id_0, id_1, id_2, cc_2 from (select id_0, id_1, id_2, count(distinct cc_2) as v from lgd_gadm2_lvl_2_data group by id_0, id_1, id_2) foo;
