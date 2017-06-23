@@ -1,0 +1,123 @@
+version: '2.1'
+
+services:
+
+  lgd-db:
+    extends:
+      file: docker-compose.base.yml
+      service: lgd-db-base
+    build: ./lgd-db
+    container_name: lgd-db
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_USER=${DB_USER}
+      - PGDATA=/var/lib/postgresql/data
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - lgd-db-vol:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-nominatim-sync:
+    extends:
+      file: docker-compose.base.yml
+      service: lgd-db-base
+    build:
+      context: ./lgd-nominatim-sync
+    container_name: lgd-nominatim-sync
+    depends_on:
+      lgd-db:
+        condition: service_healthy
+    networks:
+      - lgd-net
+
+  lgd-nominatim-web:
+    extends:
+      file: docker-compose.base.yml
+      service: lgd-db-base
+    build:
+      context: ./lgd-nominatim-web
+    container_name: lgd-nominatim-web
+    depends_on:
+      lgd-db:
+        condition: service_healthy
+    restart: always
+    ports:
+      - 8012:80
+    networks:
+      - lgd-net
+
+  lgd-osm-sync:
+    extends:
+      file: docker-compose.base.yml
+      service: lgd-db-base
+    build:
+      context: ./lgd-osm-sync
+    container_name: lgd-osm-sync
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    depends_on:
+      lgd-db:
+        condition: service_healthy
+    networks:
+      - lgd-net
+
+  lgd-sparqlify-web:
+    extends:
+      file: docker-compose.base.yml
+      service: lgd-db-base
+    build:
+      context: ./lgd-sparqlify-web
+    container_name: lgd-sparqlify-web
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    ports:
+      - 8013:7531
+    depends_on:
+      lgd-db:
+        condition: service_healthy
+    networks:
+      - lgd-net
+
+
+
+#  lgd-nominatim:
+#    build: lgd-nominatim
+#    dockerfile: Dockerfile
+#    container_name: lgd-nominatim
+#    restart: always
+#    depends_on:
+#      - lgd-db
+#    environment:
+#      - DATABASE_URL=postgresql://ckan:ckan@ckan-db:5432/ckan
+#      - SOLR_URL=http://ckan-solr:8983/solr/ckan
+#      - RECAPTCHA_PUBLIC_KEY=CHANGE_ME
+#      - RECAPTCHA_PRIVATE_KEY=CHANGE_ME
+#      - SITE_URL=http://ckan.vhost.tld
+#      - VIRTUAL_HOST=ckan.vhost.tld
+    #volumes:
+      #- /tmp/ckan-uploads:/var/lib/ckan
+#    networks:
+#      - lgd-net
+
+volumes:
+  lgd-db-vol:
+    external:
+      name: lgd-db-vol
+
+#/data/docker-data/lgd-db
+
+networks:
+  lgd-net:
+    external:
+      name: lgd-net
+
