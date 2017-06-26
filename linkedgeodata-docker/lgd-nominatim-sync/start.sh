@@ -6,6 +6,8 @@ statusKey="nominatim:status"
 #DB_URL="postgresql://lgd:lgdpwd@172.18.0.2:5432/lgd"
 echo "STARTING - DB_URL = $DB_URL $(pwd)"
 
+cat ./src/settings/local.php.dist | envsubst > ./src/settings/local.php
+
 psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
 

@@ -33,7 +33,7 @@ RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recurs
 COPY target/.pgpass /root/.pgpass
 RUN chmod 600 /root/.pgpass
 
-COPY local.php ./src/settings/local.php
+COPY local.php.dist ./src/settings/local.php.dist
 
 COPY setup-patched.php ./src/utils/setup-patched.php
 

@@ -15,6 +15,11 @@ services:
       - POSTGRES_USER=${DB_USER}
       - PGDATA=/var/lib/postgresql/data
       - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_VERSION=${POSTGRES_VERSION}
+      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
+      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
+      - DB_WORK_MEM=${DB_WORK_MEM}
+      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
     volumes:
       - lgd-db-vol:/var/lib/postgresql/data
     restart: always

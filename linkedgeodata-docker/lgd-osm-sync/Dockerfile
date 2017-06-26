@@ -15,8 +15,8 @@ RUN wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key 
 WORKDIR /app/linkedgeodata
 
 COPY configuration.txt.dist .
-COPY init-lgd.sh .
+COPY start.sh ./start.sh
 
-RUN chmod +x init-lgd.sh && sleep 1
+RUN chmod +x ./start.sh && sleep 1
 
-ENTRYPOINT ./init-lgd.sh
+ENTRYPOINT ./start.sh

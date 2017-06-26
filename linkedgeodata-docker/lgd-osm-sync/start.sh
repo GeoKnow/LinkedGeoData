@@ -30,4 +30,6 @@ fi
 
 cat configuration.txt.dist | envsubst > configuration.txt
 
+# The sync script picks up the environment variables
+/usr/share/linkedgeodata/lgd-run-sync.sh
 

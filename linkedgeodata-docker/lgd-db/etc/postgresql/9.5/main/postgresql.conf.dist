@@ -119,8 +119,8 @@ shared_buffers = ${DB_SHARED_BUFFERS}			# min 128kB
 					# (change requires restart)
 # Caution: it is not advisable to set max_prepared_transactions nonzero unless
 # you actively intend to use prepared transactions.
-#work_mem = ${DB_WORK_MEM}				# min 64kB
-#maintenance_work_mem = 64MB		# min 1MB
+work_mem = ${DB_WORK_MEM}				# min 64kB
+maintenance_work_mem = ${DB_MAINTENANCE_WORK_MEM}		# min 1MB
 #autovacuum_work_mem = -1		# min 1MB, or -1 to use maintenance_work_mem
 #max_stack_depth = 2MB			# min 100kB
 dynamic_shared_memory_type = posix	# the default is the first option
