@@ -42,7 +42,7 @@ then
 fi
 
 
-function applyChanges {
+applyChanges() {
     h="$DB_HOST"
     if [ ! -z "$DB_PORT" ]; then
         h="$DB_HOST:$DB_PORT"
