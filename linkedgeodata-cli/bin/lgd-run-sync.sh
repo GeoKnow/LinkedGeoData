@@ -12,7 +12,7 @@ log() { echo "[`date +'%Y-%m-%d %H:%M:%S'`] $$ [$1] $2" ; }
 echo "Starting LinkedGeoData live update (based on osmosis)..."
 
 
-if [ ! -z "configFileName" ]; then
+if [ ! -z "$configFileName" ]; then
     if [ ! -f "$configFileName" ]; then
         log "info" "No config found, attempting to copy '$configFileName.dist' to '$configFileName'"
         cp "$configFileName.dist" "$configFileName"
