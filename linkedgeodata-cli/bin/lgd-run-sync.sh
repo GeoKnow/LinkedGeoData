@@ -7,38 +7,37 @@ osmosis="osmosis"
 targetPath="sync"
 sleepInterval="60"
 
-log() { echo "[`date +"%Y-%m-%d %H:%M:%S"`] $$ [$1] $2" }
+log() { echo "[`date +'%Y-%m-%d %H:%M:%S'`] $$ [$1] $2" ; }
 
 echo "Starting LinkedGeoData live update (based on osmosis)..."
 
 
 if [ ! -z "configFileName" ]; then
-	if [ ! -f "$configFileName" ]; then
-		log "info" "No config found, attempting to copy '$configFileName.dist' to '$configFileName'"
-		cp "$configFileName.dist" "$configFileName"
-	fi
+    if [ ! -f "$configFileName" ]; then
+        log "info" "No config found, attempting to copy '$configFileName.dist' to '$configFileName'"
+        cp "$configFileName.dist" "$configFileName"
+    fi
 
-	if ! source "$configFileName"; then
-		log "error" "Could not load config file: '$configFileName'"
-		exit 1
-	fi
+    if ! source "$configFileName"; then
+        log "error" "Could not load config file: '$configFileName'"
+        exit 1
+    fi
 fi
 
 mkdir -p "$targetPath"
 
 
 # Check if we need to initialize the working directory
-if [ ! -f "$targetPath/configuration.txt" ]
-then
-	"$osmosis" --read-replication-interval-init workingDirectory="$targetPath"
+if [ ! -f "$targetPath/configuration.txt" ]; then
+    "$osmosis" --read-replication-interval-init workingDirectory="$targetPath"
 
-	if [ "$?" -eq "0" ]; then	
-		log "info" "Osmosis target directory has been initialized. Please check configuration in $targetPath, then run this script again"
-	else
-		log "error" "Osmosis exited with error code ($?)"
-		exit 1
-	fi
-	exit 0
+    if [ "$?" -eq "0" ]; then	
+        log "info" "Osmosis target directory has been initialized. Please check configuration in $targetPath, then run this script again"
+    else
+        log "error" "Osmosis exited with error code ($?)"
+        exit 1
+    fi
+    exit 0
 fi
 
 
@@ -60,11 +59,10 @@ applyChanges() {
 # Apply changes that might not have been applied yet
 applyChanges
 
-while [ 1 ]
-do
-	"$osmosis" --read-replication-interval workingDirectory=$targetPath --simplify-change --write-xml-change "$targetPath/diff.osc"
+while [ 1 ]; do
+    "$osmosis" --read-replication-interval workingDirectory=$targetPath --simplify-change --write-xml-change "$targetPath/diff.osc"
     applyChanges
-	echo "Going to sleep for $sleepInterval seconds..."
+    echo "Going to sleep for $sleepInterval seconds..."
     sleep "$sleepInterval"
 done
 
