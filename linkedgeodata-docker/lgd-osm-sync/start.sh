@@ -1,5 +1,8 @@
 #/bin/bash
 
+echo "lgd-osm-sync environment:"
+env | grep -i "osm\|db\|post"
+
 
 # Check the database whether the data was loaded
 statusKey="lgd-db:status"
