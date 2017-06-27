@@ -2,10 +2,10 @@
 FROM mdillon/postgis:9.5
 MAINTAINER Claus Stadler <cstadler@informatik.uni-leipzig.de>
 
-RUN echo "forcerebuild 2"
+RUN echo "forcerebuild 5"
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -y update --fix-missing && apt-get install -y wget sudo curl osmosis gettext-base
+RUN apt-get -y update --fix-missing && apt-get install -y wget sudo curl osmosis gettext-base osmctools
 
 # && \
 #    sudo apt-get install wget 

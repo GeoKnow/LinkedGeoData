@@ -36,6 +36,7 @@ services:
     environment:
       - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
       - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+      - OSM_DATA_SYNC_SLEEP=${OSM_DATA_SYNC_SLEEP}
     depends_on:
       lgd-db:
         condition: service_healthy
@@ -68,6 +69,7 @@ services:
     environment:
       - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
       - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+      - OSM_DATA_SYNC_SLEEP=${OSM_DATA_SYNC_SLEEP}
     depends_on:
       lgd-db:
         condition: service_healthy
