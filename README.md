@@ -42,7 +42,7 @@ After installing these packages, the following essential commands will be availa
 * `lgd-createdb` (provided by linkedgeodata)
 * `lgd-createdb-snapshot` (provided by linkedgeodata)
 * `sparqlify-tool` (provided by sparqlify, supersedes the former lgd-query command)
-* Additional tools 
+* Have a look at the [section for additional tools](#additional-tools)
 
 Read the section on data conversion for their documentation.
 
@@ -122,7 +122,7 @@ Examples:
 Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.
 
 
-### Additional tooling
+### Additional tools
 
 * Convert a timestamp to a sequence ID
 ```bash
