@@ -50,14 +50,12 @@ family_spaces	int
 recycling:glass	boolean
 payment:coins	boolean
 horse	boolean
-post_code	int
 park_ride	boolean
 lit	boolean
 permissive	boolean
 osmarender:renderRef	boolean
 oneway:bicycle	boolean
 openGeoDB:loc_id	int
-building	boolean
 toilet	boolean
 ele	float
 step_count	int
@@ -101,9 +99,7 @@ fuel:cng	boolean
 bus	boolean
 stars	int
 backrest	boolean
-postal_code	int
 public	boolean
-addr:postcode	int
 oneway	boolean
 blz	int
 disused	boolean
@@ -170,6 +166,9 @@ departures_board	boolean
 --
 
 COPY lgd_map_literal (k, property, language) FROM stdin;
+castleType	http://linkedgeodata.org/ontology/castleType	
+postal_code	http://linkedgeodata.org/ontology/postalCode	
+post_code	http://linkedgeodata.org/ontology/postCode	
 name	http://www.w3.org/2000/01/rdf-schema#label	
 name:en	http://www.w3.org/2000/01/rdf-schema#label	en
 name:ja	http://www.w3.org/2000/01/rdf-schema#label	ja
@@ -658,6 +657,7 @@ leisure	sauna	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeoda
 leisure	skate_park	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/SkatePark
 leisure	social_club	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/SocialClub
 leisure	sport	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Sport
+amenity	planetarium	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Planetarium
 amenity	advertisement	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Advertisement
 amenity	advertising	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Advertising
 amenity	air_fill	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AirFill
@@ -1342,7 +1342,10 @@ tourism	viewpoint	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedg
 tourism	zoo	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Zoo
 tourism	yes	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/PointOfInterest
 tourism	hanami	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Hanami
-building	1	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Building
+building	temple	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Temple
+building	cathedral	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Cathedral
+building	synagogue	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Synagogue
+building	yes	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/UnclassifiedBuilding
 building	apartments	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ApartmentBuilding
 building	barn	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingBarn
 building	building	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingBuilding
@@ -1363,7 +1366,7 @@ building	fortress	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedg
 building	garage	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingGarage
 building	hall	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHall
 building	hospital	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHospital
-building	house	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHouse
+building	house	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/House
 building	hut	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingHut
 building	kiosk	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingKiosk
 building	monastery	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingMonastery
@@ -1556,95 +1559,104 @@ boundary	forest	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeo
 boundary	marker	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BoundaryMarker
 boundary	national_forest	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/NationalForest
 boundary	protected_area	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ProtectedArea
-sport	9pin	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/NinePinBowling
-sport	10pin	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/TenPinBowling
-sport	american_football	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/AmericanFootball
-sport	archery	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Archery
-sport	athletics	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Athletics
-sport	australian_football	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/AustralianFootball
-sport	BASE	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/BASE
-sport	badminton	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Badminton
-sport	baseball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Baseball
-sport	basketball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Basketball
-sport	beachvolleyball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Beachvolleyball
-sport	bmx	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Bmx
-sport	boules	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Boules
-sport	bowls	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Bowls
-sport	cannadian_football	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/CannadianFootball
-sport	canoe	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Canoe
-sport	chess	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Chess
-sport	climbing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Climbing
-sport	cricket	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Cricket
-sport	cricket_nets	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/CricketNets
-sport	croquet	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Croquet
-sport	cycling	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Cycling
-sport	diving	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Diving
-sport	dog_racing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/DogRacing
-sport	fencing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Fencing
-sport	equestrian	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Equestrian
-sport	gaelic_games	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/GaelicGames
-sport	golf	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Golf
-sport	gymnastics	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Gymnastics
-sport	hockey	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Hockey
-sport	horseshoes	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/HorseShoes
-sport	horse_racing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/HorseRacing
-sport	ice_stock	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/IceStock
-sport	karting	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Karting
-sport	korfball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Korfball
-sport	motor	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/MotorSport
-sport	multi	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/MultiSports
-sport	orienteering	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Orienteering
-sport	paddle_tennis	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/PaddleTennis
-sport	paragliding	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Paragliding
-sport	free_flying	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/FreeFlying
-sport	pelota	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Pelota
-sport	racquet	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Racquet
-sport	rowing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Rowing
-sport	rugby_league	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/RugbyLeague
-sport	rugby_union	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/RugbyUnion
-sport	shooting	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Shooting
-sport	skating	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/IceSkating
-sport	skateboard	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Skateboarding
-sport	skiing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Skiing
-sport	soccer	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Soccer
-sport	surfing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Surfing
-sport	swimming	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Swimming
-sport	table_tennis	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/TableTennis
-sport	team_handball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/TeamHandball
-sport	tennis	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Tennis
-sport	toboggan	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Toboggan
-sport	volleyball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Volleyball
-sport	water_ski	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/WaterSki
-sport	billard	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Billard
-sport	billiard	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Billiard
-sport	bowling	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Bowling
-sport	boxing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Boxing
-sport	curling	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Curling
-sport	dancing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Dancing
-sport	dog	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Dog
-sport	dog_training	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/DogTraining
-sport	equestrian	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Equestrian
-sport	fitness	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/SportFitness
-sport	football	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Football
-sport	gaa	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Gaa
-sport	gaelic_football;hurling	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/GaelicFootball%3Bhurling
-sport	golf	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Golf
-sport	gym	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/SportGym
-sport	handball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Handball
-sport	judo	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Judo
-sport	model_aerodrome	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/ModelAerodrome
-sport	multi	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Multi
-sport	netball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Netball
-sport	paintball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Paintball
-sport	sailing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Sailing
-sport	scuba_diving	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/SportScubaDiving
-sport	snooker	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Snooker
-sport	softball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Softball
-sport	squash	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Squash
-sport	via_ferrata	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/ViaFerrata
-sport	volley ball	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Volley+ball
-sport	water_sports	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/WaterSports
-sport	windsurfing	http://linkedgeodata.org/ontology/featuresSport	http://linkedgeodata.org/ontology/Windsurfing
+sport	9pin	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Nine-pin_bowling
+sport	10pin	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Ten-pin_bowling
+sport	american_football	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/American_football
+sport	aikido	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Aikido
+sport	archery	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Archery
+sport	athletics	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Athletics_(sport)
+sport	australian_football	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Australian_rules_football
+sport	base	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/BASE_jumping
+sport	badminton	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Badminton
+sport	bandy	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Bandy
+sport	baseball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Baseball
+sport	basketball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Basketball
+sport	beachvolleyball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Beach_volleyball
+sport	billard	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cue_sports
+sport	billards	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cue_sports
+sport	billiard	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cue_sports
+sport	bmx	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/BMX
+sport	boules	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Boules
+sport	bowls	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Bowls
+sport	bowling	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Bowling
+sport	boxing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Boxing
+sport	cannadian_football	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Canadian_football
+sport	canoe	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Canoe
+sport	chess	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Chess
+sport	cliff_diving	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Diving
+sport	climbing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Rock_climbing
+sport	climbing_adventure	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Adventure_park
+sport	cockfighting	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cockfighting
+sport	cricket	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cricket
+sport	croquet	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Croquet
+sport	curling	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Curling
+sport	cycling	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cycling
+sport	darts	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Darts
+sport	dog_racing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Greyhound_racing
+sport	equestrian	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Equestrianism
+sport	fencing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Fencing
+sport	field_hockey	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Field_hockey
+sport	free_flying	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Hang_gliding
+sport	gaelic_games	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Gaelic_games
+sport	golf	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Golf
+sport	gymnastics	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Gymnastics
+sport	handball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Handball
+sport	hapkido	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Hapkido
+sport	hockey	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Hockey
+sport	horseshoes	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Horseshoes
+sport	horse_racing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Horse_racing
+sport	ice_hockey	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Ice_Hockey
+sport	ice_skating	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Ice_skating
+sport	ice_stock	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Ice_stock_sport
+sport	judo	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Judo
+sport	karting	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Kart_racing
+sport	kitesurfing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Kitesurfing
+sport	korfball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Korfball
+sport	model_aerodrome	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Radio-controlled_aircraft
+sport	motor	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Motorsport
+sport	netball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Netball
+sport	obstacle_course	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Obstacle_course
+sport	orienteering	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Orienteering
+sport	paddle_tennis	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Paddle_tennis
+sport	paragliding	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Paragliding
+sport	pelota	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Pelota
+sport	racquet	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Rackets_(sport)
+sport	rc_car	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Radio-controlled_car
+sport	roller_skating	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Roller_skating
+sport	rowing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Rowing
+sport	rugby_league	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Rugby_league
+sport	rugby_union	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Rugby_union
+sport	running	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Running
+sport	sailing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Sailing
+sport	scuba_diving	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Scuba_diving
+sport	shooting	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Shooting_sport
+sport	skating	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Skaing
+sport	skateboard	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Skateboarding
+sport	skiing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Skiing
+sport	soccer	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Association_football
+sport	surfing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Surfing
+sport	swimming	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Swimming
+sport	table_tennis	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Table_tennis
+sport	table_soccer	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Table_football
+sport	team_handball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Handball
+sport	taekwondo	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Taekwondo
+sport	tennis	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Tennis
+sport	toboggan	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Toboggan
+sport	volleyball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Volleyball
+sport	water_polo	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Water_polo
+sport	water_ski	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Waterskiing
+sport	weightlifting	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Olympic_weightlifting
+sport	wrestling	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Wrestling
+sport	dancing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Dance
+sport	football	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Association_football
+sport	gaelic_football;hurling	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Gaelic_football
+sport	gym	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Physical_exercise
+sport	fitness	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Physical_exercise
+sport	paintball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Paintball
+sport	snooker	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Cue_sports
+sport	softball	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Softball
+sport	squash	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Squash_(sport)
+sport	windsurfing	http://linkedgeodata.org/ontology/featuresSport	http://dbpedia.org/resource/Windsurfing
 abutters	residential	http://linkedgeodata.org/ontology/featuresAbutters	http://linkedgeodata.org/ontology/ResidentialAbutters
 abutters	retail	http://linkedgeodata.org/ontology/featuresAbutters	http://linkedgeodata.org/ontology/RetailAbutters
 abutters	commercial	http://linkedgeodata.org/ontology/featuresAbutters	http://linkedgeodata.org/ontology/CommercialAbutters
@@ -1775,8 +1787,6 @@ payment:notes	http://linkedgeodata.org/ontology/payment/notes
 payment:telephone_cards	http://linkedgeodata.org/ontology/payment/telephoneCards
 permissive	http://linkedgeodata.org/ontology/permissive
 population	http://linkedgeodata.org/ontology/population
-postal_code	http://linkedgeodata.org/ontology/postalCode
-post_code	http://linkedgeodata.org/ontology/postCode
 produced	http://linkedgeodata.org/ontology/produced
 public	http://linkedgeodata.org/ontology/public
 rail	http://linkedgeodata.org/ontology/rail

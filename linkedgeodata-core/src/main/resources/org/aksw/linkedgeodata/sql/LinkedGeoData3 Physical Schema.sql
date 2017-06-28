@@ -9,19 +9,19 @@ $$
 DECLARE
 BEGIN
     RETURN
-    	CASE
-    		WHEN (v ~* 'true'  OR v ~* 'yes' OR v = '1') THEN TRUE
-    		WHEN (v ~* 'false' OR v ~* 'no'  OR v = '0') THEN FALSE
-    		ELSE NULL
-    	END;
+        CASE
+            WHEN (v ~* 'true'  OR v ~* 'yes' OR v = '1') THEN TRUE
+            WHEN (v ~* 'false' OR v ~* 'no'  OR v = '0') THEN FALSE
+            ELSE NULL
+        END;
 END;
 $$
     LANGUAGE 'plpgsql'
     IMMUTABLE
     RETURNS NULL ON NULL INPUT;
-    
 
-    
+
+
 DROP FUNCTION IF EXISTS lgd_tryparse_int(str TEXT);
 CREATE FUNCTION lgd_tryparse_int(str TEXT) RETURNS INT8 AS
 $$
@@ -29,15 +29,15 @@ DECLARE
 BEGIN
     RETURN str::int8;
 EXCEPTION
-	WHEN OTHERS THEN
-		RETURN NULL;
+    WHEN OTHERS THEN
+        RETURN NULL;
 END;
 $$
     LANGUAGE 'plpgsql'
     IMMUTABLE
     RETURNS NULL ON NULL INPUT;
 
-    
+
 DROP FUNCTION IF EXISTS lgd_tryparse_float(str TEXT);
 CREATE FUNCTION lgd_tryparse_float(str TEXT) RETURNS FLOAT AS
 $$
@@ -45,8 +45,8 @@ DECLARE
 BEGIN
     RETURN str::float;
 EXCEPTION
-	WHEN OTHERS THEN
-		RETURN NULL;
+    WHEN OTHERS THEN
+        RETURN NULL;
 END;
 $$
     LANGUAGE 'plpgsql'
@@ -57,10 +57,10 @@ $$
  * Mapping tables                                                           *
  ****************************************************************************/
 
-
+-- TODO: Potentially can be removed
 CREATE TABLE simple_polys (
-	way_id BIGINT PRIMARY KEY NOT NULL,
-	area float NOT NULL
+    way_id BIGINT PRIMARY KEY NOT NULL,
+    area float NOT NULL
 );
 
 -- TODO: Not Null constraint
@@ -89,12 +89,12 @@ CREATE INDEX idx_lgd_map_datatype_datatype ON lgd_map_datatype(datatype);
 
 DROP TABLE IF EXISTS lgd_map_literal;
 CREATE TABLE lgd_map_literal (
-	k text NOT NULL,
-	property text NOT NULL, 
-	language text NOT NULL,
+    k text NOT NULL,
+    property text NOT NULL,
+    language text NOT NULL,
 
-	/* Avoid duplicates */
-	UNIQUE(k, property, language)
+    /* Avoid duplicates */
+    UNIQUE(k, property, language)
 );
 
 CREATE INDEX idx_lgd_map_literal_k ON lgd_map_literal(k);
@@ -106,16 +106,16 @@ CREATE INDEX idx_lgd_map_literal_language ON lgd_map_literal(language);
 
 DROP TABLE IF EXISTS lgd_map_label;
 CREATE TABLE lgd_map_label (
-	k TEXT NOT NULL,
-	v TEXT NOT NULL, 
-	language VARCHAR(16) NOT NULL,
-	label TEXT NOT NULL,
+    k TEXT NOT NULL,
+    v TEXT NOT NULL,
+    language VARCHAR(16) NOT NULL,
+    label TEXT NOT NULL,
 
-	/* Avoid duplicates */
-	UNIQUE(k, v, language, label)
+    /* Avoid duplicates */
+    UNIQUE(k, v, language, label)
 );
 
-/* Index for searching by label */ 
+/* Index for searching by label */
 CREATE INDEX idx_lgd_map_label_label ON lgd_map_label(label);
 --CREATE INDEX idx_lgd_map_label_label_language ON lgd_map_label(label, language);
 
@@ -129,7 +129,7 @@ CREATE INDEX idx_lgd_map_label_v ON lgd_map_label(v);
 --CREATE INDEX idx_lgd_map_label_k_v ON lgd_map_label(v, k);
 
 
-DROP TABLE IF EXISTS lgd_map_resource_k; 
+DROP TABLE IF EXISTS lgd_map_resource_k;
 CREATE TABLE lgd_map_resource_k (
     k text NOT NULL,
     property text NOT NULL,
@@ -195,7 +195,7 @@ CREATE VIEW lgd_resource_label AS
    JOIN lgd_map_resource_kv b USING (k, v);
 
 
-   
+
 /* Interlinks */
 DROP TABLE IF EXISTS "lgd_interlinks";
 CREATE TABLE "lgd_interlinks" (
@@ -213,3 +213,12 @@ CREATE TABLE "lgd_interlinks" (
 CREATE INDEX "idx_lgd_interlinks_s" ON "lgd_interlinks"("s");
 CREATE INDEX "idx_lgd_interlinks_o" ON "lgd_interlinks"("o");
 
+
+CREATE TABLE lgd_relation_geoms(
+    relation_id BIGINT PRIMARY KEY NOT NULL
+--    geom geometry NOT NULL
+)
+;
+
+SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
+CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);

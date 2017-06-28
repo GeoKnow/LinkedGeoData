@@ -58,7 +58,7 @@ Create View users As
 /**********
  * Interlinks
  **********/
- 
+
 Create View interlinks As
   Construct {
     ?s owl:sameAs ?o .
@@ -73,7 +73,7 @@ Create View interlinks As
     ?o prefix "http://dbpedia.org" "http://sws.geonames.org"
   From
     lgd_interlinks
- 
+
 
 /**********
  * Ontology
@@ -98,8 +98,8 @@ Create View sub_classes As
         ?child rdfs:subClassOf ?parent .
     }
     With
-        ?child  = uri(?child) 
-        ?parent = uri(?parent) 
+        ?child  = uri(?child)
+        ?parent = uri(?parent)
     Constrain
         ?child  prefix "http://linkedgeodata.org/ontology/"
         ?parent prefix "http://linkedgeodata.org/ontology/"
@@ -129,16 +129,16 @@ Create View classes_kv As
 
 // Resource labels
 Create View view_resource_labels As
-	Construct {
-		?s rdfs:label ?o .
-	}
-	With
-		?s = uri(?resource)
-		?o = plainLiteral(?label, ?language)
-	Constrain
-		?s prefix "http://linkedgeodata.org/ontology/"
-	From
-		lgd_resource_label;
+    Construct {
+        ?s rdfs:label ?o .
+    }
+    With
+        ?s = uri(?resource)
+        ?o = plainLiteral(?label, ?language)
+    Constrain
+        ?s prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_resource_label;
 
 
 
@@ -152,31 +152,31 @@ Create View view_properties_k As
             rdfs:range owl:Thing .
     }
     With
-    	?s = uri(?property)
+        ?s = uri(?property)
     Constrain
         ?s prefix "http://linkedgeodata.org/ontology/"
     From
-		lgd_map_resource_prefix
+        lgd_map_resource_prefix
 
 
 /* TODO Not sure how to adress the following tables best...
 Create View view_object_properties As
     Construct {
         ?s
-        	a rdf:Property ;
+            a rdf:Property ;
             a owl:ObjectProperty ;
             rdfs:domain spatial:Feature ;
             rdfs:range lgdo:Sport .
     }
     With
-        
+
     From
-        [[SELECT property FROM lgd_map_resource_kv WHERE 
+        [[SELECT property FROM lgd_map_resource_kv WHERE
 
 
 Create View static_properties As
     Construct {
-		<http://linkedgeodata.org/ontology/motorcar>
+        <http://linkedgeodata.org/ontology/motorcar>
  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
  http://linkedgeodata.org/ontology/featuresSport
  http://linkedgeodata.org/ontology/wheelchair
@@ -189,7 +189,7 @@ Create View static_properties As
 Create View property_int As
     Construct {
         ?s
-        	a rdf:Property ;
+            a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:integer .
     }
@@ -198,13 +198,13 @@ Create View property_int As
     Constrain
         ?s prefix "http://linkedgeodata.org/ontology/"
     From
-        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'int']] 
+        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'int']]
 
 
 Create View property_double As
     Construct {
         ?s
-        	a rdf:Property ;
+            a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:double .
     }
@@ -213,13 +213,13 @@ Create View property_double As
     Constrain
         ?s prefix "http://linkedgeodata.org/ontology/"
     From
-        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'float']] 
+        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'float']]
 
 
 Create View property_boolean As
     Construct {
         ?s
-        	a rdf:Property ;
+            a rdf:Property ;
             a owl:DatatypeProperty ;
             rdfs:range xsd:boolean .
     }
@@ -228,7 +228,7 @@ Create View property_boolean As
     Constrain
         ?s prefix "http://linkedgeodata.org/ontology/"
     From
-        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'boolean']] 
+        [[SELECT b.property FROM lgd_map_datatype a JOIN lgd_map_property b ON (a.k = b.k) WHERE a.datatype = 'boolean']]
 
 
 
@@ -240,51 +240,51 @@ Create View property_boolean As
 
 // Node geometries
 Create View lgd_nodes As
-	Construct {
-	    ?n a lgdm:Node .
-	    ?n a spatial:Feature .
-	    ?n lgdo:version ?v .
-	    ?n dcterms:contributor ?u .
-		?n dcterms:modified ?d .
-		?n lgdo:changeset ?c .
-		?n geom:geometry ?g .
-		
-		?g a geom:Geometry .
-		?g ogc:asWKT ?o .
-		
-		?n wgs:long ?xx .
-		?n wgs:lat ?yy .
-		
-		?n lgdo:gadmSameAs ?gadm .
-	}
-	With
-		?n = uri(concat(lgd:node, ?id))
-		?v = typedLiteral(?version, xsd:int)
-		?u = uri(concat(lgd:user, ?user_id))
-		?d = typedLiteral(?tstamp, xsd:dateTime)
-		?c = typedLiteral(?changeset_id, xsd:int)
-		?g = uri(concat(lgd-geom:node, ?id))
-		?o = typedLiteral(?geom, ogc:wktLiteral)
-		//?g = typedLiteral(?geom, virtrdf:geometry)
-		?xx = typedLiteral(?x, xsd:double)
-		?yy = typedLiteral(?y, xsd:double)
-		
-		?gadm = uri(concat("http://gadm.geovocab.org/services/withinRegion?lat=", ?y_text , "&long=", ?x_text, "#point"))
-		
-	From
-		[[SELECT *, ST_X(geom::geometry) x, ST_Y(geom::geometry) y, ST_X(geom::geometry)::float4::text x_text, ST_Y(geom::geometry)::float4::text y_text FROM nodes]];
+    Construct {
+        ?n a lgdm:Node .
+        ?n a spatial:Feature .
+        ?n lgdo:version ?v .
+        ?n dcterms:contributor ?u .
+        ?n dcterms:modified ?d .
+        ?n lgdo:changeset ?c .
+        ?n geom:geometry ?g .
+
+        ?g a geom:Geometry .
+        ?g ogc:asWKT ?o .
+
+        ?n wgs:long ?xx .
+        ?n wgs:lat ?yy .
+
+        ?n lgdo:gadmSameAs ?gadm .
+    }
+    With
+        ?n = uri(concat(lgd:node, ?id))
+        ?v = typedLiteral(?version, xsd:int)
+        ?u = uri(concat(lgd:user, ?user_id))
+        ?d = typedLiteral(?tstamp, xsd:dateTime)
+        ?c = typedLiteral(?changeset_id, xsd:int)
+        ?g = uri(concat(lgd-geom:node, ?id))
+        ?o = typedLiteral(?geom, ogc:wktLiteral)
+        //?g = typedLiteral(?geom, virtrdf:geometry)
+        ?xx = typedLiteral(?x, xsd:double)
+        ?yy = typedLiteral(?y, xsd:double)
+
+        ?gadm = uri(concat("http://gadm.geovocab.org/services/withinRegion?lat=", ?y_text , "&long=", ?x_text, "#point"))
+
+    From
+        [[SELECT *, ST_X(geom::geometry) x, ST_Y(geom::geometry) y, ST_X(geom::geometry)::float4::text x_text, ST_Y(geom::geometry)::float4::text y_text FROM nodes]];
 
 
 /*
 Create view lgd_sameAs_gadm As
-    Construct {		
-		?n owl:sameAs ?gadm .
+    Construct {
+        ?n owl:sameAs ?gadm .
     }
     With
-    	?n = uri(concat(lgd:node, ?id))
-		?gadm = uri(concat("http://gadm.geovocab.org/services/withinRegion?lat=", ?y , "&long=", ?x, "#point"))
-	From
-		[[SELECT id, ST_X(geom::geometry)::float4::text x, ST_Y(geom::geometry)::float4::text y FROM nodes]];
+        ?n = uri(concat(lgd:node, ?id))
+        ?gadm = uri(concat("http://gadm.geovocab.org/services/withinRegion?lat=", ?y , "&long=", ?x, "#point"))
+    From
+        [[SELECT id, ST_X(geom::geometry)::float4::text x, ST_Y(geom::geometry)::float4::text y FROM nodes]];
 
 
 Create View lgd_node_geometries As
@@ -293,403 +293,417 @@ Create View lgd_node_geometries As
         ?n ogc:asWKT ?o .
     }
     With
-        ?n = uri(concat(lgd-geom:node, ?id)) 
+        ?n = uri(concat(lgd-geom:node, ?id))
         ?o = typedLiteral(?geom, ogc:wktLiteral)
     From
         nodes;
 */
 
 Create View lgd_node_tags_resource_k As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id)) 
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
-		?o prefix "http://linkedgeodata.org/ontology/"
-	From
-		lgd_node_tags_resource_k
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_node_tags_resource_k
 
 
 Create View lgd_node_tags_resource_kv As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"	
-		?o prefix "http://linkedgeodata.org/ontology/"	
-	From
-		lgd_node_tags_resource_kv
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_node_tags_resource_kv
 
 Create View lgd_node_tags_boolean As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:boolean)
-	From
-		lgd_node_tags_boolean
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:boolean)
+    From
+        lgd_node_tags_boolean
 
 Create View lgd_node_tags_int As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		//?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:int)
-	From
-		lgd_node_tags_int
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        //?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:int)
+    From
+        lgd_node_tags_int
 
 Create View lgd_node_tags_float As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:float)
-	From
-		lgd_node_tags_float
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:float)
+    From
+        lgd_node_tags_float
 
 
 Create View lgd_node_tags_text As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id)) 
-		?p = uri(?property)
-		?o = plainLiteral(?v, ?language)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_node_tags_text
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = plainLiteral(?v, ?language)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_node_tags_text
 
 Create View lgd_node_tags_string As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?o = plainLiteral(?v)
-	From
-		lgd_node_tags_string
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?o = plainLiteral(?v)
+    From
+        lgd_node_tags_string
 
 
 Create View lgd_node_tags_uri_objects As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(lgd:node, ?node_id)
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_node_tags_property
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(lgd:node, ?node_id)
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_node_tags_property
 
 
 /*************
  * Ways
  *************/
- 
+
 Create View lgd_ways As
-	Construct {
-	    ?w a lgdm:Way .
-	    ?w a spatial:Feature .
-	    ?w lgdo:version ?v .
-	    ?w dcterms:contributor ?u .
-		?w dcterms:modified ?d .
-		?w lgdo:changeset ?c .
-		?w geom:geometry ?g .
-	}
-	With
-		?w = uri(concat(lgd:way, ?id))
-		?v = typedLiteral(?version, xsd:int)
-		?u = uri(concat(lgdo:user, ?user_id))
-		?d = typedLiteral(?tstamp, xsd:dateTime)
-		?c = typedLiteral(?changeset_id, xsd:int)
-		//?g = typedLiteral(?geom, virtrdf:geometry)
-		?g = uri(concat(lgd-geom:way, ?id))
-	From
-		ways; 
+    Construct {
+        ?w a lgdm:Way .
+        ?w a spatial:Feature .
+        ?w lgdo:version ?v .
+        ?w dcterms:contributor ?u .
+        ?w dcterms:modified ?d .
+        ?w lgdo:changeset ?c .
+        ?w geom:geometry ?g .
+    }
+    With
+        ?w = uri(concat(lgd:way, ?id))
+        ?v = typedLiteral(?version, xsd:int)
+        ?u = uri(concat(lgdo:user, ?user_id))
+        ?d = typedLiteral(?tstamp, xsd:dateTime)
+        ?c = typedLiteral(?changeset_id, xsd:int)
+        //?g = typedLiteral(?geom, virtrdf:geometry)
+        ?g = uri(concat(lgd-geom:way, ?id))
+    From
+        ways;
 
 Create View lgd_ways_linestrings As
     Construct {
-        ?w a geom:Geometry . 
+        ?w a geom:Geometry .
         ?w ogc:asWKT ?g .
     }
     With
-		//?w = uri(concat(lgd:way, ?id))
-		?w = uri(concat(lgd-geom:way, ?id))
-		?g = typedLiteral(?linestring, ogc:wktLiteral)
-	From
-		[[SELECT id, linestring FROM ways a WHERE a.id NOT IN (SELECT way_id FROM simple_polys)]];
-    
+        //?w = uri(concat(lgd:way, ?id))
+        ?w = uri(concat(lgd-geom:way, ?id))
+        ?g = typedLiteral(?linestring, ogc:wktLiteral)
+    From
+        [[SELECT id, linestring FROM ways a WHERE a.id NOT IN (SELECT way_id FROM simple_polys)]];
+
 
 Create View ways_polygons As
-	Construct {
-	    ?w a geom:Geometry .
-		?w ogc:asWKT ?g .
-	}
-	With
-		//?w = uri(concat(lgd:way, ?way_id))
-		?w = uri(concat(lgd-geom:way, ?way_id))
-		?g = typedLiteral(?polygon, ogc:wktLiteral)
-	From
-		simple_polys;
-	
+    Construct {
+        ?w a geom:Geometry .
+        ?w ogc:asWKT ?g .
+    }
+    With
+        //?w = uri(concat(lgd:way, ?way_id))
+        ?w = uri(concat(lgd-geom:way, ?way_id))
+        ?g = typedLiteral(?polygon, ogc:wktLiteral)
+    From
+        simple_polys;
+
 
 
 /*
 Create View view_way_to_nodes As
-	Construct {
-		?w lgdo:hasNodes ?wn .
-	}
-	With 
-		?w = uri(concat(lgd:way, ?id))
-		?wn = uri(concat(lgd:waynode, ?id))  
-	From
-		ways;
+    Construct {
+        ?w lgdo:hasNodes ?wn .
+    }
+    With
+        ?w = uri(concat(lgd:way, ?id))
+        ?wn = uri(concat(lgd:waynode, ?id))
+    From
+        ways;
 */
 
 
 Create View lgd_pos_seq As
-	Construct {
-		?w lgdo:posSeq ?wn .
-	}
-	With 
-		?w = uri(concat(lgd-geom:way, ?id))
-		?wn = uri(concat(lgd-geom:posSeq, ?id))  
-	From
-		ways;
+    Construct {
+        ?w lgdo:posSeq ?wn .
+    }
+    With
+        ?w = uri(concat(lgd-geom:way, ?id))
+        ?wn = uri(concat(lgd-geom:posSeq, ?id))
+    From
+        ways;
 
 Create View lgd_pos_seq_type As
-	Construct {
-	    ?wn a rdf:Seq . 
-	}
-	With
-		?wn = uri(concat(lgd-geom:posSeq, ?id))
-	From
-		ways;
+    Construct {
+        ?wn a rdf:Seq .
+    }
+    With
+        ?wn = uri(concat(lgd-geom:posSeq, ?id))
+    From
+        ways;
 
-  
+
 Create View view_waynodes As
-	Construct {
-		?wn ?p ?n .
-	}
-	With
-		?wn = uri(concat(lgd-geom:posSeq, ?way_id))
-		?p = uri(concat(rdf:_, ?sid))
-		?n = uri(concat(lgd-geom:node, ?node_id))  
-	From
-		[[SELECT *, sequence_id + 1 AS sid FROM way_nodes]]
+    Construct {
+        ?wn ?p ?n .
+    }
+    With
+        ?wn = uri(concat(lgd-geom:posSeq, ?way_id))
+        ?p = uri(concat(rdf:_, ?sid))
+        ?n = uri(concat(lgd-geom:node, ?node_id))
+    From
+        [[SELECT *, sequence_id + 1 AS sid FROM way_nodes]]
 
 
 Create View lgd_way_tags_resource_k As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id)) 
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
-		?o prefix "http://linkedgeodata.org/ontology/"
-	From
-		lgd_way_tags_resource_k
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_way_tags_resource_k
 
 Create View lgd_way_tags_resource_kv As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id))
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"	
-		?o prefix "http://linkedgeodata.org/ontology/"	
-	From
-		lgd_way_tags_resource_kv
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_way_tags_resource_kv
 
 Create View lgd_way_tags_boolean As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:boolean)
-	From
-		lgd_way_tags_boolean
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:boolean)
+    From
+        lgd_way_tags_boolean
 
 Create View lgd_way_tags_int As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id))
-		//?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:int)
-	From
-		lgd_way_tags_int
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        //?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:int)
+    From
+        lgd_way_tags_int
 
 Create View lgd_way_tags_float As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:float)
-	From
-		lgd_way_tags_float
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:float)
+    From
+        lgd_way_tags_float
 
 Create View lgd_way_tags_text As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id)) 
-		?p = uri(?property)
-		?o = plainLiteral(?v, ?language)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_way_tags_text
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(?property)
+        ?o = plainLiteral(?v, ?language)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_way_tags_text
 
 Create View lgd_way_tags_string As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:way, ?way_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?o = plainLiteral(?v)
-	From
-		lgd_way_tags_string
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?o = plainLiteral(?v)
+    From
+        lgd_way_tags_string
 
 
 Create View lgd_way_tags_uri_objects As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(lgd:way, ?way_id)
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_way_tags_property
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(lgd:way, ?way_id)
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_way_tags_property
 
 
 
 /*********
  * RELATIONS
- *********/ 
+ *********/
 
 Create View lgd_relations As
-	Construct {
-	    ?s a lgdm:Relation .
-	    ?s a spatial:Feature .
-	    ?s lgdo:version ?v .
-	    ?s dcterms:contributor ?u .
-		?s dcterms:modified ?d .
-		?s lgdo:changeset ?c .
-		//?w geom:geometry ?g .
-		
-		?s lgdo:members ?m .
-		?m a rdf:Seq .
-		
-	}
-	With
-		?s = uri(concat(lgd:relation, ?id))
-		?v = typedLiteral(?version, xsd:int)
-		?u = uri(concat(lgdo:user, ?user_id))
-		?d = typedLiteral(?tstamp, xsd:dateTime)
-		?c = typedLiteral(?changeset_id, xsd:int)
-		//?g = uri(concat(lgd-geom:relation, ?id))
-		
-		?m = uri(lgd:rmembers, ?id)  
-		
-	From
-		relations
-		//[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]]; 
+    Construct {
+        ?s a lgdm:Relation .
+        ?s a spatial:Feature .
+        ?s lgdo:version ?v .
+        ?s dcterms:contributor ?u .
+        ?s dcterms:modified ?d .
+        ?s lgdo:changeset ?c .
+        //?w geom:geometry ?g .
+
+        ?s lgdo:members ?m .
+        ?m a rdf:Seq .
+
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?id))
+        ?v = typedLiteral(?version, xsd:int)
+        ?u = uri(concat(lgdo:user, ?user_id))
+        ?d = typedLiteral(?tstamp, xsd:dateTime)
+        ?c = typedLiteral(?changeset_id, xsd:int)
+        //?g = uri(concat(lgd-geom:relation, ?id))
+
+        ?m = uri(lgd:rmembers, ?id)
+
+    From
+        relations
+        //[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]];
+
+Create View lgd_relation_geoms As
+  Construct {
+    ?s geom:geometry ?g .
+
+    ?g a geom:Geometry .
+    ?g ogc:asWKT ?o .
+  }
+  With
+    ?s = uri(lgd:relation, ?relation_id)
+    ?g = uri(lgd-geom:relation, ?relation_id)
+    ?o = typedLiteral(?geom, ogc:wktLiteral)
+  From
+    lgd_relation_geoms
 
 
 Create View lgd_relation_members_all As
   Construct {
-		?m ?p ?i .      
-		?i lgdo:role ?r .
+        ?m ?p ?i .
+        ?i lgdo:role ?r .
   }
   With
-		?m = uri(lgd:rmembers, ?relation_id)  
-		?p = uri(rdf:_, ?sid)
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
-		?r = plainLiteral(?member_role)  
+        ?m = uri(lgd:rmembers, ?relation_id)
+        ?p = uri(rdf:_, ?sid)
+        ?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
+        ?r = plainLiteral(?member_role)
   From
     [[SELECT *, sequence_id + 1 AS sid FROM relation_members]]
 
-  
+
 Create View lgd_relation_members_seq_nodes As
-	Construct {
-		?i lgdo:ref ?n
-	}
-	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
-		?n = uri(lgd:node, ?member_id)
-	From
-		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'N']];
+    Construct {
+        ?i lgdo:ref ?n
+    }
+    With
+        ?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
+        ?n = uri(lgd:node, ?member_id)
+    From
+        [[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'N']];
 
 Create View lgd_relation_members_seq_ways As
-	Construct {
-		?i lgdo:ref ?w
-	}
-	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
-		?w = uri(lgd:way, ?member_id)
-	From
-		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'W']];
+    Construct {
+        ?i lgdo:ref ?w
+    }
+    With
+        ?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
+        ?w = uri(lgd:way, ?member_id)
+    From
+        [[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'W']];
 
 
 Create View lgd_relation_members_seq_relations As
-	Construct {
-		?i lgdo:ref ?r
-	}
-	With
-		?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
-		?r = uri(lgd:relation, ?member_id)
-	From
-		[[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'R']];
+    Construct {
+        ?i lgdo:ref ?r
+    }
+    With
+        ?i = uri(lgd:rmember, ?relation_id, "_", ?sid)
+        ?r = uri(lgd:relation, ?member_id)
+    From
+        [[SELECT *, sequence_id + 1 AS sid FROM relation_members WHERE member_type = 'R']];
 
 
 /*
 Create View relation_members_nodes As
-	Construct {
-		?s lgdo:hasMember ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id)) 
-		?o = uri(concat(lgd:node, ?member_id))
-	From
-		[[SELECT relation_id, member_id FROM relation_members WHERE member_type = 'N']];
+    Construct {
+        ?s lgdo:hasMember ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?o = uri(concat(lgd:node, ?member_id))
+    From
+        [[SELECT relation_id, member_id FROM relation_members WHERE member_type = 'N']];
 */
 
 
@@ -697,119 +711,119 @@ Create View relation_members_nodes As
 
 
 Create View lgd_relation_tags_resource_k As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id)) 
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
-		?o prefix "http://linkedgeodata.org/ontology/"
-	From
-		lgd_relation_tags_resource_k
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_relation_tags_resource_k
 
 Create View lgd_relation_tags_resource_kv As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id))
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"	
-		?o prefix "http://linkedgeodata.org/ontology/"	
-	From
-		lgd_relation_tags_resource_kv
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/"
+        ?o prefix "http://linkedgeodata.org/ontology/"
+    From
+        lgd_relation_tags_resource_kv
 
 Create View lgd_relation_tags_boolean As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:boolean)
-	From
-		lgd_relation_tags_boolean
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:boolean)
+    From
+        lgd_relation_tags_boolean
 
 Create View lgd_relation_tags_int As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id))
-		//?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:int)
-	From
-		lgd_relation_tags_int
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        //?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:int)
+    From
+        lgd_relation_tags_int
 
 Create View lgd_relation_tags_float As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
-		?o = typedLiteral(?v, xsd:float)
-	From
-		lgd_relation_tags_float
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ?k))
+        ?o = typedLiteral(?v, xsd:float)
+    From
+        lgd_relation_tags_float
 
 Create View lgd_relation_tags_text As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id)) 
-		?p = uri(?property)
-		?o = plainLiteral(?v, ?language)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_relation_tags_text
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(?property)
+        ?o = plainLiteral(?v, ?language)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_relation_tags_text
 
 Create View lgd_relation_tags_string As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:relation, ?relation_id))
-		?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
-		?o = plainLiteral(?v)
-	From
-		lgd_relation_tags_string
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?o = plainLiteral(?v)
+    From
+        lgd_relation_tags_string
 
 
 Create View lgd_relation_tags_uri_objects As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(lgd:relation, ?relation_id)
-		?p = uri(?property)
-		?o = uri(?object)
-	Constrain
-		?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
-	From
-		lgd_relation_tags_property
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(lgd:relation, ?relation_id)
+        ?p = uri(?property)
+        ?o = uri(?object)
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/" "http://www.w3.org/" "http://xmlns.com/foaf/0.1/"
+    From
+        lgd_relation_tags_property
 
 
 /*
 
 // Classes and object properties (generic)
 Create View view_prefixed_properties As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(?property)
-		?o = uri(?object)
-	From
-		node_generic_resources;
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = uri(?object)
+    From
+        node_generic_resources;
 
 
 
@@ -817,20 +831,20 @@ Create View view_prefixed_properties As
 // Object Properties with prefix
 // The prefix datatype causes troubles
 Create View view_prefixed_properties As
-	Construct {
-		?s ?p ?o .
-	}
-	With
-		?s = uri(concat(lgd:node, ?node_id))
-		?p = uri(?property)
-		?o = uri(concat(?object_prefix, ?v))
-	From
-		lgd_node_tags_prefix;
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = uri(concat(?object_prefix, ?v))
+    From
+        lgd_node_tags_prefix;
 
 */
 
 
-		
+
 /**
  * Copyright (C) 2009-2012, LinkedGeoData team at the MOLE research
  * group at AKSW / University of Leipzig
@@ -851,5 +865,5 @@ Create View view_prefixed_properties As
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
- 
+
 

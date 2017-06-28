@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LIMES SYSTEM "limes.dtd">
+<LIMES>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
+		<LABEL>rdf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2000/01/rdf-schema#</NAMESPACE>
+		<LABEL>rdfs</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://geovocab.org/geometry#</NAMESPACE>
+		<LABEL>geom</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
+		<LABEL>ocg</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://xmlns.com/foaf/0.1/</NAMESPACE>
+		<LABEL>foaf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
+		<LABEL>owl</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://purl.org/dc/terms/</NAMESPACE>
+		<LABEL>dc</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
+		<LABEL>lgdo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/ontology/</NAMESPACE>
+		<LABEL>dbo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/property/</NAMESPACE>
+		<LABEL>dbp</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://linkedgeodata.org/meta/</NAMESPACE>
+		<LABEL>meta</LABEL>
+	</PREFIX>
+	<SOURCE>
+		<ID>linkedgeodata</ID>
+		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
+		<VAR>?y</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?y rdf:type lgdo:Airport</RESTRICTION>
+		<RESTRICTION>OPTIONAL {?y lgdo:iata ?iata.} filter(!bound(?iata)||regex(?iata,"^[A-Z]{3}$")).</RESTRICTION>
+		<RESTRICTION>OPTIONAL {?y lgdo:icao ?icao.} filter(!bound(?icao)||regex(?icao,"^[A-Z]{4}$")).</RESTRICTION>
+		<RESTRICTION>?y rdf:type meta:Node</RESTRICTION>
+		<PROPERTY>lgdo:iata RENAME iata</PROPERTY>
+		<PROPERTY>lgdo:icao RENAME icao</PROPERTY>
+	</SOURCE>
+	<TARGET>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Airport</RESTRICTION>
+		<RESTRICTION>?x dbo:iataLocationIdentifier ?iata. filter(regex(?iata,"^[A-Z]{3}$")).</RESTRICTION>
+		<RESTRICTION>?x dbo:icaoLocationIdentifier ?icao. filter(regex(?icao,"^[A-Z]{4}$")).</RESTRICTION>
+		<PROPERTY>dbo:iataLocationIdentifier RENAME iata</PROPERTY>
+		<PROPERTY>dbo:icaoLocationIdentifier RENAME icao</PROPERTY>
+	</TARGET>
+
+<!-- have to figure out how to include optional properties in LIMES-->
+<METRIC>OR(jaro(x.iata,y.iata)|1,(jaro(x.icao,y.icao)|1)</METRIC>
+<!--<METRIC>jaro(x.iata,y.iata)</METRIC>-->
+	<ACCEPTANCE>
+		<THRESHOLD>1</THRESHOLD>
+		<FILE>links.nt</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</ACCEPTANCE>
+	<REVIEW>
+		<THRESHOLD>1</THRESHOLD>
+		<FILE>review.nt</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</REVIEW>
+	<EXECUTION>Simple</EXECUTION>
+	<OUTPUT>NTRIPLES</OUTPUT>
+</LIMES>

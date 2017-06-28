@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.aksw.linkedgeodata</groupId>
-		<artifactId>linkedgeodata-parent</artifactId>
-		<version>0.4.2-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>org.aksw.linkedgeodata</groupId>
+        <artifactId>linkedgeodata-parent</artifactId>
+        <version>0.4.2-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>linkedgeodata-debian</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>linkedgeodata-debian</artifactId>
+    <packaging>jar</packaging>
 
-	<properties>
-		<deb.packageName>linkedgeodata</deb.packageName>
+    <properties>
+        <deb.packageName>linkedgeodata</deb.packageName>
         <deb.jarFile>${project.artifactId}-${project.version}.jar</deb.jarFile>
-	</properties>
+    </properties>
 
-	<profiles>
-		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<project.description>A middleware featuring SPARQL to SQL rewriting over relational databases.</project.description>
-			</properties>
-		</profile>
-		<profile>
-			<id>lod2</id>
-			<properties>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <project.description>A middleware featuring SPARQL to SQL rewriting over relational databases.</project.description>
+            </properties>
+        </profile>
+        <profile>
+            <id>lod2</id>
+            <properties>
 <project.description>A middleware featuring SPARQL to SQL rewriting over relational databases.
  .
  LOD2 is a large-scale integrating project co-funded by the European
@@ -39,12 +39,12 @@
  researchers, companies, and service providers from across 7 European
  countries and is coordinated by the AKSW research group at the
  University of Leipzig.</project.description>
-			</properties>
-		</profile>
-	</profiles>
+            </properties>
+        </profile>
+    </profiles>
 
-	<build>
-		<plugins>
+    <build>
+        <plugins>
 
        <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -61,7 +61,7 @@
                         <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
                             <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                        </transformers> 
+                        </transformers>
                         <filters>
                             <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
                             <filter>
@@ -80,87 +80,117 @@
 
 
 
-			<plugin>
-				<artifactId>jdeb</artifactId>
-				<groupId>org.vafer</groupId>
-				<version>1.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jdeb</goal>
-						</goals>
-						<configuration>
-							<deb>${project.build.directory}/${deb.packageName}_[[version]]_all.deb</deb>
-							<changesOut>${project.build.directory}/${deb.packageName}_[[version]]_all.changes</changesOut>
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jdeb</goal>
+                        </goals>
+                        <configuration>
+                            <deb>${project.build.directory}/${deb.packageName}_[[version]]_all.deb</deb>
+                            <changesOut>${project.build.directory}/${deb.packageName}_[[version]]_all.changes</changesOut>
 
-							<!-- <timestamped>true</timestamped> -->
-							<snapshotExpand>true</snapshotExpand>
-							<snapshotEnv></snapshotEnv>
+                            <!-- <timestamped>true</timestamped> -->
+                            <snapshotExpand>true</snapshotExpand>
+                            <snapshotEnv></snapshotEnv>
 
-							<signPackage>${jdeb.signPackage}</signPackage>
-							<signMethod>dpkg-sig</signMethod>
-							<signRole>builder</signRole>
-							<keyring>${jdeb.keyring}</keyring>
-							<key>${jdeb.key}</key>
-							<passphrase>${jdeb.passphrase}</passphrase>
+                            <signPackage>${jdeb.signPackage}</signPackage>
+                            <signMethod>dpkg-sig</signMethod>
+                            <signRole>builder</signRole>
+                            <keyring>${jdeb.keyring}</keyring>
+                            <key>${jdeb.key}</key>
+                            <passphrase>${jdeb.passphrase}</passphrase>
 
-							<dataSet>
+                            <dataSet>
 
-								<data>
-									<type>directory</type>
-									<src>${basedir}/src/deb/resources/etc</src>
-									<mapper>
-										<type>perm</type>
-										<prefix>/etc</prefix>
-									</mapper>
-								</data>
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/src/deb/resources/etc</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/etc</prefix>
+                                    </mapper>
+                                </data>
 
-								<data>
-									<type>directory</type>
-									<src>${basedir}/src/deb/resources/usr/bin</src>
-									<mapper>
-										<type>perm</type>
-										<prefix>/usr/bin</prefix>
-										<filemode>755</filemode>
-									</mapper>
-								</data>
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/src/deb/resources/usr/bin</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/bin</prefix>
+                                        <filemode>755</filemode>
+                                    </mapper>
+                                </data>
 
-								<data>
-									<type>file</type>
-									<src>${project.build.directory}/${deb.jarFile}</src>
-									<mapper>
-										<type>perm</type>
-										<prefix>/usr/share/lib/${deb.packageName}</prefix>
-									</mapper>
-								</data>
+                                <data>
+                                    <type>file</type>
+                                    <src>${project.build.directory}/${deb.jarFile}</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/${deb.packageName}</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                        <prefix>/usr/share/${deb.packageName}/sql</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>directory</type>
+                                    <src>${basedir}/../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                        <prefix>/usr/share/${deb.packageName}/sml</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>directory</type>
+                                    <!-- TODO This copies all files, although we only want a few of them to be included in the deb -->
+                                    <src>${basedir}/../linkedgeodata-cli/bin</src>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                        <prefix>/usr/share/${deb.packageName}</prefix>
+                                    </mapper>
+                                </data>
+
+                                <data>
+                                    <type>link</type>
+                                    <symlink>true</symlink>
+                                    <linkName>/usr/share/${deb.packageName}/${deb.packageName}.jar</linkName>
+                                    <linkTarget>/usr/share/${deb.packageName}/${deb.jarFile}</linkTarget>
+                                </data>
+
+                            </dataSet>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 
-								<data>
-									<type>link</type>
-									<symlink>true</symlink>
-									<linkName>/usr/share/lib/${deb.packageName}/${deb.packageName}.jar</linkName>
-									<linkTarget>/usr/share/lib/${deb.packageName}/${deb.jarFile}</linkTarget>
-								</data>
-
-							</dataSet>
-
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-		</plugins>
-	</build>
-
-
-	<dependencies>
+    <dependencies>
 <!--
-		<dependency>
-			<groupId>org.aksw.linkedgeodata</groupId>
-			<artifactId>linkedgeodata-core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.aksw.linkedgeodata</groupId>
+            <artifactId>linkedgeodata-core</artifactId>
+        </dependency>
 -->
-	</dependencies>
+    </dependencies>
 </project>
 

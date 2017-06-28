@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LIMES SYSTEM "limes.dtd">
+<LIMES>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/1999/02/22-rdf-syntax-ns#</NAMESPACE>
+		<LABEL>rdf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2000/01/rdf-schema#</NAMESPACE>
+		<LABEL>rdfs</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://geovocab.org/geometry#</NAMESPACE>
+		<LABEL>geom</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.opengis.net/ont/geosparql#</NAMESPACE>
+		<LABEL>ocg</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://xmlns.com/foaf/0.1/</NAMESPACE>
+		<LABEL>foaf</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2002/07/owl#</NAMESPACE>
+		<LABEL>owl</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://purl.org/dc/terms/</NAMESPACE>
+		<LABEL>dc</LABEL>
+	</PREFIX>
+	<PREFIX>
+			<NAMESPACE>http://linkedgeodata.org/ontology/</NAMESPACE>
+			<LABEL>lgdo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/ontology/</NAMESPACE>
+		<LABEL>dbo</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://dbpedia.org/property/</NAMESPACE>
+		<LABEL>dbp</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://www.w3.org/2003/01/geo/wgs84_pos#</NAMESPACE>
+		<LABEL>wgs84</LABEL>
+	</PREFIX>
+	<PREFIX>
+		<NAMESPACE>http://linkedgeodata.org/meta/</NAMESPACE>
+		<LABEL>meta</LABEL>
+	</PREFIX>
+	<SOURCE>
+		<ID>linkedgeodata</ID>
+		<ENDPOINT>http://linkedgeodata.org/sparql</ENDPOINT>
+		<VAR>?y</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?y rdf:type lgdo:Airport. OPTIONAL {?y lgdo:iata ?iata.} filter(!bound(?iata))</RESTRICTION>
+		<RESTRICTION>?y rdf:type meta:Node</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>geom:geometry/ocg:asWKT RENAME wkt</PROPERTY>
+	</SOURCE>
+	<TARGET>
+		<ID>dbpedia</ID>
+		<ENDPOINT>http://dbpedia.org/sparql</ENDPOINT>
+		<VAR>?x</VAR>
+		<PAGESIZE>1000</PAGESIZE>
+		<RESTRICTION>?x rdf:type dbo:Airport. OPTIONAL {?x dbo:iataLocationIdentifier ?iata.}. filter(!bound(?iata))</RESTRICTION>
+		<PROPERTY>rdfs:label AS nolang->lowercase RENAME label</PROPERTY>
+		<PROPERTY>wgs84:geometry RENAME wkt</PROPERTY>
+	</TARGET>
+<!--<METRIC>AND(mean(x.wkt,y.wkt)|0.957,trigrams(x.label,y.label)|0.8)</METRIC>-->
+<METRIC>AND(mean(x.wkt,y.wkt)|0.5,trigrams(x.label,y.label)|0.8)</METRIC>
+	<ACCEPTANCE>
+		<THRESHOLD>0.55</THRESHOLD>
+		<FILE>links.nt</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</ACCEPTANCE>
+	<REVIEW>
+		<THRESHOLD>0.5</THRESHOLD>
+		<FILE>review.nt</FILE>
+		<RELATION>owl:sameAs</RELATION>
+	</REVIEW>
+	<EXECUTION>Simple</EXECUTION>
+	<OUTPUT>TTL</OUTPUT>
+</LIMES>
