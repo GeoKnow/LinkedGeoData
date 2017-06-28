@@ -124,14 +124,14 @@ Again, note that Sparqlify is still in development and the supported features ar
 
 ### Additional tools
 
-* Convert a timestamp to a sequence ID
+* `lgd-osm-replicate-sequences`: Convert a timestamp to a sequence ID. This is similar to [mazdermind's replicate sequences tool](https://github.com/MaZderMind/replicate-sequences), however, our version does not require a local index. Instead, our tools combines binary search with linear interpolation: First, the the two most recent state.txt files from the given repository url are fetched, then the time differnce is computed, and based on linear interpolation a sequence id close to the given timetstamp is computed. This process is repeated recursively.
 ```bash
-lgd-osm-date-to-seq -u "https://planet.openstreetmap.org/replication/hour/" -d "2017-05-28T15:00:00Z"
+lgd-osm-replicate-sequences -u "https://planet.openstreetmap.org/replication/hour/" -d "2017-05-28T15:00:00Z"
 
 # The above command from the debian package is a wrapper for:
 
 java -cp linkedgeodata-debian/target/linkedgeodata-debian-*-jar-with-dependencies.jar \
-    "org.aksw.linkedgeodata.cli.command.osm.CommandOsmDateToSeq" \
+    "org.aksw.linkedgeodata.cli.command.osm.CommandOsmReplicateSequences" \
     -u "https://planet.openstreetmap.org/replication/hour/" -d "2017-05-28T15:00:00Z"
 ```
 The output is a (presently subset) of the appropriate state.txt file whose timestamp is strictly less than that given as the argument.
@@ -143,7 +143,7 @@ Note, that the timestamp format is compatible with `osmconvert`, which can check
 these tools can be combined in order to find the state.txt file from which to proceed with replication.
 ```bash
 timestamp=`osmconvert --out-timestamp "data.osm.pbf"`
-lgd-osm-date-to-seq -u "url-to-repo" -t "$timestamp"
+lgd-osm-replicate-sequences -u "url-to-repo" -t "$timestamp"
 ```
 
 ### Postgresql Database Tuning
