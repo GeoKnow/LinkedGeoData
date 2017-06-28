@@ -1,11 +1,13 @@
-#FROM ubuntu:16.04
-FROM mdillon/postgis:9.5
+FROM ubuntu:16.04
+#FROM mdillon/postgis:9.5
 MAINTAINER Claus Stadler <cstadler@informatik.uni-leipzig.de>
 
-RUN echo "forcerebuild 5"
+RUN echo "forcerebuild 6"
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -y update --fix-missing && apt-get install -y wget sudo curl osmosis gettext-base osmctools
+RUN apt-get -y update --fix-missing && apt-get install -y postgresql-9.5-postgis-2.2 wget sudo curl osmosis gettext-base osmctools
+
+# TODO We actually just need the postgres client stuff, together with some postgis sql scripts - so no full db server needed
 
 # && \
 #    sudo apt-get install wget 

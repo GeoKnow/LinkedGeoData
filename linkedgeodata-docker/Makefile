@@ -9,3 +9,15 @@ $(SUBDIRS):
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
+
+create-resources:
+	docker network create lgd-net ; true
+	docker volume create lgd-db-vol ; true
+	docker volume create lgd-osm-sync-vol ; true
+
+remove-resources:
+	docker network rm lgd-net ; true
+	docker volume rm lgd-db-vol ; true
+	docker volume rm lgd-osm-sync-vol ; true
+
+

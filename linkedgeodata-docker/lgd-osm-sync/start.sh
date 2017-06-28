@@ -22,17 +22,17 @@ mkdir -p "$syncDir"
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then
   #PBF_DATA=http://downloads.linkedgeodata.org/debugging/monaco-170618.osm.pbf
-  rm -f data.osm.pbf
-  curl -L "$OSM_DATA_BASE_URL" --create-dirs -o data.osm.pbf
+  rm -f "$syncDir/data.osm.pbf"
+  curl -L "$OSM_DATA_BASE_URL" --create-dirs -o "$syncDir/data.osm.pbf"
 
-  timestamp=`osmconvert --out-timestamp "data.osm.pbf"`
+  timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
   #curl "https://osm.mazdermind.de/replicate-sequences/?$timestamp" > sync/state.txt
   lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d "$timestamp" > "$syncDir/state.txt"
 
 
 # TODO Fix lgd-createdb to include port
 #  lgd-createdb -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "data.osm.bpf" 
-  lgd-createdb -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "data.osm.pbf"
+  lgd-createdb -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "$syncDir/data.osm.pbf"
 
   psql "$DB_URL" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
 fi
