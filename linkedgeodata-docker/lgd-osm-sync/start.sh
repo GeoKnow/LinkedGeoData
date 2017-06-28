@@ -7,6 +7,8 @@ env | grep -i "osm\|db\|post"
 # Check the database whether the data was loaded
 statusKey="lgd-osm-sync:status"
 
+syncDir="osm/sync"
+
 
 psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
@@ -15,7 +17,7 @@ statusVal=`psql "$DB_URL" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKe
 
 echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
 
-mkdir -p sync
+mkdir -p "$syncDir"
 
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then
@@ -25,7 +27,7 @@ if [ -z "$statusVal" ]; then
 
   timestamp=`osmconvert --out-timestamp "data.osm.pbf"`
   #curl "https://osm.mazdermind.de/replicate-sequences/?$timestamp" > sync/state.txt
-  lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d "$timestamp" > sync/state.txt
+  lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d "$timestamp" > "$syncDir/state.txt"
 
 
 # TODO Fix lgd-createdb to include port
@@ -37,8 +39,10 @@ fi
 
 # NOTE lgd-run-sync uses ./sync/configuration.txt by default
 
-cat configuration.txt.dist | envsubst > sync/configuration.txt
+cat configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
 
 # The sync script picks up the environment variables
+# TODO Pass the sync dir to the sync script
+cd osm
 /usr/share/linkedgeodata/lgd-run-sync.sh
 

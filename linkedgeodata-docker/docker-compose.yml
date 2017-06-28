@@ -21,7 +21,7 @@ services:
       - DB_WORK_MEM=${DB_WORK_MEM}
       - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
     volumes:
-      - lgd-db-vol:/var/lib/postgresql/data
+      - lgd-vol:/var/lib/postgresql/data
     restart: always
     networks:
       - lgd-net
@@ -73,6 +73,8 @@ services:
     depends_on:
       lgd-db:
         condition: service_healthy
+    volumes:
+      - lgd-vol:/app/linkedgeodata/osm/sync
     networks:
       - lgd-net
 
@@ -119,9 +121,9 @@ services:
 #      - lgd-net
 
 volumes:
-  lgd-db-vol:
+  lgd-vol:
     external:
-      name: lgd-db-vol
+      name: lgd-vol
 
 #/data/docker-data/lgd-db
 
