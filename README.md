@@ -42,7 +42,7 @@ After installing these packages, the following essential commands will be availa
 * `lgd-createdb` (provided by linkedgeodata)
 * `lgd-createdb-snapshot` (provided by linkedgeodata)
 * `sparqlify-tool` (provided by sparqlify, supersedes the former lgd-query command)
-
+* Additional tools 
 
 Read the section on data conversion for their documentation.
 
@@ -121,6 +121,30 @@ Examples:
 
 Again, note that Sparqlify is still in development and the supported features are a bit limited right now - still, basic graph patterns and equal-constraints should be working fine.
 
+
+### Additional tooling
+
+* Convert a timestamp to a sequence ID
+```bash
+lgd-osm-date-to-seq -u "https://planet.openstreetmap.org/replication/hour/" -d "2017-05-28T15:00:00Z"
+
+# The above command from the debian package is a wrapper for:
+
+java -cp linkedgeodata-debian/target/linkedgeodata-debian-*-jar-with-dependencies.jar \
+    "org.aksw.linkedgeodata.cli.command.osm.CommandOsmDateToSeq" \
+    -u "https://planet.openstreetmap.org/replication/hour/" -d "2017-05-28T15:00:00Z"
+```
+The output is a (presently subset) of the appropriate state.txt file whose timestamp is strictly less than that given as the argument.
+```
+sequenceNumber=41263
+timestamp=2017-05-28T14\:00\:00Z
+```
+Note, that the timestamp format is compatible with `osmconvert`, which can check for the most recent data item in a osm data file. Hence,
+these tools can be combined in order to find the state.txt file from which to proceed with replication.
+```bash
+timestamp=`osmconvert --out-timestamp "data.osm.pbf"`
+lgd-osm-date-to-seq -u "url-to-repo" -t "$timestamp"
+```
 
 ### Postgresql Database Tuning
 It is recommended to tune the database according to [these recommendations](http://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server). Here is a brief summary:
