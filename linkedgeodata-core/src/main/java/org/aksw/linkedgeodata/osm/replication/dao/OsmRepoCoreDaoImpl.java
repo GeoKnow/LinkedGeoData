@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.aksw.linkedgeodata.core.init.InitJenaLinkedGeoData;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -95,7 +96,7 @@ public class OsmRepoCoreDaoImpl
 
 
     public State getState(URI uri) throws Exception {
-        logger.debug("Attempting to retrieve: " + uri);
+        logger.info("Retrieving state information for " + uri);
 
         URLConnection conn = uri.toURL().openConnection();
         conn.setReadTimeout(10000);
@@ -106,8 +107,7 @@ public class OsmRepoCoreDaoImpl
         StringWriter w = new StringWriter();
         IOUtils.copy(conn.getInputStream(), w, StandardCharsets.UTF_8);
         String content = w.toString();
-        logger.info("Retrieving state information for " + uri);
-        logger.info("Reponse from " + uri + ": " + content);
+        logger.debug("Reponse from " + uri + ":\n" + content);
 
         properties.load(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
 
@@ -117,7 +117,7 @@ public class OsmRepoCoreDaoImpl
 
         State result = ModelFactory.createDefaultModel()
                 .createResource()
-                .addProperty(RDF.type, LgdPersonality.State)
+                .addProperty(RDF.type, InitJenaLinkedGeoData.State)
                 .as(State.class);
 
         properties.entrySet().forEach(e ->
@@ -131,7 +131,6 @@ public class OsmRepoCoreDaoImpl
 
     public static void main(String[] args) throws Exception {
 
-        LgdPersonality.init();
         Instant src = Instant.parse("2017-05-26T20:44:02Z");
 
         //OsmRepoDao repoDao = OsmRepoDaoImpl.create("http://download.geofabrik.de/europe/monaco-updates");

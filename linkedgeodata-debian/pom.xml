@@ -14,76 +14,21 @@
 
     <properties>
         <deb.packageName>linkedgeodata</deb.packageName>
-        <deb.jarFile>${project.artifactId}-${project.version}.jar</deb.jarFile>
+        <deb.jarFile>${project.artifactId}-${project.version}-jar-with-dependencies.jar</deb.jarFile>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <project.description>A middleware featuring SPARQL to SQL rewriting over relational databases.</project.description>
-            </properties>
-        </profile>
-        <profile>
-            <id>lod2</id>
-            <properties>
-<project.description>A middleware featuring SPARQL to SQL rewriting over relational databases.
- .
- LOD2 is a large-scale integrating project co-funded by the European
- Commission within the FP7 Information and Communication Technologies
- Work Programme (Grant Agreement No. 257943). Commencing in September
- 2010, this 4-year project comprises leading Linked Open Data technology
- researchers, companies, and service providers from across 7 European
- countries and is coordinated by the AKSW research group at the
- University of Leipzig.</project.description>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
 
-       <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>2.0</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <transformers>
-                        <!--  use transformer to handle merge of META-INF/services - see http://java.net/jira/browse/JERSEY-440?focusedCommentId=14822&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#action_14822 -->
-                            <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                        </transformers>
-                        <filters>
-                            <!--  filter to address "Invalid signature file" issue - see http://stackoverflow.com/a/6743609/589215-->
-                            <filter>
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>META-INF/*.SF</exclude>
-                                    <exclude>META-INF/*.DSA</exclude>
-                                    <exclude>META-INF/*.RSA</exclude>
-                                </excludes>
-                            </filter>
-                        </filters>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <artifactId>jdeb</artifactId>
                 <groupId>org.vafer</groupId>
-                <version>1.3</version>
+                <version>1.5</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -136,6 +81,14 @@
                                 </data>
 
                                 <data>
+                                    <type>link</type>
+                                    <symlink>true</symlink>
+                                    <linkName>/usr/share/${deb.packageName}/${deb.packageName}.jar</linkName>
+                                    <linkTarget>/usr/share/${deb.packageName}/${deb.jarFile}</linkTarget>
+                                </data>
+
+
+                                <data>
                                     <type>directory</type>
                                     <src>${basedir}/../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql</src>
                                     <mapper>
@@ -157,20 +110,14 @@
 
                                 <data>
                                     <type>directory</type>
-                                    <!-- TODO This copies all files, although we only want a few of them to be included in the deb -->
+                                    <!-- TODO This copies all files, although we only want a few of
+                                        them to be included in the deb -->
                                     <src>${basedir}/../linkedgeodata-cli/bin</src>
                                     <mapper>
                                         <type>perm</type>
                                         <filemode>755</filemode>
                                         <prefix>/usr/share/${deb.packageName}</prefix>
                                     </mapper>
-                                </data>
-
-                                <data>
-                                    <type>link</type>
-                                    <symlink>true</symlink>
-                                    <linkName>/usr/share/${deb.packageName}/${deb.packageName}.jar</linkName>
-                                    <linkTarget>/usr/share/${deb.packageName}/${deb.jarFile}</linkTarget>
                                 </data>
 
                             </dataSet>
@@ -185,12 +132,10 @@
 
 
     <dependencies>
-<!--
         <dependency>
             <groupId>org.aksw.linkedgeodata</groupId>
-            <artifactId>linkedgeodata-core</artifactId>
+            <artifactId>linkedgeodata-cli</artifactId>
         </dependency>
--->
     </dependencies>
 </project>
 

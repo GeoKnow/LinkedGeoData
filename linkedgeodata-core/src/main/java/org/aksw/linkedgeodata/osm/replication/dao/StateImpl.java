@@ -1,6 +1,7 @@
 package org.aksw.linkedgeodata.osm.replication.dao;
 
 import java.util.Calendar;
+import java.util.Properties;
 
 import org.apache.jena.datatypes.xsd.XSDDateTime;
 import org.apache.jena.enhanced.EnhGraph;
@@ -26,6 +27,14 @@ public class StateImpl
     @Override
     public long getSeqId() {
         long result = this.getRequiredProperty(DCTerms.identifier).getLong();
+        return result;
+    }
+
+
+    public static Properties toProperties(Properties result, State state) {
+        result.setProperty("timestamp", state.getTimestamp().toInstant().toString());
+        result.setProperty("sequenceNumber", Long.toString(state.getSeqId()));
+
         return result;
     }
 }
