@@ -11,7 +11,7 @@ import org.aksw.linkedgeodata.osm.replication.dao.StateImpl;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
-public class CommandOsmDateToSeq {
+public class CommandOsmReplicateSequences {
 
     @Parameter(names = {"-u", "-url"}, description = "OSM Repository base URL")
     public String osmReplicationRepoBaseUrl = null;
@@ -21,7 +21,7 @@ public class CommandOsmDateToSeq {
 
     public static void main(String[] args) throws Exception {
 
-        CommandOsmDateToSeq options = new CommandOsmDateToSeq();
+        CommandOsmReplicateSequences options = new CommandOsmReplicateSequences();
         JCommander jCommander = new JCommander(options);
         jCommander.parse(args);
 

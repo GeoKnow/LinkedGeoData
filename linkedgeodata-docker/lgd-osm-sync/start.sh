@@ -24,7 +24,8 @@ if [ -z "$statusVal" ]; then
   curl -L "$OSM_DATA_BASE_URL" --create-dirs -o data.osm.pbf
 
   timestamp=`osmconvert --out-timestamp "data.osm.pbf"`
-  curl "https://osm.mazdermind.de/replicate-sequences/?$timestamp" > sync/state.txt
+  #curl "https://osm.mazdermind.de/replicate-sequences/?$timestamp" > sync/state.txt
+  lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d "$timestamp" > sync/state.txt
 
 
 # TODO Fix lgd-createdb to include port
