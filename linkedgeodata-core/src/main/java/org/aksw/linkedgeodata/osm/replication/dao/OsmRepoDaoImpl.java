@@ -1,6 +1,7 @@
 package org.aksw.linkedgeodata.osm.replication.dao;
 
 import java.net.URI;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -13,13 +14,18 @@ public class OsmRepoDaoImpl
     implements OsmRepoDao
 {
     protected OsmRepoCoreDao coreDao;
-    protected long avgUpdateIntervalInSec;
+    protected Duration updateInterval;
 
 
-    public OsmRepoDaoImpl(OsmRepoCoreDao repoAccessor, long avgUpdateIntervalInSec) {
+    public OsmRepoDaoImpl(OsmRepoCoreDao repoAccessor, Duration updateInterval) {
         super();
         this.coreDao = repoAccessor;
-        this.avgUpdateIntervalInSec = avgUpdateIntervalInSec;
+        this.updateInterval = updateInterval;
+    }
+
+    @Override
+    public Duration getUpdateInterval() {
+        return updateInterval;
     }
 
     @Override
@@ -45,12 +51,12 @@ public class OsmRepoDaoImpl
         State currentState = this.getMostRecentState();
 
         Range<Long> range = Range.closedOpen(0l, currentState.getSeqId());
-        State result = findStatePreceedingTimestamp(currentState, searchTimestamp, avgUpdateIntervalInSec, range);
+        State result = findStatePreceedingTimestamp(currentState, searchTimestamp, updateInterval, range);
 
         return result;
     }
 
-    public State findStatePreceedingTimestamp(State currentState, Instant searchTimestamp, long avgUpdateIntervalInS, Range<Long> seqIdRange) throws Exception {
+    public State findStatePreceedingTimestamp(State currentState, Instant searchTimestamp, Duration updateInterval, Range<Long> seqIdRange) throws Exception {
         State result = null;
         Range<Long> subRange;
 
@@ -63,7 +69,7 @@ public class OsmRepoDaoImpl
             //Instant lowerTimestamp = timestamp.toInstant();
             // Interpolate the sequence id of the lower state
 
-            long delta = (long)(ChronoUnit.SECONDS.between(searchTimestamp, currentTimestamp) / (double)avgUpdateIntervalInS);
+            long delta = (long)(ChronoUnit.SECONDS.between(searchTimestamp, currentTimestamp) / (double)updateInterval.getSeconds());
             // If the searchTimestamp is after the checkTimestamp, we need to go further back by one updateInterval
             if(delta == 0) {
                 if(searchTimestamp.compareTo(currentTimestamp) < 0) {
@@ -87,13 +93,13 @@ public class OsmRepoDaoImpl
                 State checkState = this.getState(lowerSeqId);
                 //Instant checkTimestamp = checkState.getTimestamp().toInstant();
 
-                result = findStatePreceedingTimestamp(checkState, searchTimestamp, avgUpdateIntervalInS, subRange);
+                result = findStatePreceedingTimestamp(checkState, searchTimestamp, updateInterval, subRange);
             }
         }
         return result;
     }
 
-    public static double determineUpdateIntervalInSec(OsmRepoCoreDao repoCoreDao) throws Exception {
+    public static Duration determineUpdateIntervalInSec(OsmRepoCoreDao repoCoreDao) throws Exception {
         int n = 2;
         List<Instant> instants = new ArrayList<>(n);
         State latest = repoCoreDao.getMostRecentState();
@@ -103,11 +109,12 @@ public class OsmRepoDaoImpl
             instants.add(state.getTimestamp().toInstant());
         }
 
-        double result = IntStream.range(0, n - 1)
+        double tmp = IntStream.range(0, n - 1)
                 .mapToLong(i -> ChronoUnit.SECONDS.between(instants.get(i + 1), instants.get(i)))
                 .average()
                 .getAsDouble();
 
+        Duration result = Duration.ofSeconds((long)tmp);
         return result;
     }
 
@@ -120,9 +127,11 @@ public class OsmRepoDaoImpl
     }
 
     public static OsmRepoDao create(OsmRepoCoreDao coreDao) throws Exception {
-        long updateIntervalInSec = (long)determineUpdateIntervalInSec(coreDao);
+        Duration updateInterval = determineUpdateIntervalInSec(coreDao);
 
-        OsmRepoDao result = new OsmRepoDaoImpl(coreDao, updateIntervalInSec);
+        OsmRepoDao result = new OsmRepoDaoImpl(coreDao, updateInterval);
         return result;
     }
 }
+
+

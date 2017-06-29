@@ -1,5 +1,6 @@
 package org.aksw.linkedgeodata.osm.replication.dao;
 
+import java.time.Duration;
 import java.time.Instant;
 
 /**
@@ -20,4 +21,5 @@ public interface OsmRepoDao
 //    State getState(long seqId) throws Exception;
 
     State findState(Instant searchTimestamp) throws Exception;
+    Duration getUpdateInterval();
 }

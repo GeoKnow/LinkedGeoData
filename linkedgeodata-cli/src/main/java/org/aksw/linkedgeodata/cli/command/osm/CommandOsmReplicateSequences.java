@@ -16,8 +16,12 @@ public class CommandOsmReplicateSequences {
     @Parameter(names = {"-u", "-url"}, description = "OSM Repository base URL")
     public String osmReplicationRepoBaseUrl = null;
 
-    @Parameter(names = {"-d", "-date"}, description = "Timestamp")
+    @Parameter(names = {"-t", "-timestamp"}, description = "Timestamp")
     public String timestamp = null;
+
+    @Parameter(names = {"-d", "-duration"}, description = "Duration")
+    public Boolean returnDuration = false;
+    //public String cmd
 
     public static void main(String[] args) throws Exception {
 
@@ -27,14 +31,17 @@ public class CommandOsmReplicateSequences {
 
         OsmRepoDao repoDao = OsmRepoDaoImpl.create(options.osmReplicationRepoBaseUrl);
 
-        Instant instant = Instant.parse(options.timestamp);
+        if(options.returnDuration) {
+            System.out.println(repoDao.getUpdateInterval().getSeconds());
+        } else { // By default, print the state file for the timestamp
+            Instant instant = Instant.parse(options.timestamp);
 
 
-        State state = repoDao.findState(instant);
+            State state = repoDao.findState(instant);
 
-        java.util.Properties properties = StateImpl.toProperties(new Properties(), state);
-        properties.store(System.out, null);
-
+            java.util.Properties properties = StateImpl.toProperties(new Properties(), state);
+            properties.store(System.out, null);
+        }
 
 //        if(commandLineArgs.isHelp())
 //        {
