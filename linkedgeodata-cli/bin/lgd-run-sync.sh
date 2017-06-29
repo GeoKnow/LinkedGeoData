@@ -4,8 +4,8 @@ configFileName="$1"
 
 #osmosis={osmosis:-osmosis}
 osmosis="osmosis"
-targetPath="sync"
-sleepInterval="60"
+targetPath=${targetPath:-"sync"}
+OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-60}
 
 log() { echo "[`date +'%Y-%m-%d %H:%M:%S'`] $$ [$1] $2" ; }
 
@@ -62,8 +62,9 @@ applyChanges
 while [ 1 ]; do
     "$osmosis" --read-replication-interval workingDirectory=$targetPath --simplify-change --write-xml-change "$targetPath/diff.osc"
     applyChanges
-    echo "Going to sleep for $sleepInterval seconds..."
-    sleep "$sleepInterval"
+    # TODO Enhance script to compute time duration to next recheck interval based on timestamp in latest state.txt file
+    echo "Going to sleep for $OSM_DATA_SYNC_RECHECK_INTERVAL seconds..."
+    sleep "$OSM_DATA_SYNC_RECHECK_INTERVAL"
 done
 
 

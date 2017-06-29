@@ -1,4 +1,5 @@
 #/bin/bash
+set -eu
 
 echo "lgd-osm-sync environment:"
 env | grep -i "osm\|db\|post"
@@ -19,6 +20,11 @@ echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
 
 mkdir -p "$syncDir"
 
+export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-"$OSM_DATA_SYNC_UPDATE_INTERVAL"}
+
+cat configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
+
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then
   #PBF_DATA=http://downloads.linkedgeodata.org/debugging/monaco-170618.osm.pbf
@@ -29,7 +35,6 @@ if [ -z "$statusVal" ]; then
   #curl "https://osm.mazdermind.de/replicate-sequences/?$timestamp" > sync/state.txt
   lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
 
-
 # TODO Fix lgd-createdb to include port
 #  lgd-createdb -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "data.osm.bpf" 
   lgd-createdb -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "$syncDir/data.osm.pbf"
@@ -39,7 +44,6 @@ fi
 
 # NOTE lgd-run-sync uses ./sync/configuration.txt by default
 
-cat configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
 
 # The sync script picks up the environment variables
 # TODO Pass the sync dir to the sync script
