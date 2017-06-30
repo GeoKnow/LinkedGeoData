@@ -34,12 +34,16 @@ services:
       context: ./lgd-nominatim-sync
     container_name: lgd-nominatim-sync
     environment:
+      - POSTGRES_VERSION=${POSTGRES_VERSION}
+      - POSTGIS_VERSION=${POSTGIS_VERSION}
       - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
       - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
       - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
       lgd-db:
         condition: service_healthy
+    volumes:
+      - lgd-nominatim-sync-vol:/app/nominatim/src/settings
     networks:
       - lgd-net
 
@@ -67,6 +71,8 @@ services:
       context: ./lgd-osm-sync
     container_name: lgd-osm-sync
     environment:
+      - POSTGRES_VERSION=${POSTGRES_VERSION}
+      - POSTGIS_VERSION=${POSTGIS_VERSION}
       - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
       - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
       - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
@@ -127,6 +133,11 @@ volumes:
   lgd-osm-sync-vol:
     external:
       name: lgd-osm-sync-vol
+  lgd-nominatim-sync-vol:
+    external:
+      name: lgd-nominatim-sync-vol
+
+
 
 #/data/docker-data/lgd-db
 

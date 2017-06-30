@@ -1,12 +1,20 @@
 #!/bin/bash
+set -eu
+
+sleep 2
+cd src
+find .
+echo "pwd: " `pwd`
+
+echo "lgd-osm-sync environment:"
+env | grep -i "osm\|db\|post"
+
 
 # Check the database whether the data was loaded
 statusKey="nominatim:status"
 
-#DB_URL="postgresql://lgd:lgdpwd@172.18.0.2:5432/lgd"
-echo "STARTING - DB_URL = $DB_URL $(pwd)"
+syncDir="settings"
 
-cat ./src/settings/local.php.dist | envsubst > ./src/settings/local.php
 
 psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
@@ -15,21 +23,25 @@ statusVal=`psql "$DB_URL" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKe
 
 echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
 
+mkdir -p "$syncDir"
+
+export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-"$OSM_DATA_SYNC_UPDATE_INTERVAL"}
+
+cat ./settings/configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
+cat ./settings/local.php.dist | envsubst > ./settings/local.php
+
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then 
 
-  #PBF_DATA=http://download.geofabrik.de/europe/monaco-latest.osm.pbf
-  PBF_DATA=http://downloads.linkedgeodata.org/debugging/monaco-170618.osm.pbf
-  rm -f data.osm.pbf
-  curl -L "$PBF_DATA" --create-dirs -o data.osm.pbf
+  rm -f "$syncDir/data.osm.pbf"
+  curl -L "$OSM_DATA_BASE_URL" --create-dirs -o "$syncDir/data.osm.pbf"
 
-#  sleep 3
-#  sync
-#  sleep 3
-#  service postgresql start && \
+  timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
+  lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
 
-    psql "$DB_URL" -c "CREATE ROLE \"nominatim\";" || true && \
-    psql "$DB_URL" -c "CREATE ROLE \"www-data\" NOSUPERUSER NOCREATEDB NOCREATEROLE;" || true && \
+#    psql "$DB_URL" -c "CREATE ROLE \"nominatim\";" || true && \
+#    psql "$DB_URL" -c "CREATE ROLE \"www-data\" NOSUPERUSER NOCREATEDB NOCREATEROLE;" || true && \
 
 #    psql "$DB_URL" -c "CREATE DATABASE IF NOT EXISTS nominatim" && \
 #    sudo -u postgres psql postgres -c "DROP DATABASE IF EXISTS nominatim" && \
@@ -45,7 +57,7 @@ if [ -z "$statusVal" ]; then
 #        | sed -r "s|.*createlang.*||" \
 #        > ./src/utils/setup-patched.php
 
-    ./src/utils/setup-patched.php --osm-file data.osm.pbf --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2
+    ./utils/setup-patched.php --osm-file "$syncDir/data.osm.pbf" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2
 
 # TODO osmosis init
 
@@ -54,7 +66,7 @@ if [ -z "$statusVal" ]; then
 fi
 
 
-./src/utils/update.php --import-osmosis-all --no-npi
+./utils/update-patched.php --import-osmosis-all --no-npi
 
 #service postgresql start
 #/usr/sbin/apache2ctl -D FOREGROUND

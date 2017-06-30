@@ -118,7 +118,7 @@
 		if (CONST_Postgresql_Version != $aMatches[1].'.'.$aMatches[2])
 		{
 			echo "ERROR: PostgreSQL version is not correct.  Expected ".CONST_Postgresql_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
-			exit;
+			//exit;
 		}
 
 
@@ -145,7 +145,7 @@
 		if (CONST_Postgis_Version != $aMatches[1].'.'.$aMatches[2])
 		{
 			echo "ERROR: PostGIS version is not correct.  Expected ".CONST_Postgis_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
-			exit;
+			//exit;
 		}
 
 		pgsqlRunScriptFile(CONST_BasePath.'/data/country_name.sql');
@@ -205,11 +205,15 @@ var_dump($aDSNInfo);
 		if (CONST_Tablespace_Place_Index)
 			$osm2pgsql .= ' --tablespace-main-index '.CONST_Tablespace_Place_Index;
 		$osm2pgsql .= ' -lsc -O gazetteer --hstore --number-processes 1';
-		$osm2pgsql .= ' -C '.$iCacheMemory;
-		$osm2pgsql .= ' -H '.$aDSNInfo['hostspec'];
-		$osm2pgsql .= ' -U '.$aDSNInfo['username'];
-		$osm2pgsql .= ' -P '.$aDSNInfo['port'];
-		$osm2pgsql .= ' -d '.$aDSNInfo['database'].' '.$aCMDResult['osm-file'];
+		$osm2pgsql .= ' -C ' . $iCacheMemory;
+
+		$osm2pgsql .= ' -H ' . $aDSNInfo['hostspec']
+                            . ' -U ' . $aDSNInfo['username']
+                            . ' -P ' . $aDSNInfo['port']
+                            . ' -d ' . $aDSNInfo['database']
+                            ;
+
+		$osm2pgsql .= ' ' . $aCMDResult['osm-file'];
 
 echo "osm2pgsql cmd: $osm2pgsql\n";
 		passthruCheckReturn($osm2pgsql);
