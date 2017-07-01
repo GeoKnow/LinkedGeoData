@@ -43,7 +43,7 @@ RUN cd ./src && git checkout "$NOMINATIM_VERSION"
 #  ./autogen.sh && ./configure && make
 
 
-RUN echo "force rebuild b5"
+RUN echo "force rebuild b6"
 
 # Nominatim create site
 
