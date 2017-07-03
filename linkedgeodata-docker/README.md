@@ -1,13 +1,38 @@
 ## How to use
-Before doing any docker related stuff, run make in order to initialize the repo.
-The make script is idempotent, so multiple calls are harmless.
+
+* First of all, set up [the docker engine](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) (make sure to select your OS) and [docker-compose](https://docs.docker.com/compose/install/)
+
+* Then, run make in order to initialize the repo. The make script is idempotent, so multiple calls are harmless.
 
 ```bash
 make
 ```
 
+* Run the following make command in order to set up docker volumes and network (in the future this step may be combined with the first one). For convenience, there is a `remove-resources` target which will attempt to delete these resources.
+
+```
+make create-resources
+# make remove-resources
+```
+
+* You may want to review and change settings in the [.env](.env) file.
+By default, the configuration will load the small monaco dataset and perform subsequent replication.
+Database memory parameters are can also be changed in this file.
+
+* Finally, start the services. The `-d` flag instructs all services to run in background (daemon) mode.
+Note, the first time this command is called will take several minutes and a good internet connection is recommended.
+```
+docker-compose up -d
+```
+
+## Services
+Once all containers are running, the following services will be available:
+
+* Nominatim: [http://localhost:8012]
+* Sparql Endpoint: [http://localhost:8013/sparql](http://localhost:8012/sparql)
 
 ## Notable quirks
+
 ### Nominatim setup
 The nominatim tool combines several unrelated tasks into one tool, which as of version 2.5.1, unfortunately does not support remote database setups out of the box.
 These tasks are:
