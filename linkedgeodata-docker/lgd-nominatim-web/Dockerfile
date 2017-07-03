@@ -15,7 +15,8 @@ RUN apt-get -y update --fix-missing && \
     postgresql postgis postgresql-contrib postgresql-9.3-postgis-2.1 \
     postgresql-server-dev-9.3 curl git autoconf-archive cmake python \
     lua5.1 liblua5.1-dev libluabind-dev \
-    osmosis && \
+    osmosis \
+    gettext-base && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/*
@@ -31,11 +32,17 @@ RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recurs
 
 
 # Nominatim create site
-COPY target/local.php ./src/settings/local.php
+COPY target/local.php.dist ./src/settings/
 RUN rm -rf /var/www/html/* && ./src/utils/setup.php --create-website /var/www/html
 
 # Apache configure
 COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+#ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+COPY start.sh ./start.sh
+
+RUN chmod +x ./start.sh && sleep 1
+ENTRYPOINT ./start.sh
+
 
