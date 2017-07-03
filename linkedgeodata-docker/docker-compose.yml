@@ -8,8 +8,6 @@ services:
       service: lgd-db-base
     build: ./lgd-db
     container_name: lgd-db
-    sysctls:
-      - kernel.shmmax=4294967296
     environment:
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_USER=${DB_USER}
@@ -20,6 +18,8 @@ services:
       - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
       - DB_WORK_MEM=${DB_WORK_MEM}
       - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
+    sysctls:
+      - kernel.shmmax=4294967296
     volumes:
       - lgd-db-vol:/var/lib/postgresql/data
     restart: always
@@ -58,6 +58,12 @@ services:
       lgd-db:
         condition: service_healthy
     restart: always
+    environment:
+      - POSTGRES_VERSION=${POSTGRES_VERSION}
+      - POSTGIS_VERSION=${POSTGIS_VERSION}
+      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     ports:
       - 8012:80
     networks:

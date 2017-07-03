@@ -31,9 +31,11 @@ RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recurs
   ./autogen.sh && ./configure && make
 
 
+RUN echo "force rebuild 2"
+
 # Nominatim create site
 COPY target/local.php.dist ./src/settings/
-RUN rm -rf /var/www/html/* && ./src/utils/setup.php --create-website /var/www/html
+#RUN rm -rf /var/www/html/* && ./src/utils/setup.php --create-website /var/www/html
 
 # Apache configure
 COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
