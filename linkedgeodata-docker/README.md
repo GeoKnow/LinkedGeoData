@@ -1,18 +1,18 @@
 ## How to use
 
-* First of all, set up [the docker engine](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) (make sure to select your OS) and [docker-compose](https://docs.docker.com/compose/install/)
-
-* Then, run make in order to initialize the repo. The make script is idempotent, so multiple calls are harmless.
-
-```bash
-make
-```
+* First of all, set up [the docker engine](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) (make sure to select your OS) and [docker-compose](https://docs.docker.com/compose/install/). Our docker setup requires support for docker-compose.yml version 2.1.
 
 * Run the following make command in order to set up docker volumes and network (in the future this step may be combined with the first one). For convenience, there is a `remove-resources` target which will attempt to delete these resources.
 
 ```
 make create-resources
 # make remove-resources
+```
+
+* Then, run make in order to initialize the repo. The make script is idempotent, so multiple calls are harmless.
+
+```bash
+make
 ```
 
 * You may want to review and change settings in the [.env](.env) file.
@@ -28,7 +28,7 @@ docker-compose up -d
 ## Services
 Once all containers are running, the following services will be available:
 
-* Nominatim: [http://localhost:8012]
+* Nominatim: [http://localhost:8012](http://localhost:8012)
 * Sparql Endpoint: [http://localhost:8013/sparql](http://localhost:8012/sparql)
 
 ## Notable quirks
