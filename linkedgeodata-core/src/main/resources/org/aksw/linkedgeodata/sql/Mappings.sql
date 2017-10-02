@@ -16,6 +16,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY lgd_map_datatype (k, datatype) FROM stdin;
+capacity	int
 recycling:scrap_metal	boolean
 undefined	int
 noexit	boolean
@@ -166,6 +167,15 @@ departures_board	boolean
 --
 
 COPY lgd_map_literal (k, property, language) FROM stdin;
+operator	http://linkedgeodata.org/ontology/operator	
+covered	http://linkedgeodata.org/ontology/covered	
+access	http://linkedgeodata.org/ontology/access	
+capacity	http://linkedgeodata.org/ontology/rawCapacity	
+fee	http://linkedgeodata.org/ontology/fee	
+bicycleParking	http://linkedgeodata.org/ontology/bicycleParking	
+cyclestreets_id	http://linkedgeodata.org/ontology/cycleStreetIds	
+maxstay	http://linkedgeodata.org/ontology/maxStay	
+surveillance	http://linkedgeodata.org/ontology/surveillance	
 castleType	http://linkedgeodata.org/ontology/castleType	
 postal_code	http://linkedgeodata.org/ontology/postalCode	
 post_code	http://linkedgeodata.org/ontology/postCode	
