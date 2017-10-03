@@ -20,6 +20,6 @@ remove-resources:
 	docker network rm lgd-net ; true
 	docker volume rm lgd-db-vol ; true
 	docker volume rm lgd-osm-sync-vol ; true
-	dockre volume rm lgd-nominatim-sync-vol ; true
+	docker volume rm lgd-nominatim-sync-vol ; true
 
 
