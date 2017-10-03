@@ -20,7 +20,7 @@ WORKDIR /app/linkedgeodata
 
 #RUN chmod +x init-lgd.sh && sleep 1
 
-ENTRYPOINT sparqlify -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -m "/usr/share/linkedgeodata/sml/LinkedGeoData-Triplify-IndividualViews.sml" -t 180 -n 50000
+ENTRYPOINT sparqlify -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -m "/usr/share/linkedgeodata/sml/LinkedGeoData-Triplify-IndividualViews.sml" $SPARQLIFY_OPTS
 
 
 EXPOSE 7531

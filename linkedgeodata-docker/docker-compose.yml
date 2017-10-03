@@ -103,6 +103,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
+      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
     ports:
       - 8013:7531
     depends_on:
