@@ -59,8 +59,8 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
 
   cd osm
   /usr/share/linkedgeodata/lgd-run-sync.sh
-elif
-	echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
+else
+  echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi
 
 

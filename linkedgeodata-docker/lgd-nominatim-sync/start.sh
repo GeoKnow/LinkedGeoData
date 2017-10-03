@@ -77,8 +77,8 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
   fi
 
   ./utils/update-patched.php --import-osmosis-all --no-npi
-elif
-	echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
+else
+  echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi
 
 
