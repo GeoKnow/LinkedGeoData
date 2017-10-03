@@ -172,7 +172,7 @@ covered	http://linkedgeodata.org/ontology/covered
 access	http://linkedgeodata.org/ontology/access	
 capacity	http://linkedgeodata.org/ontology/rawCapacity	
 fee	http://linkedgeodata.org/ontology/fee	
-bicycleParking	http://linkedgeodata.org/ontology/bicycleParking	
+bicycle_parking	http://linkedgeodata.org/ontology/bicycleParking	
 cyclestreets_id	http://linkedgeodata.org/ontology/cycleStreetIds	
 maxstay	http://linkedgeodata.org/ontology/maxStay	
 surveillance	http://linkedgeodata.org/ontology/surveillance	
