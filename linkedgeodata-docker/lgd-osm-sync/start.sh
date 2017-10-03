@@ -5,11 +5,6 @@ echo "lgd-osm-sync environment:"
 env | grep -i "osm\|db\|post"
 
 
-if [ -z "$OSM_DATA_SYNC_URL" ]; then
-        echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
-        exit 0
-fi
-
 # Check the database whether the data was loaded
 statusKey="lgd-osm-sync:status"
 
