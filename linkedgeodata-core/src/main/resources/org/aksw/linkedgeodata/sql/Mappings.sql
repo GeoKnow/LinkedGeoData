@@ -167,6 +167,7 @@ departures_board	boolean
 --
 
 COPY lgd_map_literal (k, property, language) FROM stdin;
+opening_hours	http://linkedgeodata.org/ontology/openingHours	
 operator	http://linkedgeodata.org/ontology/operator	
 covered	http://linkedgeodata.org/ontology/covered	
 access	http://linkedgeodata.org/ontology/access	
@@ -1855,6 +1856,7 @@ wheelchair	http://linkedgeodata.org/ontology/wheelchair
 
 COPY lgd_map_resource_prefix (k, property, object_prefix, post_processing) FROM stdin;
 email	http://xmlns.com/foaf/0.1/mbox	mailto:	none
+wikidata	http://linkedgeodata.org/ontology/wikidata	http://www.wikidata.org/entity/	none
 wheelchair	http://linkedgeodata.org/ontology/wheelchair	http://linkedgeodata.org/ontology/	ucamelize&urlencode
 religion	http://linkedgeodata.org/ontology/religion	http://linkedgeodata.org/ontology/	ucamelize&urlencode
 direction	http://linkedgeodata.org/ontology/direction	http://linkedgeodata.org/ontology/	ucamelize&urlencode

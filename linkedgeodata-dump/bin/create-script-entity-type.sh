@@ -1,1 +1,1 @@
-create-script-entity-type-sparql.sh
+create-script-entity-type-tool.sh

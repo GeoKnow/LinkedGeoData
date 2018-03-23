@@ -864,6 +864,48 @@ Create View lgd_relation_tags_uri_objects As
         lgd_relation_tags_property
 
 
+
+Create View lgd_node_tags_resource_prefix As
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:node, ?node_id))
+        ?p = uri(?property)
+        ?o = uri(concat(?object_prefix, ?v))
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/"
+    From
+        [[SELECT * FROM lgd_node_tags_resource_prefix WHERE post_processing='none']]
+
+Create View lgd_way_tags_resource_prefix As
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:way, ?way_id))
+        ?p = uri(?property)
+        ?o = uri(concat(?object_prefix, ?v))
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/"
+    From
+        [[SELECT * FROM lgd_way_tags_resource_prefix WHERE post_processing='none']]
+
+Create View lgd_relation_tags_resource_prefix As
+    Construct {
+        ?s ?p ?o .
+    }
+    With
+        ?s = uri(concat(lgd:relation, ?relation_id))
+        ?p = uri(?property)
+        ?o = uri(concat(?object_prefix, ?v))
+    Constrain
+        ?p prefix "http://linkedgeodata.org/ontology/"
+    From
+        [[SELECT * FROM lgd_relation_tags_resource_prefix WHERE post_processing='none']]
+
+
+
 /*
 
 // Classes and object properties (generic)
