@@ -21,13 +21,14 @@ defaultGraph="$protocol$host/$basename/"
 
 
 echo "# dcat distribution
-osmEntityType=$osmEntityType
-lgdClass=$lgdClass
-lgdClassDash=$lgdClassDash
-lgdClassIri=http://linkedgeodata.org/ontology/$lgdClass
-dcatDistributionIri=$dcatDistributionIri
-basename=$basename
-filename=$filename
-defaultGraph=$defaultGraph
+osmEntityType='$osmEntityType'
+description='RDF dataset containing OSM $osmEntityType of type $lgdClassDash'
+lgdClass='$lgdClass'
+lgdClassDash='$lgdClassDash'
+lgdClassIri='http://linkedgeodata.org/ontology/$lgdClass'
+dcatDistributionIri='$dcatDistributionIri'
+basename='$basename'
+filename='$filename'
+defaultGraph='$defaultGraph'
 "
 

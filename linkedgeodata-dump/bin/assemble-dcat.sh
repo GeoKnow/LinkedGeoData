@@ -1,6 +1,15 @@
 #/bin/bash
 
+echoerr() { echo "$@" 1>&2; }
+
 dcatContextFolder="$1"
+
+dcatDatasetContextFile="$dcatContextFolder/dcat.properties"
+
+if [ ! -f "$dcatDatasetContextFile" ]; then
+  echoerr "First argument must be a folder containing a dcat.properties file - got: $dcatContextFolder="
+  exit 1
+fi
 
 dcatDatasetContextFile="$dcatContextFolder/dcat.properties"
 
@@ -13,10 +22,10 @@ echo "
 
 <$dcatDatasetIri>
   a dcat:Dataset ;
-  dct:identifier \"$gav\" ;
+  dct:identifier \"$ckanId\" ;
   dct:title \"LinkedGeoData $datasetName $datasetDate\" ;
   dct:description \"LinkedGeoData RDF dump of $datasetName as of $datasetDate\" ;
-  dcat:defaultGraphGroup <$graph> ;
+  dcat:defaultGraphGroup <$defaultGraphGroup> ;
   .
 
 "
@@ -32,7 +41,7 @@ for dist in "$dcatContextFolder"/*.dist.properties; do
 
 <$dcatDistributionIri>
   a dcat:Distribution ;
-  dct:title \"$title\" ;
+  dct:title \"$basename\" ;
   dct:description \"$description\" ;
   dcat:downloadURL <$filename> ;
   dcat:defaultGraph <$defaultGraph> ;

@@ -1,7 +1,13 @@
-#/bin/bash
+#!/bin/bash
+
+echoerr() { echo "$@" 1>&2; }
 
 lgdClasses="$1"
 
+if [ ! -f "$lgdClasses" ]; then
+  echoerr "Error: First argument must a file containing class URI which to dump"
+  exit 1
+fi
 
 
 # Fetch dcat information ...
@@ -25,13 +31,18 @@ echo "$dcatDatasetContext" > "$dcatDatasetContextFile"
 
 # Create distribution contexts
 
+osmTypes=( "nodes" "ways" )
+
 while read lgdClass; do
-  dcatDistributionContext=`./create-dcat-distribution-context.sh "$dcatDatasetContextFile" nodes "$lgdClass"`
 
-  eval "$dcatDistributionContext"
+  for osmType in "${osmTypes[@]}"; do
+    dcatDistributionContext=`./create-dcat-distribution-context.sh "$dcatDatasetContextFile" "$osmType" "$lgdClass"`
 
-  dcatDistributionContextFile="$targetFolder/$basename.dist.properties"
-  echo "$dcatDistributionContext" > "$dcatDistributionContextFile"
+    eval "$dcatDistributionContext"
+
+    dcatDistributionContextFile="$targetFolder/$basename.dist.properties"
+    echo "$dcatDistributionContext" > "$dcatDistributionContextFile"
+  done
 
 done <"$lgdClasses"
 

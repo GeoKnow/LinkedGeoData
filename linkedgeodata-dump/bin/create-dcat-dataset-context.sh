@@ -31,6 +31,7 @@ artifactId="osm-$datasetName"
 version="$datasetDate"
 
 gav="$groupId:$artifactId:$version"
+ckanId=`echo "$gav" | sed 's|[.:]|-|g'`
 
 #datasetLocalName="$artifactId-$version"
 
@@ -55,19 +56,21 @@ dcatDatasetIri="${dcatBaseIri}dataset/$artifactId-$version"
 defaultGraphGroup="$protocol$host/$artifactId/$version/"
 
 echo "#dcat context properties
-datasetName=$datasetName
-dcatDatasetIri=$dcatDatasetIri
-defaultGraphGroup=$defaultGraphGroup
+datasetName='$datasetName'
+datasetDate='$datasetDate'
+dcatDatasetIri='$dcatDatasetIri'
+defaultGraphGroup='$defaultGraphGroup'
 
-protocol=$protocol
-groupId=$groupId
-artifactId=$artifactId
-version=$version
-host=$host
-gav=$gav
-dcatBaseIri=$dcatBaseIri
-dcatDatasetIri=$dcatDatasetIri
-defaultGraphGroup=$defaultGraphGroup
+protocol='$protocol'
+groupId='$groupId'
+artifactId='$artifactId'
+version='$version'
+host='$host'
+gav='$gav'
+ckanId='$ckanId'
+dcatBaseIri='$dcatBaseIri'
+dcatDatasetIri='$dcatDatasetIri'
+defaultGraphGroup='$defaultGraphGroup'
 "
 
 #echo "
