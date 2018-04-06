@@ -197,7 +197,7 @@ psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.
 # Create a status table and add the dataset name
 psql -h "$dbHost" -U "$dbUser" -d"$dbName" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text, \"v\" text, UNIQUE(\"k\", \"v\"));"
 
-statusKey="http://linkedgeodata.org/meta/osmDatasetName"
+statusKey="osmDatasetName"
 
 # Insert an entry that the datset was loaded (if not present already)
 statusVal=`psql -h "$dbHost" -U "$dbUser" -d"$dbName" -tc "SELECT \"v\" FROM \"status\" WHERE \"k\"='$statusKey' AND \"v\"='$datasetName'"`

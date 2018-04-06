@@ -41,6 +41,20 @@ Set defaultGraph = "http://linkedgeodata.org/osm/"
 
 
 /**********
+ * Status
+ **********/
+Create View status As
+  Construct {
+    <http://linkedgeodata.org/meta/status> ?p ?o .
+  }
+  With
+    ?p = uri(lgdm:, ?k)
+    ?o = plainLiteral(?v)
+  From
+    status
+
+
+/**********
  * Users
  **********/
 Create View users As
