@@ -158,6 +158,13 @@ interner_access	boolean
 bar	boolean
 openGeoDB:community_identification_number	int
 departures_board	boolean
+capacity:disabled    int
+capacity:women    int
+capacity:parent    int
+capacity:charging    int
+capacity:hgv    int
+capacity:bus    int
+capacity:car    int
 \.
 
 
@@ -979,6 +986,9 @@ amenity	wlan	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodat
 amenity	WLAN	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/WLAN
 amenity	youth_centre	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/YouthCentre
 amenity	youth_club	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/YouthClub
+capacity:disabled   no	        http://linkedgeodata.org/ontology/capacity#disabled   http://linkedgeodata.org/ontology/capacity#disabled_no
+capacity:disabled   number	http://linkedgeodata.org/ontology/capacity#disabled   http://linkedgeodata.org/ontology/capacity#disabled_number
+capacity:disabled   yes	        http://linkedgeodata.org/ontology/capacity#disabled   http://linkedgeodata.org/ontology/capacity#disabled_yes
 office	accountant	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AccountantOffice
 office	administrative	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AdministrativeOffice
 office	architect	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ArchitectOffice
@@ -1395,6 +1405,9 @@ building	train_station	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://li
 building	university	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingUniversity
 building	unknown	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BuildingUnknown
 building	yes	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Building
+fee	        no	http://linkedgeodata.org/ontology/fee   http://linkedgeodata.org/ontology/fee_no
+fee       	unknown	http://linkedgeodata.org/ontology/fee	http://linkedgeodata.org/ontology/fee_interval
+fee	        yes	http://linkedgeodata.org/ontology/fee	http://linkedgeodata.org/ontology/fee_yes
 historic	archaeological_site	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ArchaeologicalSite
 historic	battlefield 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Battlefield
 historic	boundary_stone 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/BoundaryStone
