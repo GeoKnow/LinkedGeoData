@@ -44,6 +44,7 @@ for dist in "$dcatContextFolder"/*.dist.properties; do
   dct:title \"$basename\" ;
   dct:description \"$description\" ;
   dcat:downloadURL <$filename> ;
+  dct:format \"RDF\" ;
   dcat:defaultGraph <$defaultGraph> ;
   .
 
