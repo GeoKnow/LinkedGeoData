@@ -76,14 +76,14 @@ $$
  ****************************************************************************/
 
 -- TODO: Potentially can be removed
-CREATE TABLE simple_polys (
-    way_id BIGINT PRIMARY KEY NOT NULL,
-    area float NOT NULL
-);
+--CREATE TABLE simple_polys (
+--    way_id BIGINT PRIMARY KEY NOT NULL,
+--    area float NOT NULL
+--);
 
 -- TODO: Not Null constraint
-SELECT AddGeometryColumn('simple_polys', 'polygon', 4326, 'GEOMETRY', 2);
-CREATE INDEX idx_simple_polys_polygon ON simple_polys USING GIST(polygon);
+--SELECT AddGeometryColumn('simple_polys', 'polygon', 4326, 'GEOMETRY', 2);
+--CREATE INDEX idx_simple_polys_polygon ON simple_polys USING GIST(polygon);
 
 
 DROP TYPE IF EXISTS lgd_datatype;
@@ -305,11 +305,11 @@ CREATE INDEX "idx_lgd_relation_interlinks_o" ON "lgd_relation_interlinks"("o");
 
 
 
-CREATE TABLE lgd_relation_geoms(
-    relation_id BIGINT PRIMARY KEY NOT NULL
+--CREATE TABLE lgd_relation_geoms(
+--    relation_id BIGINT PRIMARY KEY NOT NULL
 --    geom geometry NOT NULL
-)
-;
+--)
+--;
 
-SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
-CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);
+--SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
+--CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);

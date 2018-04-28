@@ -14,9 +14,18 @@
 --   SELECT f.k FROM lgd_map_property f WHERE f.k = a.k UNION ALL
 --   SELECT g.k FROM lgd_map_resource_prefix g WHERE g.k = a.k;
 
+
+
 /****************************************************************************
  * nodes                                                                    *
  ****************************************************************************/
+
+/* This view is an extension point and can be replaced with ones for better geometries */
+DROP VIEW IF EXISTS lgd_nodes_geometry;
+CREATE VIEW lgd_nodes_geometry AS
+  SELECT id, geom
+   FROM nodes;
+
 
 DROP VIEW IF EXISTS lgd_node_tags_boolean;
 CREATE VIEW lgd_node_tags_boolean AS
@@ -179,6 +188,12 @@ CREATE VIEW lgd_node_tags_resource_prefix AS
  * ways                                                                     *
  ****************************************************************************/
 
+/* This view is an extension point and can be replaced with ones for better geometries */
+DROP VIEW IF EXISTS lgd_ways_geometry;
+CREATE VIEW lgd_ways_geometry AS
+  SELECT id, linestring AS geom
+   FROM ways;
+
 DROP VIEW IF EXISTS lgd_way_tags_boolean;
 CREATE VIEW lgd_way_tags_boolean AS
   SELECT a.way_id, b.property, lgd_tryparse_boolean(a.v) AS v
@@ -325,6 +340,11 @@ CREATE OR REPLACE VIEW lgd_way_tags_property AS
 /****************************************************************************
  * relations                                                                *
  ****************************************************************************/
+DROP VIEW IF EXISTS lgd_relations_geometry;
+CREATE VIEW lgd_relations_geometry AS
+  SELECT NULL::bigint AS id, NULL::geometry WHERE false;
+
+
 DROP VIEW IF EXISTS lgd_relation_tags_boolean;
 CREATE VIEW lgd_relation_tags_boolean AS
   SELECT a.relation_id, b.property, lgd_tryparse_boolean(a.v) AS v

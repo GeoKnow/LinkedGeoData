@@ -304,7 +304,6 @@ Create View property_boolean As
  * Nodes
  *************/
 
-
 // Node geometries
 Create View lgd_nodes As
     Construct {
@@ -314,10 +313,6 @@ Create View lgd_nodes As
         ?n dcterms:contributor ?u .
         ?n dcterms:modified ?d .
         ?n lgdo:changeset ?c .
-        ?n geom:geometry ?g .
-
-        ?g a geom:Geometry .
-        ?g ogc:asWKT ?o .
 
         ?n wgs:long ?xx .
         ?n wgs:lat ?yy .
@@ -330,8 +325,6 @@ Create View lgd_nodes As
         ?u = uri(concat(lgd:user, ?user_id))
         ?d = typedLiteral(?tstamp, xsd:dateTime)
         ?c = typedLiteral(?changeset_id, xsd:int)
-        ?g = uri(concat(lgd-geom:node, ?id))
-        ?o = typedLiteral(?geom, ogc:wktLiteral)
         //?g = typedLiteral(?geom, virtrdf:geometry)
         ?xx = typedLiteral(?x, xsd:double)
         ?yy = typedLiteral(?y, xsd:double)
@@ -340,6 +333,21 @@ Create View lgd_nodes As
 
     From
         [[SELECT *, ST_X(geom::geometry) x, ST_Y(geom::geometry) y, ST_X(geom::geometry)::float4::text x_text, ST_Y(geom::geometry)::float4::text y_text FROM nodes]];
+
+
+Create View lgd_nodes_geometry As
+    Construct {
+        ?n geom:geometry ?g .
+
+        ?g a geom:Geometry .
+        ?g ogc:asWKT ?o .
+    }
+    With
+        ?n = uri(concat(lgd:node, ?id))
+        ?g = uri(concat(lgd-geom:node, ?id))
+        ?o = typedLiteral(?geom, ogc:wktLiteral)
+    From
+      lgd_nodes_geometry
 
 
 /*
@@ -500,7 +508,6 @@ Create View lgd_ways As
         ?w dcterms:contributor ?u .
         ?w dcterms:modified ?d .
         ?w lgdo:changeset ?c .
-        ?w geom:geometry ?g .
     }
     With
         ?w = uri(concat(lgd:way, ?id))
@@ -513,6 +520,22 @@ Create View lgd_ways As
     From
         ways;
 
+Create View lgd_ways_geometry As
+    Construct {
+        ?w geom:geometry ?g .
+
+        ?g a geom:Geometry .
+        ?g ogc:asWKT ?o .
+    }
+    With
+        ?w = uri(concat(lgd:way, ?id))
+        ?g = uri(concat(lgd-geom:way, ?id))
+        ?o = typedLiteral(?geom, ogc:wktLiteral)
+    From
+      lgd_ways_geometry
+
+
+/*
 Create View lgd_ways_linestrings As
     Construct {
         ?w a geom:Geometry .
@@ -524,6 +547,7 @@ Create View lgd_ways_linestrings As
         ?g = typedLiteral(?linestring, ogc:wktLiteral)
     From
         [[SELECT id, linestring FROM ways a WHERE a.id NOT IN (SELECT way_id FROM simple_polys)]];
+*/
 
 
 Create View ways_polygons As
@@ -738,6 +762,22 @@ Create View lgd_relations As
         relations
         //[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]];
 
+Create View lgd_relations_geometry As
+    Construct {
+        ?s geom:geometry ?g .
+
+        ?g a geom:Geometry .
+        ?g ogc:asWKT ?o .
+    }
+    With
+        ?w = uri(lgd:relation, ?id)
+        ?g = uri(lgd-geom:relation, ?id)
+        ?o = typedLiteral(?geom, ogc:wktLiteral)
+    From
+      lgd_relations_geometry
+
+
+/*
 Create View lgd_relation_geoms As
   Construct {
     ?s geom:geometry ?g .
@@ -751,7 +791,7 @@ Create View lgd_relation_geoms As
     ?o = typedLiteral(?geom, ogc:wktLiteral)
   From
     lgd_relation_geoms
-
+*/
 
 Create View lgd_relation_members_all As
   Construct {

@@ -4,7 +4,7 @@
 
     <groupId>org.aksw.linkedgeodata</groupId>
     <artifactId>linkedgeodata-parent</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>0.4.2-SNAPSHOT</version>
 
     <name>LinkedGeoData - Parent</name>
     <description>linkedgeodata.org - Adding a spatial dimension to the Web of Data.</description>
