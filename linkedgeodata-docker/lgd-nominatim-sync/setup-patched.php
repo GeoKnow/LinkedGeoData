@@ -127,14 +127,14 @@
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Contrib.'/hstore.sql');
 			pgsqlRunScriptFile(CONST_BasePath.'/sql/hstore_compatability_9_0.sql');
 		} else {
-			pgsqlRunScript('CREATE EXTENSION hstore');
+			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS hstore');
 		}
 
 		if ($fPostgisVersion < 2.0) {
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Postgis.'/postgis.sql');
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Postgis.'/spatial_ref_sys.sql');
 		} else {
-			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS postgis');
+			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS postgis', false);
 		}
 		if ($fPostgisVersion < 2.1) {
 			// Function was renamed in 2.1 and throws an annoying deprecation warning

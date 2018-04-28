@@ -18,10 +18,6 @@ Prefix lgdm:<http://linkedgeodata.org/meta/>
 
 Prefix geom:<http://geovocab.org/geometry#>
 
-
-/**********
- * Status
- **********/
 Create View placex_nodes As
   Construct {
     ?n
@@ -41,7 +37,7 @@ Create View placex_nodes As
   From
     [[SELECT * FROM placex WHERE osm_type = 'N']]
 
-Create View placex_nodes As
+Create View placex_ways As
   Construct {
     ?n
       a lgdm:Way ;
@@ -60,7 +56,7 @@ Create View placex_nodes As
   From
     [[SELECT * FROM placex WHERE osm_type = 'W']]
 
-Create View placex_nodes As
+Create View placex_relations As
   Construct {
     ?n
       a lgdm:Relation ;

@@ -340,9 +340,9 @@ CREATE OR REPLACE VIEW lgd_way_tags_property AS
 /****************************************************************************
  * relations                                                                *
  ****************************************************************************/
-DROP VIEW IF EXISTS lgd_relations_geometry;
-CREATE VIEW lgd_relations_geometry AS
-  SELECT NULL::bigint AS id, NULL::geometry WHERE false;
+--DROP VIEW IF EXISTS lgd_relations_geometry;
+--CREATE VIEW lgd_relations_geometry AS
+--  SELECT NULL::bigint AS id, NULL::geometry AS geom WHERE false;
 
 
 DROP VIEW IF EXISTS lgd_relation_tags_boolean;
@@ -453,9 +453,9 @@ DROP VIEW IF EXISTS lgd_relation_tags_resource_kv;
 CREATE VIEW lgd_relation_tags_resource_kv AS
   SELECT a.relation_id, b.property, b.object
    FROM relation_tags a
-   JOIN lgd_map_resource_kv b ON (b.k, b.v) = (a.k, a.v)
- WHERE
-  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
+   JOIN lgd_map_resource_kv b ON (b.k, b.v) = (a.k, a.v);
+-- WHERE
+--  b.k NOT IN (SELECT c.k FROM lgd_map_datatype c);
 
 
 DROP VIEW IF EXISTS lgd_relation_tags_resource_kd;

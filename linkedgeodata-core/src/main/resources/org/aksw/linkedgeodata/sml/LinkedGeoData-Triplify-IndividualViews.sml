@@ -516,7 +516,6 @@ Create View lgd_ways As
         ?d = typedLiteral(?tstamp, xsd:dateTime)
         ?c = typedLiteral(?changeset_id, xsd:int)
         //?g = typedLiteral(?geom, virtrdf:geometry)
-        ?g = uri(concat(lgd-geom:way, ?id))
     From
         ways;
 
@@ -550,6 +549,7 @@ Create View lgd_ways_linestrings As
 */
 
 
+/*
 Create View ways_polygons As
     Construct {
         ?w a geom:Geometry .
@@ -561,7 +561,7 @@ Create View ways_polygons As
         ?g = typedLiteral(?polygon, ogc:wktLiteral)
     From
         simple_polys;
-
+*/
 
 
 /*
@@ -762,6 +762,7 @@ Create View lgd_relations As
         relations
         //[[SELECT id, version, user_id, tstamp, changeset_id FROM relations]];
 
+/*
 Create View lgd_relations_geometry As
     Construct {
         ?s geom:geometry ?g .
@@ -770,12 +771,12 @@ Create View lgd_relations_geometry As
         ?g ogc:asWKT ?o .
     }
     With
-        ?w = uri(lgd:relation, ?id)
+        ?s = uri(lgd:relation, ?id)
         ?g = uri(lgd-geom:relation, ?id)
         ?o = typedLiteral(?geom, ogc:wktLiteral)
     From
       lgd_relations_geometry
-
+*/
 
 /*
 Create View lgd_relation_geoms As
