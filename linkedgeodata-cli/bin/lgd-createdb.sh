@@ -29,7 +29,9 @@ where:
     -U  postgres user name
     -W  password !!!will be added to ~/.pgpass if not exists!!!
     -f  the OSM file to load (must have one of these extensions: ${!extToReadMode[@]})
-    -n  dataset name (will be used e.g in the file names of dumps)"
+    -n  dataset name (will be used e.g in the file names of dumps)
+    -N  no nominatim - skip nominatim setup
+"
 
 #
 # Hard coded profile paths, with folder precedence order: local > home > etc
@@ -71,6 +73,8 @@ while getopts "?h:U:W:d:f:P:n:" opt; do
         f)  osmFile="$OPTARG"
             ;;
         n)  datasetName="$OPTARG"
+            ;;
+        N)  noNominatim=true
             ;;
 	P)  profileName="$OPTARG"
             profileFile="/etc/sparqlify/profiles.d/${profileName}.conf"
@@ -239,28 +243,30 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sq
 
 # Perform Nominatim upgrade
 
-# Create a copy of the nominatim setup
-nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
+if ! $noNominatim; then
 
-nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
+  # Create a copy of the nominatim setup
+  nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
 
-echoerr "Create copy of nominatim at $nominatimFolder"
+  nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
 
-cp -rf "$nominatimSource"/* "$nominatimFolder"
+  echoerr "Create copy of nominatim at $nominatimFolder"
 
-
-#cd "$nominatimFolder"
-
-#Update settings
-export POSTGRES_VERSION=9.5
-export POSTGIS_VERSION=2.3
-export DB_URL="pgsql://$dbUser:$dbPass@$dbHost:$dbPort/$dbName"
-
-cat "$nominatimFolder/settings/local.php.dist" | envsubst > "$nominatimFolder/settings/local.php"
-
-(cd "$nominatimFolder" && ./utils/setup-patched.php --osm-file "$osmFile" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2)
-
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3-Nominatim.sql"
+  cp -rf "$nominatimSource"/* "$nominatimFolder"
 
 
+  #cd "$nominatimFolder"
+
+  #Update settings
+  export POSTGRES_VERSION=9.5
+  export POSTGIS_VERSION=2.3
+  export DB_URL="pgsql://$dbUser:$dbPass@$dbHost:$dbPort/$dbName"
+
+  cat "$nominatimFolder/settings/local.php.dist" | envsubst > "$nominatimFolder/settings/local.php"
+
+  (cd "$nominatimFolder" && ./utils/setup-patched.php --osm-file "$osmFile" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2)
+
+  psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3-Nominatim.sql"
+
+fi
 
