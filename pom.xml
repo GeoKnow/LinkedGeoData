@@ -1,364 +1,382 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.aksw.linkedgeodata</groupId>
-    <artifactId>linkedgeodata-parent</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+	<groupId>org.aksw.linkedgeodata</groupId>
+	<artifactId>linkedgeodata-parent</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
 
-    <name>LinkedGeoData - Parent</name>
-    <description>linkedgeodata.org - Adding a spatial dimension to the Web of Data.</description>
-    <packaging>pom</packaging>
+	<name>LinkedGeoData - Parent</name>
+	<description>linkedgeodata.org - Adding a spatial dimension to the Web of Data.</description>
+	<packaging>pom</packaging>
 
-    <scm>
-        <connection>scm:git:git@github.com:GeoKnow/LinkedGeoData.git</connection>
-        <tag>HEAD</tag>
-    </scm>
-
-
-    <developers>
-        <developer>
-            <name>Claus Stadler</name>
-            <email>cstadler@informatik.uni-leipzig.de</email>
-            <roles>
-                <role>lead developer</role>
-            </roles>
-            <organizationUrl>http://aksw.org</organizationUrl>
-        </developer>
-    </developers>
-
-    <modules>
-        <!-- core module is broken, and actually there is no real need for a REST
-            API anyway -->
-        <module>linkedgeodata-core</module>
-        <module>linkedgeodata-cli</module>
-        <module>linkedgeodata-debian</module>
-    </modules>
-
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-
-        <!-- project defaults -->
-        <!-- <java.version>1.6</java.version> -->
-        <java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
-        <file.encoding>UTF-8</file.encoding>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<scm>
+		<connection>scm:git:git@github.com:GeoKnow/LinkedGeoData.git</connection>
+		<tag>HEAD</tag>
+	</scm>
 
 
-        <jersey.version>1.8</jersey.version>
-        <spring.version>4.1.4.RELEASE</spring.version>
+	<developers>
+		<developer>
+			<name>Claus Stadler</name>
+			<email>cstadler@informatik.uni-leipzig.de</email>
+			<roles>
+				<role>lead developer</role>
+			</roles>
+			<organizationUrl>http://aksw.org</organizationUrl>
+		</developer>
+	</developers>
 
-        <jena-sparql-api.version>3.3.0-1</jena-sparql-api.version>
+	<modules>
+		<!-- core module is broken, and actually there is no real need for a REST 
+			API anyway -->
+		<module>linkedgeodata-core</module>
+		<module>linkedgeodata-cli</module>
+		<module>linkedgeodata-debian</module>
+<!-- This module should only be built if explicitly required as downloading nominatim takes a while
+Also, its only needed to build the jar that contains nominatim - once it is deployed/installed, one can used this artifact from the local maven repo
+-->
+<!--		<module>linkedgeodata-nominatim-core</module> -->
+		<module>linkedgeodata-debian-nominatim</module>
+	</modules>
 
-        <!-- <aksw.commons.version>0.5-SNAPSHOT</aksw.commons.version> -->
-    </properties>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 
-    <build>
-
-        <plugins>
-            <!-- That's a sledge hammer solution - but at least it works ... -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <arguments>-P!source-artifacts</arguments>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <goals>-Dmaven.test.skip=true deploy</goals>
-                </configuration>
-            </plugin>
-
-            <!--Maven Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- <plugin> -->
-            <!-- <groupId>org.mortbay.jetty</groupId> -->
-            <!-- <artifactId>jetty-maven-plugin</artifactId> -->
-            <!-- <version>8.1.6.v20120903</version> -->
-            <!-- <configuration> -->
-            <!-- <systemProperties> -->
-            <!-- <systemProperty> -->
-            <!-- <name>jetty.port</name> -->
-            <!-- <value>8080</value> -->
-            <!-- </systemProperty> -->
-            <!-- </systemProperties> -->
-            <!-- <reload>manual</reload> -->
-            <!-- </configuration> -->
-            <!-- </plugin> -->
-
-            <plugin>
-                <groupId>org.codehaus.groovy.maven</groupId>
-                <artifactId>gmaven-plugin</artifactId>
-                <version>1.0</version>
-            </plugin>
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>surefire-report-maven-plugin</artifactId>
-                <version>2.0-beta-1</version> </plugin> -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.3</version>
-                <configuration>
-                    <skipTests>false</skipTests>
-                </configuration>
-            </plugin>
-
-        </plugins>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>2.4.3</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>shade</goal>
-                            </goals>
-                            <configuration>
-                                <createDependencyReducedPom>false</createDependencyReducedPom>
-                                <shadedArtifactAttached>true</shadedArtifactAttached>
-                                <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-                                <attach>false</attach>
-                                <descriptorRefs>
-                                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                                </descriptorRefs>
-                                <filters>
-                                    <filter>
-                                        <artifact>*:*</artifact>
-                                        <excludes>
-                                            <exclude>META-INF/*.SF</exclude>
-                                            <exclude>META-INF/*.DSA</exclude>
-                                            <exclude>META-INF/*.RSA</exclude>
-                                        </excludes>
-                                    </filter>
-                                </filters>
-                                <transformers>
-                                    <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                                </transformers>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
-
-    </build>
-
-    <repositories>
-        <repository>
-            <id>maven.aksw.internal</id>
-            <name>University Leipzig, AKSW Maven Internal Repository</name>
-            <url>http://maven.aksw.org/repository/internal</url>
-        </repository>
-
-        <repository>
-            <id>maven.aksw.snapshot</id>
-            <name>University Leipzig, AKSW Maven Snapshot Repository</name>
-            <url>http://maven.aksw.org/repository/snapshots</url>
-        </repository>
-
-        <repository>
-            <id>org.topbraid</id>
-            <url>http://topquadrant.com/repository/spin</url>
-        </repository>
-    </repositories>
+		<!-- project defaults -->
+		<!-- <java.version>1.6</java.version> -->
+		<java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
+		<file.encoding>UTF-8</file.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.aksw.linkedgeodata</groupId>
-                <artifactId>linkedgeodata-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+		<jersey.version>1.8</jersey.version>
+		<spring.version>4.1.4.RELEASE</spring.version>
 
-            <dependency>
-                <groupId>org.aksw.linkedgeodata</groupId>
-                <artifactId>linkedgeodata-cli</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+		<jena-sparql-api.version>3.3.0-1</jena-sparql-api.version>
 
-            <!-- <dependency> -->
-            <!-- <groupId>org.aksw.sparqlify</groupId> -->
-            <!-- <artifactId>sparqlify-core</artifactId> -->
-            <!-- <version>0.6.5-SNAPSHOT</version> -->
-            <!-- <type>jar</type> -->
-            <!-- <scope>compile</scope> -->
-            <!-- </dependency> -->
+		<!-- <aksw.commons.version>0.5-SNAPSHOT</aksw.commons.version> -->
+	</properties>
 
-            <dependency>
-                <groupId>org.aksw.jena-sparql-api</groupId>
-                <artifactId>jena-sparql-api-server-standalone</artifactId>
-                <version>${jena-sparql-api.version}</version>
-            </dependency>
+	<build>
+		<plugins>
+			<!-- That's a sledge hammer solution - but at least it works ... -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<arguments>-P!source-artifacts</arguments>
+					<useReleaseProfile>false</useReleaseProfile>
+					<goals>-Dmaven.test.skip=true deploy</goals>
+				</configuration>
+			</plugin>
 
-            <dependency>
-                <groupId>org.aksw.jena-sparql-api</groupId>
-                <artifactId>jena-sparql-api-web</artifactId>
-                <version>${jena-sparql-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aksw.jena-sparql-api</groupId>
-                <artifactId>jena-sparql-api-core</artifactId>
-                <version>${jena-sparql-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aksw.jena-sparql-api</groupId>
-                <artifactId>jena-sparql-api-cache-h2</artifactId>
-                <version>${jena-sparql-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${spring.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>8.4-701.jdbc4</version>
-                <!-- <version>9.3-1100-jdbc41</version> -->
-            </dependency>
-
-            <dependency>
-                <groupId>commons-cli</groupId>
-                <artifactId>commons-cli</artifactId>
-                <version>1.2</version>
-            </dependency>
+			<!--Maven Compiler Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
 
 
-            <dependency>
-                <groupId>org.openstreetmap.osmosis</groupId>
-                <artifactId>osmosis-core</artifactId>
-                <version>0.43.1</version>
-            </dependency>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <dependency>
-                <groupId>com.jolbox</groupId>
-                <artifactId>bonecp</artifactId>
-                <version>0.8.0.RELEASE</version>
-            </dependency>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>1</version>
-            </dependency>
+			<!-- <plugin> -->
+			<!-- <groupId>org.mortbay.jetty</groupId> -->
+			<!-- <artifactId>jetty-maven-plugin</artifactId> -->
+			<!-- <version>8.1.6.v20120903</version> -->
+			<!-- <configuration> -->
+			<!-- <systemProperties> -->
+			<!-- <systemProperty> -->
+			<!-- <name>jetty.port</name> -->
+			<!-- <value>8080</value> -->
+			<!-- </systemProperty> -->
+			<!-- </systemProperties> -->
+			<!-- <reload>manual</reload> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 
-            <!-- Gson: Java to Json conversion -->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.2.2</version>
-            </dependency>
+			<plugin>
+				<groupId>org.codehaus.groovy.maven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>1.0</version>
+			</plugin>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>surefire-report-maven-plugin</artifactId> 
+				<version>2.0-beta-1</version> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.3</version>
+				<configuration>
+					<skipTests>false</skipTests>
+				</configuration>
+			</plugin>
 
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>2.4</version>
-            </dependency>
+			<plugin>
+				<artifactId>jdeb</artifactId>
+				<groupId>org.vafer</groupId>
+				<version>1.5</version>
+			</plugin>
 
-            <dependency>
-                <groupId>org.topbraid</groupId>
-                <artifactId>spin</artifactId>
-                <version>2.0.0</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.jena</groupId>
-                        <artifactId>jena-arq</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+		</plugins>
 
-            <dependency>
-                <groupId>com.beust</groupId>
-                <artifactId>jcommander</artifactId>
-                <version>1.72</version>
-            </dependency>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.4.3</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<createDependencyReducedPom>false</createDependencyReducedPom>
+								<shadedArtifactAttached>true</shadedArtifactAttached>
+								<shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+								<attach>false</attach>
+								<descriptorRefs>
+									<descriptorRef>jar-with-dependencies</descriptorRef>
+								</descriptorRefs>
+								<filters>
+									<filter>
+										<artifact>*:*</artifact>
+										<excludes>
+											<exclude>META-INF/*.SF</exclude>
+											<exclude>META-INF/*.DSA</exclude>
+											<exclude>META-INF/*.RSA</exclude>
+										</excludes>
+									</filter>
+								</filters>
+								<transformers>
+									<transformer
+										implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								</transformers>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.10</version>
-            </dependency>
+			</plugins>
+		</pluginManagement>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.10</version>
-            </dependency>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<name>University Leipzig, AKSW Maven Internal Repository</name>
+			<url>http://maven.aksw.org/repository/internal</url>
+		</repository>
+
+		<repository>
+			<id>maven.aksw.snapshot</id>
+			<name>University Leipzig, AKSW Maven Snapshot Repository</name>
+			<url>http://maven.aksw.org/repository/snapshots</url>
+		</repository>
+
+		<repository>
+			<id>org.topbraid</id>
+			<url>http://topquadrant.com/repository/spin</url>
+		</repository>
+	</repositories>
 
 
-        </dependencies>
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>maven.aksw.internal</id>
-            <name>AKSW Internal Release Repository</name>
-            <url>http://maven.aksw.org/archiva/repository/internal</url>
-        </repository>
+			<dependency>
+				<groupId>org.aksw.linkedgeodata</groupId>
+				<artifactId>linkedgeodata-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-        <snapshotRepository>
-            <id>maven.aksw.snapshots</id>
-            <name>AKSW Snapshot Repository</name>
-            <url>http://maven.aksw.org/archiva/repository/snapshots</url>
-        </snapshotRepository>
+			<dependency>
+				<groupId>org.aksw.linkedgeodata</groupId>
+				<artifactId>linkedgeodata-cli</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-    </distributionManagement>
+			<dependency>
+				<groupId>org.aksw.linkedgeodata</groupId>
+				<artifactId>linkedgeodata-nominatim-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- <dependency> -->
+			<!-- <groupId>org.aksw.sparqlify</groupId> -->
+			<!-- <artifactId>sparqlify-core</artifactId> -->
+			<!-- <version>0.6.5-SNAPSHOT</version> -->
+			<!-- <type>jar</type> -->
+			<!-- <scope>compile</scope> -->
+			<!-- </dependency> -->
+
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-server-standalone</artifactId>
+				<version>${jena-sparql-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-web</artifactId>
+				<version>${jena-sparql-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-core</artifactId>
+				<version>${jena-sparql-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-cache-h2</artifactId>
+				<version>${jena-sparql-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>8.4-701.jdbc4</version>
+				<!-- <version>9.3-1100-jdbc41</version> -->
+			</dependency>
+
+			<dependency>
+				<groupId>commons-cli</groupId>
+				<artifactId>commons-cli</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.openstreetmap.osmosis</groupId>
+				<artifactId>osmosis-core</artifactId>
+				<version>0.43.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.jolbox</groupId>
+				<artifactId>bonecp</artifactId>
+				<version>0.8.0.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>1</version>
+			</dependency>
+
+			<!-- Gson: Java to Json conversion -->
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.2.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.topbraid</groupId>
+				<artifactId>spin</artifactId>
+				<version>2.0.0</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.jena</groupId>
+						<artifactId>jena-arq</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.beust</groupId>
+				<artifactId>jcommander</artifactId>
+				<version>1.72</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.10</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.7.10</version>
+			</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<name>AKSW Internal Release Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+		</snapshotRepository>
+
+	</distributionManagement>
 
 </project>
