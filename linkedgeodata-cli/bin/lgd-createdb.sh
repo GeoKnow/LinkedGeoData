@@ -243,7 +243,7 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sq
 
 # Perform Nominatim upgrade
 
-if ! $noNominatim; then
+if ! [ "$noNominatim" = true]; then
 
   # Create a copy of the nominatim setup
   nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
