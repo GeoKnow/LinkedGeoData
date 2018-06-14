@@ -1,0 +1,10 @@
+sparqlify-tool -P lgd-foo "construct where { <http://linkedgeodata.org/meta/status> <http://linkedgeodata.org/meta/osmDatasetName> ?o }"
+
+
+# get last date
+sparqlify-tool -P lgd-foo "CONSTRUCT WHERE { ?s <http://purl.org/dc/terms/modified> ?o } ORDER BY DESC(?o) LIMIT 1" | awk -F '"' '{ print $2 }'
+
+
+date -d'2018-04-04T17:55:21' '+%Y-%m-%d'
+
+

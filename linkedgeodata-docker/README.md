@@ -29,7 +29,7 @@ docker-compose up -d
 Once all containers are running, the following services will be available:
 
 * Nominatim: [http://localhost:8012](http://localhost:8012)
-* Sparql Endpoint: [http://localhost:8013/sparql](http://localhost:8012/sparql)
+* Sparql Endpoint: [http://localhost:8013/sparql](http://localhost:8013/sparql)
 
 ## Notable quirks
 

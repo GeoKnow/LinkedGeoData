@@ -9,6 +9,9 @@ path="$5"
 # TODO Seems like this kind of xargs parallelism doesn't work :/
 [ -z "$parallel" ] && parallel="1"
 
+[ -z "$folder" ] && folder=`date +%F`
+[ -z "$path" ] && path="../target/dump/"
+
 script=`mktemp`
 echoerr "Created script at: $script" 
 echoerr "Parallel: $parallel"

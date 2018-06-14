@@ -12,154 +12,163 @@ SET escape_string_warning = off;
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: lgd_map_datatype_k; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: lgd_map_datatype; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY lgd_map_datatype (k, datatype) FROM stdin;
-capacity	int
-recycling:scrap_metal	boolean
-undefined	int
-noexit	boolean
-cables	int
-cutting	boolean
-tunnel	boolean
-wheelchair	boolean
-by_night	boolean
-charge	boolean
-verified	boolean
-alternate	boolean
-mooring	boolean
-ref:fgkz	int
-boat	boolean
-dispensing	boolean
-fuel:diesel	boolean
-recycling:shoes	boolean
-payment:electronic_purses	boolean
-frequency	float
-taxi	boolean
-minspeed	int
-payment:notes	boolean
-ruins	boolean
-fuel:HGV_diesel	boolean
-recycling:cans	boolean
-game:patrizier2:tuch	int
-uic_ref	int
-snowmobile	boolean
-atm	boolean
-level	boolean
-family_spaces	int
-recycling:glass	boolean
-payment:coins	boolean
-horse	boolean
-park_ride	boolean
-lit	boolean
-permissive	boolean
-osmarender:renderRef	boolean
-oneway:bicycle	boolean
-openGeoDB:loc_id	int
-toilet	boolean
-ele	float
-step_count	int
-fuel:octane_91	boolean
-segregated	boolean
-traffic_signals:sound	boolean
-payment:bob	boolean
-game:patrizier2:bier	int
-gauge	int
-osmarender:renderName	boolean
-StrVz	int
-lanes	int
-recycling:green_waste	boolean
-ncn	boolean
-motorroad	boolean
-opengeodb:lon	float
-game:patrizier2:ziegel	int
-asb	int
-erected	int
-TMC:cid_58:tabcd_1:NextLocationCode	int
-payment:geldkarte	boolean
-recycling:glass_bottles	boolean
-fuel:GTL_diesel	boolean
-payment:debit_cards	boolean
-game:patrizier2:wolle	boolean
-onkz	int
-bench	boolean
-maxweight	float
-VzG	int
-fenced	boolean
-seats	int
-tracks	int
-opengeodb:lat	float
-openGeoDB:layer	int
-recycling:paper	boolean
-fuel:octane_95	boolean
-video	boolean
-game:patrizier2:eisenwaren	int
-fuel:octane_98	boolean
-fuel:cng	boolean
-bus	boolean
-stars	int
-backrest	boolean
-public	boolean
-oneway	boolean
-blz	int
-disused	boolean
-maxwidth	int
-game:patrizier2:eisenerz	boolean
-bin	boolean
-admin_level	int
-unisex	boolean
-recycling:batteries	boolean
-recycling:paper_packaging	boolean
-bridge	boolean
-build	int
-via	boolean
-agricultural	boolean
-rail	boolean
-tactile_paving	boolean
-fuel:lpg	boolean
-tram	boolean
-payment:geltkarte	boolean
-fuel:octane_100	boolean
-waterway:lock:height	int
-maxspeed	int
-payment:credit_cards	boolean
-recycling:plastic	boolean
-rcn	boolean
-TMC:cid_58:tabcd_1:LCLversion	float
-board_type	boolean
-embankment	boolean
-diaper	boolean
-maxheight	float
-maxlength	int
-monument	boolean
-openGeoDB:population	int
-sms	boolean
-population	int
-ski	boolean
-elevator	boolean
-recycling:clothes	boolean
-on	boolean
-shelter	boolean
-recycling:metal	boolean
-layer	int
-TMC:cid_58:tabcd_1:PrevLocationCode	int
-payment:telephone_cards	boolean
-TMC:cid_58:tabcd_1:LocationCode	int
-produced	int
-area	boolean
-game:patrizier2:getreide	boolean
-seasonal	boolean
-recycling:garden_waste	boolean
-de:amtlicher_gemeindeschluessel	int
-openGeoDB:is_in_loc_id	int
-openGeoDB:telephone_area_code	int
-interner_access	boolean
-bar	boolean
-openGeoDB:community_identification_number	int
-departures_board	boolean
+COPY lgd_map_datatype (k, property, datatype) FROM stdin;
+capacity	http://linkedgeodata.org/capacity	int
+recycling:scrap_metal	http://linkedgeodata.org/recycling-scrapMetal	boolean
+undefined	http://linkedgeodata.org/undefined	int
+noexit	http://linkedgeodata.org/noexit	boolean
+cables	http://linkedgeodata.org/cables	int
+cutting	http://linkedgeodata.org/cutting	boolean
+tunnel	http://linkedgeodata.org/tunnel	boolean
+wheelchair	http://linkedgeodata.org/wheelchair	boolean
+by_night	http://linkedgeodata.org/byNight	boolean
+charge	http://linkedgeodata.org/charge	boolean
+verified	http://linkedgeodata.org/verified	boolean
+alternate	http://linkedgeodata.org/alternate	boolean
+mooring	http://linkedgeodata.org/mooring	boolean
+ref:fgkz	http://linkedgeodata.org/ref-fgkz	int
+boat	http://linkedgeodata.org/boat	boolean
+dispensing	http://linkedgeodata.org/dispensing	boolean
+fuel:diesel	http://linkedgeodata.org/fuel-diesel	boolean
+recycling:shoes	http://linkedgeodata.org/recycling-shoes	boolean
+payment:electronic_purses	http://linkedgeodata.org/payment-electronicPurses	boolean
+frequency	http://linkedgeodata.org/frequency	float
+taxi	http://linkedgeodata.org/taxi	boolean
+minspeed	http://linkedgeodata.org/minspeed	int
+payment:notes	http://linkedgeodata.org/payment-notes	boolean
+ruins	http://linkedgeodata.org/ruins	boolean
+fuel:HGV_diesel	http://linkedgeodata.org/fuel-HGVDiesel	boolean
+recycling:cans	http://linkedgeodata.org/recycling-cans	boolean
+game:patrizier2:tuch	http://linkedgeodata.org/game-patrizier2-tuch	int
+uic_ref	http://linkedgeodata.org/uicRef	int
+snowmobile	http://linkedgeodata.org/snowmobile	boolean
+atm	http://linkedgeodata.org/atm	boolean
+level	http://linkedgeodata.org/level	boolean
+family_spaces	http://linkedgeodata.org/familySpaces	int
+recycling:glass	http://linkedgeodata.org/recycling-glass	boolean
+payment:coins	http://linkedgeodata.org/payment-coins	boolean
+horse	http://linkedgeodata.org/horse	boolean
+park_ride	http://linkedgeodata.org/parkRide	boolean
+lit	http://linkedgeodata.org/lit	boolean
+permissive	http://linkedgeodata.org/permissive	boolean
+osmarender:renderRef	http://linkedgeodata.org/osmarender-renderRef	boolean
+oneway:bicycle	http://linkedgeodata.org/oneway-bicycle	boolean
+openGeoDB:loc_id	http://linkedgeodata.org/openGeoDB-locId	int
+toilet	http://linkedgeodata.org/toilet	boolean
+ele	http://linkedgeodata.org/ele	float
+step_count	http://linkedgeodata.org/stepCount	int
+fuel:octane_91	http://linkedgeodata.org/fuel-octane91	boolean
+segregated	http://linkedgeodata.org/segregated	boolean
+traffic_signals:sound	http://linkedgeodata.org/trafficSignals-sound	boolean
+payment:bob	http://linkedgeodata.org/payment-bob	boolean
+game:patrizier2:bier	http://linkedgeodata.org/game-patrizier2-bier	int
+gauge	http://linkedgeodata.org/gauge	int
+osmarender:renderName	http://linkedgeodata.org/osmarender-renderName	boolean
+StrVz	http://linkedgeodata.org/StrVz	int
+lanes	http://linkedgeodata.org/lanes	int
+recycling:green_waste	http://linkedgeodata.org/recycling-greenWaste	boolean
+ncn	http://linkedgeodata.org/ncn	boolean
+motorroad	http://linkedgeodata.org/motorroad	boolean
+opengeodb:lon	http://linkedgeodata.org/opengeodb-lon	float
+game:patrizier2:ziegel	http://linkedgeodata.org/game-patrizier2-ziegel	int
+asb	http://linkedgeodata.org/asb	int
+erected	http://linkedgeodata.org/erected	int
+TMC:cid_58:tabcd_1:NextLocationCode	http://linkedgeodata.org/TMC-cid58-tabcd1-nextlocationcode	int
+payment:geldkarte	http://linkedgeodata.org/payment-geldkarte	boolean
+recycling:glass_bottles	http://linkedgeodata.org/recycling-glassBottles	boolean
+fuel:GTL_diesel	http://linkedgeodata.org/fuel-GTLDiesel	boolean
+payment:debit_cards	http://linkedgeodata.org/payment-debitCards	boolean
+game:patrizier2:wolle	http://linkedgeodata.org/game-patrizier2-wolle	boolean
+onkz	http://linkedgeodata.org/onkz	int
+bench	http://linkedgeodata.org/bench	boolean
+maxweight	http://linkedgeodata.org/maxweight	float
+VzG	http://linkedgeodata.org/VzG	int
+fenced	http://linkedgeodata.org/fenced	boolean
+seats	http://linkedgeodata.org/seats	int
+tracks	http://linkedgeodata.org/tracks	int
+opengeodb:lat	http://linkedgeodata.org/opengeodb-lat	float
+openGeoDB:layer	http://linkedgeodata.org/openGeoDB-layer	int
+recycling:paper	http://linkedgeodata.org/recycling-paper	boolean
+fuel:octane_95	http://linkedgeodata.org/fuel-octane95	boolean
+video	http://linkedgeodata.org/video	boolean
+game:patrizier2:eisenwaren	http://linkedgeodata.org/game-patrizier2-eisenwaren	int
+fuel:octane_98	http://linkedgeodata.org/fuel-octane98	boolean
+fuel:cng	http://linkedgeodata.org/fuel-cng	boolean
+bus	http://linkedgeodata.org/bus	boolean
+stars	http://linkedgeodata.org/stars	int
+backrest	http://linkedgeodata.org/backrest	boolean
+public	http://linkedgeodata.org/public	boolean
+oneway	http://linkedgeodata.org/oneway	boolean
+blz	http://linkedgeodata.org/blz	int
+disused	http://linkedgeodata.org/disused	boolean
+maxwidth	http://linkedgeodata.org/maxwidth	int
+game:patrizier2:eisenerz	http://linkedgeodata.org/game-patrizier2-eisenerz	boolean
+bin	http://linkedgeodata.org/bin	boolean
+admin_level	http://linkedgeodata.org/adminLevel	int
+unisex	http://linkedgeodata.org/unisex	boolean
+recycling:batteries	http://linkedgeodata.org/recycling-batteries	boolean
+recycling:paper_packaging	http://linkedgeodata.org/recycling-paperPackaging	boolean
+bridge	http://linkedgeodata.org/bridge	boolean
+build	http://linkedgeodata.org/build	int
+via	http://linkedgeodata.org/via	boolean
+agricultural	http://linkedgeodata.org/agricultural	boolean
+rail	http://linkedgeodata.org/rail	boolean
+tactile_paving	http://linkedgeodata.org/tactilePaving	boolean
+fuel:lpg	http://linkedgeodata.org/fuel-lpg	boolean
+tram	http://linkedgeodata.org/tram	boolean
+payment:geltkarte	http://linkedgeodata.org/payment-geltkarte	boolean
+fuel:octane_100	http://linkedgeodata.org/fuel-octane100	boolean
+waterway:lock:height	http://linkedgeodata.org/waterway-lock-height	int
+maxspeed	http://linkedgeodata.org/maxspeed	int
+payment:credit_cards	http://linkedgeodata.org/payment-creditCards	boolean
+recycling:plastic	http://linkedgeodata.org/recycling-plastic	boolean
+rcn	http://linkedgeodata.org/rcn	boolean
+TMC:cid_58:tabcd_1:LCLversion	http://linkedgeodata.org/TMC-cid58-tabcd1-lclversion	float
+board_type	http://linkedgeodata.org/boardType	boolean
+embankment	http://linkedgeodata.org/embankment	boolean
+diaper	http://linkedgeodata.org/diaper	boolean
+maxheight	http://linkedgeodata.org/maxheight	float
+maxlength	http://linkedgeodata.org/maxlength	int
+monument	http://linkedgeodata.org/monument	boolean
+openGeoDB:population	http://linkedgeodata.org/openGeoDB-population	int
+sms	http://linkedgeodata.org/sms	boolean
+population	http://linkedgeodata.org/population	int
+ski	http://linkedgeodata.org/ski	boolean
+elevator	http://linkedgeodata.org/elevator	boolean
+recycling:clothes	http://linkedgeodata.org/recycling-clothes	boolean
+on	http://linkedgeodata.org/on	boolean
+shelter	http://linkedgeodata.org/shelter	boolean
+recycling:metal	http://linkedgeodata.org/recycling-metal	boolean
+layer	http://linkedgeodata.org/layer	int
+TMC:cid_58:tabcd_1:PrevLocationCode	http://linkedgeodata.org/TMC-cid58-tabcd1-prevlocationcode	int
+payment:telephone_cards	http://linkedgeodata.org/payment-telephoneCards	boolean
+TMC:cid_58:tabcd_1:LocationCode	http://linkedgeodata.org/TMC-cid58-tabcd1-locationcode	int
+produced	http://linkedgeodata.org/produced	int
+area	http://linkedgeodata.org/area	boolean
+game:patrizier2:getreide	http://linkedgeodata.org/game-patrizier2-getreide	boolean
+seasonal	http://linkedgeodata.org/seasonal	boolean
+recycling:garden_waste	http://linkedgeodata.org/recycling-gardenWaste	boolean
+de:amtlicher_gemeindeschluessel	http://linkedgeodata.org/de-amtlicherGemeindeschluessel	int
+openGeoDB:is_in_loc_id	http://linkedgeodata.org/openGeoDB-isInLocId	int
+openGeoDB:telephone_area_code	http://linkedgeodata.org/openGeoDB-telephoneAreaCode	int
+interner_access	http://linkedgeodata.org/internerAccess	boolean
+bar	http://linkedgeodata.org/bar	boolean
+openGeoDB:community_identification_number	http://linkedgeodata.org/openGeoDB-communityIdentificationNumber	int
+departures_board	http://linkedgeodata.org/departuresBoard	boolean
+capacity:disabled	http://linkedgeodata.org/ontology/capacity-disabled	int
+capacity:women	http://linkedgeodata.org/ontology/capacity-women	int
+capacity:parent	http://linkedgeodata.org/ontology/capacity-parent	int
+capacity:charging	http://linkedgeodata.org/ontology/capacity-charging	int
+capacity:hgv	http://linkedgeodata.org/ontology/capacity-hgv	int
+capacity:bus	http://linkedgeodata.org/ontology/capacity-bus	int
+capacity:car	http://linkedgeodata.org/ontology/capacity-car	int
+website	http://xmlns.com/foaf/0.1/homepage	uri
+image	http://xmlns.com/foaf/0.1/depiction	uri
+owl:sameAs:1	http://www.w3.org/2002/07/owl#sameAs	uri
 \.
-
 
 
 --
@@ -167,6 +176,8 @@ departures_board	boolean
 --
 
 COPY lgd_map_literal (k, property, language) FROM stdin;
+addr:postcode	http://linkedgeodata.org/ontology/addr/postcode	
+opening_hours	http://linkedgeodata.org/ontology/openingHours	
 operator	http://linkedgeodata.org/ontology/operator	
 covered	http://linkedgeodata.org/ontology/covered	
 access	http://linkedgeodata.org/ontology/access	
@@ -322,6 +333,25 @@ place	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/o
 lock	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/LockThing
 building	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/Building
 \.
+
+
+--
+-- Data for Name: lgd_map_resource_k; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+-- Default mappings for a key that are only applied if it was not 'overridden' by an entry in resource kv with that key.
+COPY lgd_map_resource_kd (k, property, object) FROM stdin;
+fee	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/fee
+capacity:disabled	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-disabled
+capacity:women	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-women
+capacity:parent	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-parent
+capacity:charging	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-charging
+capacity:charging	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-charging
+capacity:hgv	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-hgv
+capacity:bus	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-bus
+capacity:car	http://linkedgeodata.org/ontology/hasFeature	http://linkedgeodata.org/ontology/capacity-car
+\.
+
 
 
 --
@@ -978,6 +1008,14 @@ amenity	wlan	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodat
 amenity	WLAN	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/WLAN
 amenity	youth_centre	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/YouthCentre
 amenity	youth_club	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/YouthClub
+capacity:disabled	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-disabled
+capacity:women	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-women
+capacity:parent	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-parent
+capacity:charging	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-charging
+capacity:hgv	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-hgv
+capacity:bus	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-bus
+capacity:car	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/capacity-car
+fee	no	http://linkedgeodata.org/ontology/notHasFeature	http://linkedgeodata.org/ontology/fee
 office	accountant	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AccountantOffice
 office	administrative	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/AdministrativeOffice
 office	architect	http://www.w3.org/1999/02/22-rdf-syntax-ns#type	http://linkedgeodata.org/ontology/ArchitectOffice
@@ -1696,158 +1734,6 @@ wheelchair	yes	http://linkedgeodata.org/ontology/wheelchair	http://linkedgeodata
 \.
 
 
---
--- Data for Name: lgd_map_property; Type: TABLE DATA; Schema: public; Owner: postgres
---
-COPY lgd_map_property (k, property) FROM stdin;
-website	http://xmlns.com/foaf/0.1/homepage
-image	http://xmlns.com/foaf/0.1/depiction
-owl:sameAs:1	http://www.w3.org/2002/07/owl#sameAs
-addr:postcode	http://linkedgeodata.org/ontology/addr/postcode
-admin_level	http://linkedgeodata.org/ontology/adminLevel
-agricultural	http://linkedgeodata.org/ontology/agricultural
-alternate	http://linkedgeodata.org/ontology/alternate
-area	http://linkedgeodata.org/ontology/area
-asb	http://linkedgeodata.org/ontology/asb
-atm	http://linkedgeodata.org/ontology/atm
-backrest	http://linkedgeodata.org/ontology/backrest
-bar	http://linkedgeodata.org/ontology/bar
-bench	http://linkedgeodata.org/ontology/bench
-bin	http://linkedgeodata.org/ontology/bin
-blz	http://linkedgeodata.org/ontology/blz
-board_type	http://linkedgeodata.org/ontology/boardType
-boat	http://linkedgeodata.org/ontology/boat
-bridge	http://linkedgeodata.org/ontology/bridge
-build	http://linkedgeodata.org/ontology/build
-building	http://linkedgeodata.org/ontology/building
-bus	http://linkedgeodata.org/ontology/bus
-by_night	http://linkedgeodata.org/ontology/byNight
-cables	http://linkedgeodata.org/ontology/cables
-charge	http://linkedgeodata.org/ontology/charge
-cutting	http://linkedgeodata.org/ontology/cutting
-de:amtlicher_gemeindeschluessel	http://linkedgeodata.org/ontology/de/amtlicherGemeindeschluessel
-departures_board	http://linkedgeodata.org/ontology/departuresBoard
-diaper	http://linkedgeodata.org/ontology/diaper
-dispensing	http://linkedgeodata.org/ontology/dispensing
-disused	http://linkedgeodata.org/ontology/disused
-ele	http://linkedgeodata.org/ontology/ele
-elevator	http://linkedgeodata.org/ontology/elevator
-embankment	http://linkedgeodata.org/ontology/embankment
-erected	http://linkedgeodata.org/ontology/erected
-family_spaces	http://linkedgeodata.org/ontology/familySpaces
-fenced	http://linkedgeodata.org/ontology/fenced
-frequency	http://linkedgeodata.org/ontology/frequency
-fuel:cng	http://linkedgeodata.org/ontology/fuel/cng
-fuel:diesel	http://linkedgeodata.org/ontology/fuel_diesel
-fuel:GTL_diesel	http://linkedgeodata.org/ontology/fuel/gtlDiesel
-fuel:HGV_diesel	http://linkedgeodata.org/ontology/fuel/hgvDiesel
-fuel:lpg	http://linkedgeodata.org/ontology/fuel/lpg
-fuel:octane_100	http://linkedgeodata.org/ontology/fuel/octane_100
-fuel:octane_91	http://linkedgeodata.org/ontology/fuel/octane_91
-fuel:octane_95	http://linkedgeodata.org/ontology/fuel/octane_95
-fuel:octane_98	http://linkedgeodata.org/ontology/fuel/octane_98
-game:patrizier2:bier	http://linkedgeodata.org/ontology/game/patrizier2/bier
-game:patrizier2:eisenerz	http://linkedgeodata.org/ontology/game/patrizier2/eisenerz
-game:patrizier2:eisenwaren	http://linkedgeodata.org/ontology/game/patrizier2/eisenwaren
-game:patrizier2:getreide	http://linkedgeodata.org/ontology/game/patrizier2/getreide
-game:patrizier2:tuch	http://linkedgeodata.org/ontology/game/patrizier2/tuch
-game:patrizier2:wolle	http://linkedgeodata.org/ontology/game/patrizier2/wolle
-game:patrizier2:ziegel	http://linkedgeodata.org/ontology/game/patrizier2/ziegel
-gauge	http://linkedgeodata.org/ontology/gauge
-horse	http://linkedgeodata.org/ontology/horse
-interner_access	http://linkedgeodata.org/ontology/internerAccess
-lanes	http://linkedgeodata.org/ontology/lanes
-layer	http://linkedgeodata.org/ontology/layer
-level	http://linkedgeodata.org/ontology/level
-lit	http://linkedgeodata.org/ontology/lit
-maxheight	http://linkedgeodata.org/ontology/maxheight
-maxlength	http://linkedgeodata.org/ontology/maxlength
-maxspeed	http://linkedgeodata.org/ontology/maxspeed
-maxweight	http://linkedgeodata.org/ontology/maxweight
-maxwidth	http://linkedgeodata.org/ontology/maxwidth
-minspeed	http://linkedgeodata.org/ontology/minspeed
-monument	http://linkedgeodata.org/ontology/monument
-mooring	http://linkedgeodata.org/ontology/mooring
-motorroad	http://linkedgeodata.org/ontology/motorroad
-ncn	http://linkedgeodata.org/ontology/ncn
-noexit	http://linkedgeodata.org/ontology/noexit
-oneway:bicycle	http://linkedgeodata.org/ontology/oneway/bicycle
-oneway	http://linkedgeodata.org/ontology/oneway
-on	http://linkedgeodata.org/ontology/on
-onkz	http://linkedgeodata.org/ontology/onkz
-openGeoDB:community_identification_number	http://linkedgeodata.org/ontology/openGeoDB/communityIdentificationNumber
-openGeoDB:is_in_loc_id	http://linkedgeodata.org/ontology/openGeoDB/isInLocId
-opengeodb:lat	http://linkedgeodata.org/ontology/opengeodb/lat
-openGeoDB:layer	http://linkedgeodata.org/ontology/openGeoDB/layer
-openGeoDB:loc_id	http://linkedgeodata.org/ontology/openGeoDB/locId
-opengeodb:lon	http://linkedgeodata.org/ontology/opengeodb/lon
-openGeoDB:population	http://linkedgeodata.org/ontology/openGeoDB/population
-openGeoDB:telephone_area_code	http://linkedgeodata.org/ontology/openGeoDB/telephoneAreaCode
-osmarender:renderName	http://linkedgeodata.org/ontology/osmarender/renderName
-osmarender:renderRef	http://linkedgeodata.org/ontology/osmarender/renderRef
-park_ride	http://linkedgeodata.org/ontology/parkRide
-payment:bob	http://linkedgeodata.org/ontology/payment/bob
-payment:coins	http://linkedgeodata.org/ontology/payment/coins
-payment:credit_cards	http://linkedgeodata.org/ontology/payment/creditCcards
-payment:debit_cards	http://linkedgeodata.org/ontology/payment/debitCards
-payment:electronic_purses	http://linkedgeodata.org/ontology/payment/electronicPurses
-payment:geldkarte	http://linkedgeodata.org/ontology/payment/geldkarte
-payment:geltkarte	http://linkedgeodata.org/ontology/payment/geltkarte
-payment:notes	http://linkedgeodata.org/ontology/payment/notes
-payment:telephone_cards	http://linkedgeodata.org/ontology/payment/telephoneCards
-permissive	http://linkedgeodata.org/ontology/permissive
-population	http://linkedgeodata.org/ontology/population
-produced	http://linkedgeodata.org/ontology/produced
-public	http://linkedgeodata.org/ontology/public
-rail	http://linkedgeodata.org/ontology/rail
-rcn	http://linkedgeodata.org/ontology/rcn
-recycling:batteries	http://linkedgeodata.org/ontology/recycling/batteries
-recycling:cans	http://linkedgeodata.org/ontology/recycling/cans
-recycling:clothes	http://linkedgeodata.org/ontology/recycling/clothes
-recycling:garden_waste	http://linkedgeodata.org/ontology/recycling/gardenWaste
-recycling:glass_bottles	http://linkedgeodata.org/ontology/recycling/glassBottles
-recycling:glass	http://linkedgeodata.org/ontology/recycling/glass
-recycling:green_waste	http://linkedgeodata.org/ontology/recycling/greenWaste
-recycling:metal	http://linkedgeodata.org/ontology/recycling/metal
-recycling:paper	http://linkedgeodata.org/ontology/recycling/paper
-recycling:paper_packaging	http://linkedgeodata.org/ontology/recycling/paperPackaging
-recycling:plastic	http://linkedgeodata.org/ontology/recycling/plastic
-recycling:scrap_metal	http://linkedgeodata.org/ontology/recycling/scrapMetal
-recycling:shoes	http://linkedgeodata.org/ontology/recycling/shoes
-ref:fgkz	http://linkedgeodata.org/ontology/ref/fgkz
-ruins	http://linkedgeodata.org/ontology/ruins
-seasonal	http://linkedgeodata.org/ontology/seasonal
-seats	http://linkedgeodata.org/ontology/seats
-segregated	http://linkedgeodata.org/ontology/segregated
-shelter	http://linkedgeodata.org/ontology/shelter
-ski	http://linkedgeodata.org/ontology/ski
-sms	http://linkedgeodata.org/ontology/sms
-snowmobile	http://linkedgeodata.org/ontology/snowmobile
-stars	http://linkedgeodata.org/ontology/stars
-step_count	http://linkedgeodata.org/ontology/stepCount
-StrVz	http://linkedgeodata.org/ontology/strVz
-tactile_paving	http://linkedgeodata.org/ontology/tactilePaving
-taxi	http://linkedgeodata.org/ontology/taxi
-TMC:cid_58:tabcd_1:LCLversion	http://linkedgeodata.org/ontology/TMC/cid_58/tabcd_1/lclVersion
-TMC:cid_58:tabcd_1:LocationCode	http://linkedgeodata.org/ontology/TMC/cid_58/tabcd_1/locationCode
-TMC:cid_58:tabcd_1:NextLocationCode	http://linkedgeodata.org/ontology/TMC/cid_58/tabcd_1/nextLocationCode
-TMC:cid_58:tabcd_1:PrevLocationCode	http://linkedgeodata.org/ontology/TMC/cid_58/tabcd_1/prevLocationCode
-toilet	http://linkedgeodata.org/ontology/toilet
-tracks	http://linkedgeodata.org/ontology/tracks
-traffic_signals:sound	http://linkedgeodata.org/ontology/traffic_signals/sound
-tram	http://linkedgeodata.org/ontology/tram
-tunnel	http://linkedgeodata.org/ontology/tunnel
-uic_ref	http://linkedgeodata.org/ontology/uic_ref
-undefined	http://linkedgeodata.org/ontology/undefined
-unisex	http://linkedgeodata.org/ontology/unisex
-verified	http://linkedgeodata.org/ontology/verified
-via	http://linkedgeodata.org/ontology/via
-video	http://linkedgeodata.org/ontology/video
-VzG	http://linkedgeodata.org/ontology/VzG
-waterway:lock:height	http://linkedgeodata.org/ontology/waterway/lock/height
-wheelchair	http://linkedgeodata.org/ontology/wheelchair
-\.
-
 
 --
 -- Data for Name: lgd_map_resource_prefix; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -1855,7 +1741,7 @@ wheelchair	http://linkedgeodata.org/ontology/wheelchair
 
 COPY lgd_map_resource_prefix (k, property, object_prefix, post_processing) FROM stdin;
 email	http://xmlns.com/foaf/0.1/mbox	mailto:	none
-wheelchair	http://linkedgeodata.org/ontology/wheelchair	http://linkedgeodata.org/ontology/	ucamelize&urlencode
+wikidata	http://linkedgeodata.org/ontology/wikidata	http://www.wikidata.org/entity/	none
 religion	http://linkedgeodata.org/ontology/religion	http://linkedgeodata.org/ontology/	ucamelize&urlencode
 direction	http://linkedgeodata.org/ontology/direction	http://linkedgeodata.org/ontology/	ucamelize&urlencode
 surfaces	http://linkedgeodata.org/ontology/surfaces	http://linkedgeodata.org/ontology/	ucamelize&urlencode
