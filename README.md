@@ -14,18 +14,13 @@ Therefore, if you want to install the LinkedGeoData debian package, you also  Sp
 
 For the latest version of LinkedGeoData package, perform the following steps to set up the package source:
 
-Create the file
+Register the repo
 
-    /etc/apt/sources.list.d/cstadler.aksw.org.list
+    echo 'deb http://cstadler.aksw.org/repos/apt precise main contrib non-free' | sudo tee /etc/apt/sources.list.d/cstadler.aksw.org.list
 
-and add the content
+Import the public key
 
-    deb     http://cstadler.aksw.org/repos/apt precise main contrib non-free
-
-Import the public key with
-
-    wget -O - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key | apt-key add -
-
+    wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key  | sudo apt-key add -
 
 Now you can install LinkedGeoData using
 
