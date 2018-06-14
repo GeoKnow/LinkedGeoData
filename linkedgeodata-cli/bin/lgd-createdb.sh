@@ -114,6 +114,9 @@ echo "hasFile: $osmFile -> [$osmFileSpecified]"
 # Analyse a given osm file
 if [ $osmFileExists ]; then
 
+   # Get the absolute path to the osm file (needed for nominatim)
+   osmFile=`readlink -f "$osmFile"`
+
   # Determine the date of the data being loaded so we can use it for e.g. dump metadata
   # NOTE Disabled, because using the latest date of an entity in the database will work with replication
 #  timestamp=`osmconvert --out-timestamp "$osmFile"`
@@ -243,7 +246,7 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sq
 
 # Perform Nominatim upgrade
 
-if ! [ "$noNominatim" = true]; then
+if ! [ "$noNominatim" = true ]; then
 
   # Create a copy of the nominatim setup
   nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
