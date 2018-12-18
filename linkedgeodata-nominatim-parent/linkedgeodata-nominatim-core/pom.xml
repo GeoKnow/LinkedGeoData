@@ -7,20 +7,21 @@
 	<artifactId>linkedgeodata-nominatim-core</artifactId>
 	<packaging>jar</packaging>
 
-	<name>LinkedGeoData-Nominatim</name>
+	<!-- <name>LinkedGeoData-Nominatim</name> -->
 	<!-- <description></description> -->
 
 	<parent>
 		<groupId>org.aksw.linkedgeodata</groupId>
-		<artifactId>linkedgeodata-parent</artifactId>
-		<version>4.0.0-SNAPSHOT</version>
+		<artifactId>linkedgeodata-nominatim-parent</artifactId>
+		<version>2.5.1-1-SNAPSHOT</version>
 	</parent>
 
 	<!-- <build> <finalName>linkedgeodata-core</finalName> </build> -->
 
 	<properties>
-		<nominatim.tag>v2.5.1</nominatim.tag>
-		<deb.packageName>lgd-nominatim-${nominatim.tag}</deb.packageName>
+		<!-- nominatim.tag defined in parent -->
+		<!-- <nominatim.tag>v2.5.1</nominatim.tag> -->
+		<deb.packageName>linkedgeodata-nominatim-${nominatim.tag}</deb.packageName>
 	</properties>
 
 	<build>

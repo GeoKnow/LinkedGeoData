@@ -1,0 +1,12 @@
+Package: [[deb.packageName]]
+Version: [[version]]
+Section: web
+Priority: optional
+Architecture: all
+Depends: linkedgeodata-nominatim-core
+Maintainer: Claus Stadler <cstadler@informatik.uni-leipzig.de>
+Description: LinkedGeoData-Nominatim-Web
+Distribution: ldstack-nightly
+Homepage: https://github.com/openstreetmap/Nominatim
+Vcs-Git: git@github.com:openstreetmap/Nominatim.git
+Vcs-Browser: https://github.com/openstreetmap/Nominatim

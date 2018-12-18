@@ -1,14 +1,18 @@
 SHELL := /bin/bash
 
-.PHONY: all
+.PHONY: all clean
 
-all: target/.pgpass target/nominatim target/osm2pgsql target/nominatim.so
+all: target/.pgpass target/nominatim.jar target/nominatim target/osm2pgsql target/nominatim.so
 
 target:
 	mkdir -p target
 
 target/.pgpass: target ../.env
 	source ../.env && echo "$$DB_HOST:$$DB_PORT:$$DB_NAME:$$DB_USER:$$DB_PASS" > target/.pgpass
+
+target/nominatim.jar: target ../target/lib/nominatim.jar
+	$(MAKE) -C .. target/lib/nominatim.jar
+	cp ../target/lib/nominatim.jar target
 
 # Note: The nominatim setup.php script requires the existence of the nominatim.so module.
 target/nominatim.so: target ../lgd-build-nominatim/Dockerfile

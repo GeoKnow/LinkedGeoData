@@ -15,6 +15,9 @@ statusKey="nominatim:status"
 
 syncDir="settings"
 
+# Remove the tiger geocoder extension
+psql "$DB_URL" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
+
 
 psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"

@@ -6,10 +6,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "force rebuild 7"
 
 RUN \
-    apt-get -y update --fix-missing && \
+    apt -y update --fix-missing && \
 #    apt-get upgrade -y && \
-    apt-get install -y software-properties-common wget git curl sudo && \
-    apt-get update
+    apt install -y software-properties-common wget git curl sudo
+#    apt-get update
 
 
 ENV POSTGRES_CLIENT_VERSION 9.5
@@ -34,14 +34,16 @@ RUN wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key 
 WORKDIR /app/nominatim
 
 # Nominatim install
-ENV NOMINATIM_VERSION v2.5.1
-RUN git clone https://github.com/openstreetmap/Nominatim ./src
-RUN cd ./src && git checkout "$NOMINATIM_VERSION"
+#ENV NOMINATIM_VERSION v2.5.1
+#RUN git clone https://github.com/openstreetmap/Nominatim ./src
+#RUN cd ./src && git checkout "$NOMINATIM_VERSION"
 
 #RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
 #RUN cd ./src && git checkout "$NOMINATIM_VERSION" && git submodule update --recursive --init && \
 #  ./autogen.sh && ./configure && make
 
+COPY target/nominatim.jar .
+RUN unzip nominatim.jar && mv Nominatim src
 
 RUN echo "force rebuild b6"
 

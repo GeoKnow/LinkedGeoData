@@ -25,10 +25,13 @@ RUN apt-get -y update --fix-missing && \
 WORKDIR /app/nominatim
 
 # Nominatim install
-ENV NOMINATIM_VERSION v2.5.1
-RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
-RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recursive --init && \
-  ./autogen.sh && ./configure && make
+#ENV NOMINATIM_VERSION v2.5.1
+#RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
+#RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recursive --init && \
+#  ./autogen.sh && ./configure && make
+
+COPY target/nominatim.jar .
+RUN unzip nominatim.jar && mv Nominatim src
 
 
 RUN echo "force rebuild 2"

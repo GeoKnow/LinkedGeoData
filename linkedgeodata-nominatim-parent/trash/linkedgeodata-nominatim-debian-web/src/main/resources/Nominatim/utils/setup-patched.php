@@ -144,7 +144,7 @@
 		preg_match('#POSTGIS="([0-9]+)[.]([0-9]+)[.]([0-9]+)( r([0-9]+))?"#', $sVersionString, $aMatches);
 		if (CONST_Postgis_Version != $aMatches[1].'.'.$aMatches[2])
 		{
-			echo "WARNING: PostGIS version is not correct.  Expected ".CONST_Postgis_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
+			echo "ERROR: PostGIS version is not correct.  Expected ".CONST_Postgis_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
 			//exit;
 		}
 
@@ -160,9 +160,9 @@
 		{
 			echo "WARNING: external UK postcode table not found.\n";
 		}
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_statecounty.sql');
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_state.sql');
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_postcode.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_statecounty.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_state.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_postcode.sql');
 
 		if ($aCMDResult['no-partitions'])
 		{
@@ -173,7 +173,7 @@
 		// is only defined in the subsequently called create_tables.
 		// Create dummies here that will be overwritten by the proper
 		// versions in create-tables.
-		pgsqlRunScript('CREATE TABLE IF NOT EXISTS place_boundingbox ()');
+		pgsqlRunScript('CREATE TABLE place_boundingbox ()');
 		pgsqlRunScript('create type wikipedia_article_match as ()');
 	}
 
@@ -230,9 +230,10 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 	{
 		echo "Functions\n";
 		$bDidSomething = true;
-		if (!file_exists(CONST_BasePath.'/module/nominatim.so')) fail("nominatim module not built");
+		if (!file_exists(CONST_Module_BasePath.'/module/nominatim.so')) fail("nominatim module not built");
 		$sTemplate = file_get_contents(CONST_BasePath.'/sql/functions.sql');
-		$sTemplate = str_replace('{modulepath}', CONST_BasePath.'/module', $sTemplate);
+#		$sTemplate = str_replace('{modulepath}', CONST_BasePath.'/module', $sTemplate);
+		$sTemplate = str_replace('{modulepath}', CONST_Module_BasePath.'/module', $sTemplate);
 		if ($aCMDResult['enable-diff-updates']) $sTemplate = str_replace('RETURN NEW; -- @DIFFUPDATES@', '--', $sTemplate);
 		if ($aCMDResult['enable-debug-statements']) $sTemplate = str_replace('--DEBUG:', '', $sTemplate);
 		if (CONST_Limit_Reindexing) $sTemplate = str_replace('--LIMIT INDEXING:', '', $sTemplate);
@@ -302,8 +303,9 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 		// re-run the functions
 		echo "Functions\n";
 		$sTemplate = file_get_contents(CONST_BasePath.'/sql/functions.sql');
-		$sTemplate = str_replace('{modulepath}',
-			                     CONST_BasePath.'/module', $sTemplate);
+#		$sTemplate = str_replace('{modulepath}',
+#			                     CONST_BasePath.'/module', $sTemplate);
+		$sTemplate = str_replace('{modulepath}', CONST_Module_BasePath.'/module', $sTemplate);
 		pgsqlRunScript($sTemplate);
 	}
 

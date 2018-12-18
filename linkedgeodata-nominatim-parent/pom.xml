@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.aksw.linkedgeodata</groupId>
-	<artifactId>linkedgeodata-parent</artifactId>
-	<version>4.0.0-SNAPSHOT</version>
+	<artifactId>linkedgeodata-nominatim-parent</artifactId>
+	<version>2.5.1-1-SNAPSHOT</version>
 
-	<name>LinkedGeoData - Parent</name>
-	<description>linkedgeodata.org - Adding a spatial dimension to the Web of Data.</description>
+	<name>LinkedGeoData - Nominatim - Parent</name>
+	<description>linkedgeodata.org - Packaging of Nominatim</description>
 	<packaging>pom</packaging>
 
 	<scm>
@@ -31,18 +31,19 @@
 	<modules>
 		<!-- core module is broken, and actually there is no real need for a REST 
 			API anyway -->
-		<module>linkedgeodata-core</module>
-		<module>linkedgeodata-cli</module>
-		<module>linkedgeodata-debian</module>
 <!-- This module should only be built if explicitly required as downloading nominatim takes a while
 Also, its only needed to build the jar that contains nominatim - once it is deployed/installed, one can used this artifact from the local maven repo
 -->
-		<module>linkedgeodata-docker</module>
-<!--		<module>linkedgeodata-nominatim-core</module> -->
-		<!-- <module>linkedgeodata-debian-nominatim-parent</module> -->
+		<module>linkedgeodata-nominatim-core</module>
+		<!--
+		<module>linkedgeodata-nominatim-debian-core</module>
+		<module>linkedgeodata-nominatim-debian-web</module>
+-->
 	</modules>
 
 	<properties>
+		<nominatim.tag>v2.5.1</nominatim.tag>
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
@@ -226,141 +227,9 @@ Also, its only needed to build the jar that contains nominatim - once it is depl
 
 			<dependency>
 				<groupId>org.aksw.linkedgeodata</groupId>
-				<artifactId>linkedgeodata-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.linkedgeodata</groupId>
-				<artifactId>linkedgeodata-cli</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.linkedgeodata</groupId>
 				<artifactId>linkedgeodata-nominatim-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
-			<!-- <dependency> -->
-			<!-- <groupId>org.aksw.sparqlify</groupId> -->
-			<!-- <artifactId>sparqlify-core</artifactId> -->
-			<!-- <version>0.6.5-SNAPSHOT</version> -->
-			<!-- <type>jar</type> -->
-			<!-- <scope>compile</scope> -->
-			<!-- </dependency> -->
-
-			<dependency>
-				<groupId>org.aksw.jena-sparql-api</groupId>
-				<artifactId>jena-sparql-api-server-standalone</artifactId>
-				<version>${jena-sparql-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.jena-sparql-api</groupId>
-				<artifactId>jena-sparql-api-web</artifactId>
-				<version>${jena-sparql-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.jena-sparql-api</groupId>
-				<artifactId>jena-sparql-api-core</artifactId>
-				<version>${jena-sparql-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.jena-sparql-api</groupId>
-				<artifactId>jena-sparql-api-cache-h2</artifactId>
-				<version>${jena-sparql-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>postgresql</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>8.4-701.jdbc4</version>
-				<!-- <version>9.3-1100-jdbc41</version> -->
-			</dependency>
-
-			<dependency>
-				<groupId>commons-cli</groupId>
-				<artifactId>commons-cli</artifactId>
-				<version>1.2</version>
-			</dependency>
-
-
-			<dependency>
-				<groupId>org.openstreetmap.osmosis</groupId>
-				<artifactId>osmosis-core</artifactId>
-				<version>0.43.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.jolbox</groupId>
-				<artifactId>bonecp</artifactId>
-				<version>0.8.0.RELEASE</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
-				<version>1</version>
-			</dependency>
-
-			<!-- Gson: Java to Json conversion -->
-			<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>2.2.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.4</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.topbraid</groupId>
-				<artifactId>spin</artifactId>
-				<version>2.0.0</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.apache.jena</groupId>
-						<artifactId>jena-arq</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>com.beust</groupId>
-				<artifactId>jcommander</artifactId>
-				<version>1.72</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>1.7.10</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.7.10</version>
-			</dependency>
-
 
 		</dependencies>
 	</dependencyManagement>

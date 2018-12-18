@@ -20,7 +20,9 @@ COPY target/nominatim.so /app/nominatim/src/module/nominatim.so
 
 #HEALTHCHECK CMD ["psql", $DB_URL, "-c", "SELECT 1"]
 
-HEALTHCHECK --interval=1s --retries=180 CMD su postgres -c 'psql -c "SELECT 1"' || exit 1
+#HEALTHCHECK --interval=1s --retries=180 CMD su postgres -c 'psql -c "SELECT 1"' || exit 1
+
+HEALTHCHECK --interval=1s --retries=180 CMD psql -U "$DB_USER" -c "SELECT 1" || exit 1
 
 #WORKDIR /app/postgres
 

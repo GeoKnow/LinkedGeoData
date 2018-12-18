@@ -13,13 +13,13 @@ RUN apt-get -y update --fix-missing && apt-get install -y postgresql-9.5-postgis
 #    sudo apt-get install wget 
 RUN wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key  | sudo apt-key add - && \
     echo 'deb http://cstadler.aksw.org/repos/apt precise main contrib non-free' | sudo tee -a /etc/apt/sources.list.d/cstadler.aksw.org.list && \
-    apt-get update && \
-    apt-get install -y linkedgeodata
+    apt update && \
+    apt install -y linkedgeodata
 
 WORKDIR /app/linkedgeodata
 
 COPY configuration.txt.dist .
-COPY start.sh ./start.sh
+COPY start.sh .
 
 RUN chmod +x ./start.sh && sleep 1
 

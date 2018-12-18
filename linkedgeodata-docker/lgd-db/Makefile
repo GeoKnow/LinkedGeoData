@@ -3,10 +3,7 @@ SHELL := /bin/bash
 .PHONY: all build clean
 
 # We need to build the nominatim.so file
-all: build
-
-build: Dockerfile target/nominatim.so target/postgresql.conf
-	docker build -t lgd-nominatim .	
+all: target/nominatim.so target/postgresql.conf
 
 target:
 	mkdir -p target
