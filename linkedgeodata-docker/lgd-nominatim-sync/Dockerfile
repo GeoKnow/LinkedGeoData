@@ -62,6 +62,11 @@ RUN chmod +x ./src/utils/setup-patched.php
 COPY update-patched.php ./src/utils/
 RUN chmod +x ./src/utils/update-patched.php
 
+COPY lib-patched ./lib/lib.php
+RUN chmod +x ./lib/lib.php
+
+
+
 COPY target/nominatim ./src/nominatim/
 RUN chmod +x ./src/nominatim/nominatim
 

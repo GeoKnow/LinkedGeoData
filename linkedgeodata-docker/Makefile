@@ -3,7 +3,7 @@ TOPTARGETS := all clean
 
 SUBDIRS := $(wildcard */.)
 
-$(TOPTARGETS): $(SUBDIRS)
+$(TOPTARGETS): target/lib/nominatim.jar $(SUBDIRS)
 $(SUBDIRS):
 	@if [ "$@" != 'target/.' ]; then $(MAKE) -C "$@" $(MAKECMDGOALS) ; fi
 
