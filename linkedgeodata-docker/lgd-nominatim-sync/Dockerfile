@@ -62,10 +62,8 @@ RUN chmod +x ./src/utils/setup-patched.php
 COPY update-patched.php ./src/utils/
 RUN chmod +x ./src/utils/update-patched.php
 
-COPY lib-patched ./lib/lib.php
+COPY lib-patched.php ./lib/lib.php
 RUN chmod +x ./lib/lib.php
-
-
 
 COPY target/nominatim ./src/nominatim/
 RUN chmod +x ./src/nominatim/nominatim
@@ -103,6 +101,11 @@ COPY configuration.txt.dist ./src/settings/
 #EXPOSE 8080
 
 COPY start.sh .
+RUN chmod +x ./start.sh
+
+
+RUN sleep 3
+
 
 CMD ./start.sh
 

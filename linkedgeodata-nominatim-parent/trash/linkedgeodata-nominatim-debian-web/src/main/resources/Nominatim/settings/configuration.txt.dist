@@ -1,7 +1,0 @@
-# The URL of the directory containing change files.
-baseUrl=${OSM_DATA_SYNC_URL}
-
-# Defines the maximum time interval in seconds to download in a single invocation.
-# Setting to 0 disables this feature.
-maxInterval=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
-

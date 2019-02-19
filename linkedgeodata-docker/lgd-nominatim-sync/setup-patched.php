@@ -173,8 +173,8 @@
 		// is only defined in the subsequently called create_tables.
 		// Create dummies here that will be overwritten by the proper
 		// versions in create-tables.
-		pgsqlRunScript('CREATE TABLE IF NOT EXISTS place_boundingbox ()');
-		pgsqlRunScript('create type wikipedia_article_match as ()');
+		pgsqlRunScript('CREATE TABLE IF NOT EXISTS place_boundingbox ()', false);
+		pgsqlRunScript('create type wikipedia_article_match as ()', false);
 	}
 
 	if ($aCMDResult['import-data'] || $aCMDResult['all'])
@@ -874,6 +874,7 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 	function pgsqlRunScript($sScript, $bfatal = true)
 	{
 		global $aCMDResult;
+try {
 		// Convert database DSN to psql parameters
 		$aDSNInfo = DB::parseDSN(CONST_Database_DSN);
 		if (!isset($aDSNInfo['port']) || !$aDSNInfo['port']) $aDSNInfo['port'] = 5432;
@@ -901,6 +902,14 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 		{
 			fail("pgsql returned with error code ($iReturn)");
 		}
+} catch (Exception $e) {
+		if ($bfatal)
+		{
+			fail("" . $e);
+		} else {
+            echo "WARNING: $e\n";
+        }
+}
 	}
 
 	function pgsqlRunRestoreData($sDumpFile)
