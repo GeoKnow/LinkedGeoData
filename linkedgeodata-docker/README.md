@@ -2,6 +2,13 @@
 
 * First of all, set up [the docker engine](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) (make sure to select your OS) and [docker-compose](https://docs.docker.com/compose/install/). Our docker setup requires support for docker-compose.yml version 2.1.
 
+* Set up your own evironment configuration. The default settings should be sufficient to get you started.
+
+```
+# Note, that '.env' is a hidden file because it stats with a dot
+cp env.dist .env
+```
+
 * Run the following make command in order to set up docker volumes and network (in the future this step may be combined with the first one). For convenience, there is a `remove-resources` target which will attempt to delete these resources.
 
 ```
