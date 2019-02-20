@@ -31,7 +31,9 @@ WORKDIR /app/nominatim
 #  ./autogen.sh && ./configure && make
 
 COPY target/nominatim.jar .
-RUN unzip nominatim.jar && mv Nominatim src
+RUN unzip nominatim.jar && \
+    mv Nominatim src && \
+    chmod +x src/utils/setup.php
 
 
 RUN echo "force rebuild 2"
@@ -47,7 +49,10 @@ COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
 COPY start.sh ./start.sh
 
-RUN chmod +x ./start.sh && sleep 1
+RUN chmod +x ./start.sh
+
+RUN sleep 3
+
 ENTRYPOINT ./start.sh
 
 

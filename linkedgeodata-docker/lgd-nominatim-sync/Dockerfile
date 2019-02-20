@@ -103,9 +103,7 @@ COPY configuration.txt.dist ./src/settings/
 COPY start.sh .
 RUN chmod +x ./start.sh
 
-
 RUN sleep 3
-
 
 CMD ./start.sh
 
