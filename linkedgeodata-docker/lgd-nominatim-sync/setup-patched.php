@@ -160,9 +160,9 @@
 		{
 			echo "WARNING: external UK postcode table not found.\n";
 		}
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_statecounty.sql');
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_state.sql');
-//		pgsqlRunScriptFile(CONST_BasePath.'/data/us_postcode.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_statecounty.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_state.sql');
+		pgsqlRunScriptFile(CONST_BasePath.'/data/us_postcode.sql');
 
 		if ($aCMDResult['no-partitions'])
 		{
