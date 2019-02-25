@@ -56,7 +56,7 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 
 datasetName=""
-while getopts "?h:U:W:d:f:P:n:" opt; do
+while getopts "?hU:W:d:f:P:n:N" opt; do
     case "$opt" in
         \?)
             echoerr "$usage"
@@ -109,10 +109,10 @@ osmFileSpecified=$?
 [ -f "$osmFile" ]
 osmFileExists=$?
 
-echo "hasFile: $osmFile -> [$osmFileSpecified]"
+#echo "hasFile: $osmFile -> [$osmFileSpecified]"
 
 # Analyse a given osm file
-if [ $osmFileExists ]; then
+if [ $osmFileExists -eq 0 ]; then
 
    # Get the absolute path to the osm file (needed for nominatim)
    osmFile=`readlink -f "$osmFile"`
@@ -160,16 +160,23 @@ echoerr ""
 echoerr "Dataset"
 echoerr "  OSM file to load: $osmFile"
 echoerr "  Dataset name: $datasetName"
+echoerr "  Skip Nominatim: $noNominatim"
 #echoerr "  Dataset Inception Timestamp $timestamp"
 echoerr "-------------------------------------------------------------------"
 
 #if [ -z "$osmFile" ]; then
-if [ ! $osmFileSpecified ]; then
+if [ $osmFileSpecified -eq 0 ]; then
     echoerr "Error: No osm file specified for loading"
     echoerr ""
     echoerr "$usage"
     exit 1
 fi
+
+if [ ! $osmFileExists -eq 0 ]; then
+    echoerr "Error: File not found: $osmFile"
+    exit 1
+fi
+
 
 # Determine whether we have a pbf or xml file
 osmFileExt=${osmFile##*.}
