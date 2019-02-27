@@ -56,7 +56,7 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 
 datasetName=""
-while getopts "?hU:W:d:f:P:n:N" opt; do
+while getopts "h:U:W:d:f:P:n:N" opt; do
     case "$opt" in
         \?)
             echoerr "$usage"
@@ -103,7 +103,7 @@ else
 fi
 
 
-[ -z "$osmFile" ]
+[ -n "$osmFile" ]
 osmFileSpecified=$?
 
 [ -f "$osmFile" ]
@@ -165,14 +165,14 @@ echoerr "  Skip Nominatim: $noNominatim"
 echoerr "-------------------------------------------------------------------"
 
 #if [ -z "$osmFile" ]; then
-if [ $osmFileSpecified -eq 0 ]; then
+if [ $osmFileSpecified -ne 0 ]; then
     echoerr "Error: No osm file specified for loading"
     echoerr ""
     echoerr "$usage"
     exit 1
 fi
 
-if [ ! $osmFileExists -eq 0 ]; then
+if [ $osmFileExists -ne 0 ]; then
     echoerr "Error: File not found: $osmFile"
     exit 1
 fi
@@ -190,7 +190,7 @@ fi
 
 
 # Wait fo the user to press a key
-read -p "Press [Enter] key to start loading"
+read -p "Press [Enter] to start loading or [CTRL+C] to abort"
 
 
 if [ $passLineExists -eq 0 ]; then
@@ -260,7 +260,7 @@ if ! [ "$noNominatim" = true ]; then
 
   nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
 
-  echoerr "Create copy of nominatim at $nominatimFolder"
+  echoerr "Creating copy of nominatim at $nominatimFolder"
 
   cp -rf "$nominatimSource"/* "$nominatimFolder"
 

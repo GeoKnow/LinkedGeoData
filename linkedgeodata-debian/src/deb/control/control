@@ -3,7 +3,7 @@ Version: [[version]]
 Section: web
 Priority: optional
 Architecture: all
-Depends: sparqlify-cli, linkedgeodata-nominatim-v2.5.1
+Depends: sparqlify-cli, linkedgeodata-nominatim-v2.5.1, osmosis
 Maintainer: Claus Stadler <cstadler@informatik.uni-leipzig.de>
 Description: LinkedGeoData tools
 Distribution: ldstack-nightly
