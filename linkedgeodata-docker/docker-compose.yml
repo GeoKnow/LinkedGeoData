@@ -124,6 +124,8 @@ services:
     environment:
       - ONTOP_DB_PASSWORD=${DB_PASS}
       - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - ONTOP_MAPPING_FILE=/opt/ontop/input/gdm_vkg.obda
+      - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/gdm_vkg.owl
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
       - 8014:8080
