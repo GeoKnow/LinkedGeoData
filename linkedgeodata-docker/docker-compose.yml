@@ -116,24 +116,21 @@ services:
       - lgd-net
 
 
-#  lgd-ontop-web:
-#    env_file: .env
-#    build:
-#      context: ./lgd-sparqlify-web
-#    container_name: lgd-sparqlify-web
-##    environment:
-##      - DB_HOST=${DB_HOST}
-##      - DB_PORT=${DB_PORT}
-##      - DB_NAME=${DB_NAME}
-##      - DB_USER=${DB_USER}
-##      - DB_PASS=${DB_PASS}
-##      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
-#    ports:
-#      - 8014:7531
-##    depends_on:
-#      - lgd-osm-sync
-#    networks:
-#      - lgd-net
+  lgd-ontop-web:
+    env_file: .env
+    build:
+      context: ./lgd-ontop-web
+    container_name: lgd-ontop-web
+    environment:
+      - ONTOP_DB_PASSWORD=${DB_PASS}
+      - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#      - ONTOP_OPTS=${ONTOP_OPTS}
+    ports:
+      - 8014:8080
+    depends_on:
+      - lgd-osm-sync
+    networks:
+      - lgd-net
 
 
 #  lgd-nominatim:
