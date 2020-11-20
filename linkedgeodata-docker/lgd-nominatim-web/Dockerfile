@@ -47,12 +47,9 @@ COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
 #ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-COPY start.sh ./start.sh
-
-RUN chmod +x ./start.sh
-
+COPY start.sh .
+COPY wait-for-postgres.sh .
+RUN chmod +x ./start.sh ./wait-for-postgres.sh
 RUN sleep 3
-
-ENTRYPOINT ./start.sh
-
+ENTRYPOINT [ "./wait-for-postgres.sh", "./start.sh" ]
 

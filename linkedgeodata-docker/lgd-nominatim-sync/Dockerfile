@@ -100,10 +100,10 @@ COPY configuration.txt.dist ./src/settings/
 #EXPOSE 5432
 #EXPOSE 8080
 
+
 COPY start.sh .
-RUN chmod +x ./start.sh
-
+COPY wait-for-postgres.sh .
+RUN chmod +x ./start.sh ./wait-for-postgres.sh
 RUN sleep 3
-
-CMD ./start.sh
+CMD [ "./wait-for-postgres.sh", "./start.sh" ]
 

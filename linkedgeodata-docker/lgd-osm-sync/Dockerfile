@@ -19,8 +19,10 @@ RUN wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key 
 WORKDIR /app/linkedgeodata
 
 COPY configuration.txt.dist .
+
 COPY start.sh .
+COPY wait-for-postgres.sh .
+RUN chmod +x ./start.sh ./wait-for-postgres.sh
+RUN sleep 3
+ENTRYPOINT [ "./wait-for-postgres.sh", "./start.sh" ]
 
-RUN chmod +x ./start.sh && sleep 1
-
-ENTRYPOINT ./start.sh
