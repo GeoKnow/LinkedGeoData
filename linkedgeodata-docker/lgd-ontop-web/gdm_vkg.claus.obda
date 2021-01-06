@@ -9,10 +9,13 @@ obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 spatial:		http://geovocab.org/spatial#
 lgd:		http://linkedgeodata.org/triplify/
+lgd-geom:		http://linkedgeodata.org/geometry/
+lgdo:		http://linkedgeodata.org/ontology/
+lgdm:		http://linkedgeodata.org/meta/
 
 [MappingDeclaration] @collection [[
 mappingId	lgd_nodes_1
-target		lgd:node{id} a :Node , geo:Feature ; :version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; :changeset {changeset_id}^^xsd:int .
+target		lgd:node{id} a lgdm:Node , geo:Feature ; lgdo:version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
 source		SELECT *
 			FROM nodes
 
@@ -11543,7 +11546,7 @@ source		SELECT *
 			WHERE k='wikipedia'
 
 mappingId	lgd_ways_1
-target		lgd:way{id} a :Way , geo:Feature ; :version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; :changeset {changeset_id}^^xsd:int .
+target		lgd:way{id} a lgdm:Way , geo:Feature ; lgdo:version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
 source		SELECT *
 			FROM ways
 
@@ -11554,12 +11557,12 @@ source		SELECT id,
 			FROM ways
 
 mappingId	lgd_pos_seq
-target		lgd:way{id} :posSeq :posSeq{id} . 
+target		lgd:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
 source		SELECT *
 			FROM ways
 
 mappingId	lgd_pos_seq_type
-target		:posSeq{id} a :Seq . 
+target		lgd-geom:posSeq{id} a :Seq .
 source		SELECT *
 			FROM ways
 
@@ -23109,12 +23112,12 @@ source		SELECT *
 			WHERE k='wikipedia'
 
 mappingId	lgd_relations_1
-target		lgd:relation{id} a :Relation , :Feature , :Seq ; :version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; :changeset {changeset_id}^^xsd:int ; :members :geometryrelation{id} . 
+target		lgd:relation{id} a lgdm:Relation , :Feature , :Seq ; lgdo:version {version}^^xsd:int ; :contributor :user{user_id} ; :modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int ; lgdo:members :geometryrelation{id} .
 source		SELECT *
 			FROM relations
 
 mappingId	lgd_relation_members_all
-target		:rmember{relation_id}_{sid} :sequence_id {sid}^^xsd:int ; :role {member_role}^^xsd:string . 
+target		:rmember{relation_id}_{sid} :sequence_id {sid}^^xsd:int ; lgdo:role {member_role}^^xsd:string .
 source		SELECT *, sequence_id + 1 AS sid
 			FROM relation_members
 
@@ -34419,7 +34422,7 @@ source		SELECT *
 			WHERE k='rednap_tipo'
 
 mappingId	lgd_relation_tags_string_ref
-target		lgd:relation{relation_id} :ref {v}^^xsd:string . 
+target		lgd:relation{relation_id} :ref {v}^^xsd:string .
 source		SELECT *
 			FROM lgd_relation_tags_string
 			WHERE k='ref'
