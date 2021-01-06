@@ -11,7 +11,8 @@ ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/9.3-1101-jdbc41/pos
 #ADD https://raw.githubusercontent.com/alpano-unibz/LinkedGeoData/ontop-dev/linkedgeodata-ontop/gdm_vkg.obda input/
 ADD gdm_vkg.claus.obda input/gdm_vkg.obda
 
-ADD https://raw.githubusercontent.com/alpano-unibz/LinkedGeoData/ontop-dev/linkedgeodata-ontop/gdm_vkg.owl input/
+ADD gdm_vkg.owl input/gdm_vkg.owl
+#ADD https://raw.githubusercontent.com/alpano-unibz/LinkedGeoData/ontop-dev/linkedgeodata-ontop/gdm_vkg.owl input/
 
 ADD create-properties.sh .
 RUN chmod +x create-properties.sh
