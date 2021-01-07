@@ -1313,10 +1313,10 @@
 
 
 
-    <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#asWKT -->
+    <!-- http://www.opengis.net/ont/geosparql#asWKT -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#asWKT">
-        <rdfs:range rdf:resource="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#ogc:wktLiteral"/>
+    <owl:DatatypeProperty rdf:about="http://www.opengis.net/ont/geosparql#asWKT">
+        <rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#wktLiteral"/>
     </owl:DatatypeProperty>
 
 
@@ -1537,9 +1537,9 @@
 
 
 
-    <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#changeset -->
+    <!-- http://linkedgeodata.org/ontology/changeset -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#changeset"/>
+    <owl:DatatypeProperty rdf:about="http://linkedgeodata.org/ontology/changeset"/>
 
 
 
@@ -4951,9 +4951,9 @@
 
 
 
-    <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#version -->
+    <!-- http://linkedgeodata.org/ontology/version -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#version"/>
+    <owl:DatatypeProperty rdf:about="http://linkedgeodata.org/ontology/version"/>
 
 
 
@@ -8551,7 +8551,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Feature"/>
 
-
+	<owl:Class rdf:about="http://www.opengis.net/ont/geosparql#Feature"/>
 
     <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Fell -->
 
@@ -9090,9 +9090,9 @@
 
 
 
-    <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Geometry -->
+    <!-- http://www.opengis.net/ont/geosparql#Geometry -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Geometry"/>
+    <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#Geometry"/>
 
 
 
@@ -11353,9 +11353,9 @@
 
 
 
-    <!-- http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Node -->
+    <!-- http://linkedgeodata.org/meta/Node -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/linkedgeodata/ontologies/gdm_vkg#Node"/>
+    <owl:Class rdf:about="http://linkedgeodata.org/meta/Node"/>
 
 
 
