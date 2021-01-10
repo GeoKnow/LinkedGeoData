@@ -1,4 +1,4 @@
-FROM ontop/ontop-endpoint
+FROM ontop/ontop-endpoint:geof
 WORKDIR /opt/ontop
 
 #ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.18/postgresql-42.2.18.jar jdbc/
@@ -11,6 +11,7 @@ ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/9.3-1101-jdbc41/pos
 #ADD https://raw.githubusercontent.com/alpano-unibz/LinkedGeoData/ontop-dev/linkedgeodata-ontop/lgd.obda input/
 ADD lgd.obda input/lgd.obda
 ADD lgd.owl input/lgd.owl
+ADD lgd.portal.toml input/lgd.portal.toml
 ADD catalog-v001.xml input/catalog-v001.xml
 ADD library input/library
 

@@ -28,7 +28,7 @@ source		SELECT id,
 			FROM nodes
 
 mappingId	lgd_nodes_2_2
-target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double .
+target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double ; lgdo:gadmSameAs <http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point> .
 source		SELECT  id,
 			ST_X(geom::geometry) x,
 			ST_Y(geom::geometry) y

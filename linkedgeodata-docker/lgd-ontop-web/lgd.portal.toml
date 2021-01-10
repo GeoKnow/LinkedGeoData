@@ -1,0 +1,40 @@
+title="Open Data Hub Knowledge Graph Portal (Mobility)"
+
+[[tabGroups]]
+
+name="Example Queries"
+[[tabGroups.tabs]]
+name="Restaurants"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX lgdm: <http://linkedgeodata.org/meta/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+SELECT * WHERE {
+  ?x a lgdo:Restaurant .
+  ?x geo:asWKT ?wkt .
+  ?x rdfs:label ?wktLabel .
+}
+LIMIT 1000
+"""
+
+[[tabGroups.tabs]]
+name="Distance"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX lgdm: <http://linkedgeodata.org/meta/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+SELECT * WHERE {
+BIND(geof:distance("POINT(7.436636 43.7486778)"^^geo:wktLiteral, "POINT(7.427851 43.743312)"^^geo:wktLiteral, uom:metre) AS ?dist)
+}
+LIMIT 10
+"""

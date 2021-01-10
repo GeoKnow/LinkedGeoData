@@ -134,6 +134,7 @@ services:
       - ONTOP_MAPPING_FILE=/opt/ontop/input/lgd.obda
       - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
       - ONTOP_PROPERTIES_FILE=/opt/ontop/input/lgd.properties
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
       - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
       - ONTOP_DEBUG=1
       - ONTOP_DEV=1
@@ -146,7 +147,6 @@ services:
       - lgd-net
 
   pgadmin:
-    container_name: pgadmin_container
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
@@ -157,6 +157,8 @@ services:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
       - lgd-net
+    depends_on:
+      - lgd-db
     restart: unless-stopped
 
 #  lgd-nominatim:
