@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://linkedgeodata.org/ontology/"
-     xml:base="http://linkedgeodata.org/ontology/"
+<rdf:RDF xmlns="http://linkedgeodata.org/ontology"
+     xml:base="http://linkedgeodata.org/ontology"
      xmlns:ogc="http://www.opengis.net/ont/geosparql#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -8,7 +8,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:obda="https://w3id.org/obda/vocabulary#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="http://linkedgeodata.org/ontology/">
+    <owl:Ontology rdf:about="http://linkedgeodata.org/ontology">
          <owl:imports rdf:resource="http://www.opengis.net/ont/geosparql"/>
          <owl:imports rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos"/>
          <owl:imports rdf:resource="http://purl.org/dc/terms/1.1/"/>

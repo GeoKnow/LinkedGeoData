@@ -1,18 +1,19 @@
 [PrefixDeclaration]
 geo:		http://www.opengis.net/ont/geosparql#
+lgd:		http://linkedgeodata.org/triplify/
+ogc:		http://www.opengis.net/ont/geosparql#
 owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
 xml:		http://www.w3.org/XML/1998/namespace
 xsd:		http://www.w3.org/2001/XMLSchema#
+lgdm:		http://linkedgeodata.org/meta/
+lgdo:		http://linkedgeodata.org/ontology/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
+dcterms:		http://purl.org/dc/terms/
 spatial:		http://geovocab.org/spatial#
-lgd:		http://linkedgeodata.org/triplify/
-lgd-geom:		http://linkedgeodata.org/geometry/
-lgdo:		http://linkedgeodata.org/ontology/
-lgdm:		http://linkedgeodata.org/meta/
-dcterms:	http://purl.org/dc/terms/
-wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
+lgd-geom:	http://linkedgeodata.org/geometry/
 
 [MappingDeclaration] @collection [[
 mappingId	lgd_nodes_1
@@ -32,7 +33,6 @@ source		SELECT  id,
 			ST_X(geom::geometry) x,
 			ST_Y(geom::geometry) y
 			FROM nodes
-
 
 mappingId	lgd_node_tags_resource_k_Abutters
 target		lgd:node{node_id} a lgdo:Abutters .
@@ -11547,7 +11547,7 @@ source		SELECT *
 			WHERE k='wikipedia'
 
 mappingId	lgd_ways_1
-target		lgd:way{id} a lgdm:Way, geo:Feature ; lgdo:version {version}^^xsd:int ; dcterms:contributor lgd:user{user_id} ; dcterms:modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
+target		lgd:way{id} a lgdm:Way , geo:Feature ; lgdo:version {version}^^xsd:int ; dcterms:contributor lgd:user{user_id} ; dcterms:modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
 source		SELECT *
 			FROM ways
 
@@ -21165,7 +21165,7 @@ source		SELECT *
 			AND ((property LIKE 'http://linkedgeodata.org/ontology/%') OR (property LIKE 'http://www.w3.org/%') OR (property LIKE 'http://xmlns.com/foaf/0.1/%'))
 
 mappingId	lgd_way_tags_text_lang_no
-target		lgd:way{way_id} rdfs:label {v}@no.
+target		lgd:way{way_id} rdfs:label {v}@no .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -23139,7 +23139,6 @@ target		lgd:rmember{relation_id}_{sid} lgdo:georef lgd:relation{member_id} .
 source		SELECT *, sequence_id + 1 AS sid
 			FROM relation_members
 			WHERE member_type = 'R'
-pro
 
 mappingId	lgd_relation_tags_resource_k_Abutters
 target		lgd:relation{relation_id} a lgdo:Abutters .
