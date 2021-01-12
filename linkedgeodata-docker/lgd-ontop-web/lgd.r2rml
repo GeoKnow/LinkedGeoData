@@ -1,0 +1,5867 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix lgdm: <http://linkedgeodata.org/meta/> .
+@prefix lgdo: <http://linkedgeodata.org/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix spatial: <http://geovocab.org/spatial#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:lgd_nodes_1_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM nodes"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tstamp";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate dcterms:modified
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "changeset_id";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:changeset
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "version";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:version
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/user{user_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate dcterms:contributor
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class lgdm:Node, geo:Feature;
+      rr:template "http://linkedgeodata.org/triplify/node{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_nodes_2_1_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT id,
+ST_ASTEXT(geom) x
+FROM nodes"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "x";
+          rr:datatype geo:wktLiteral;
+          rr:termType rr:Literal
+        ];
+      rr:predicate geo:asWKT
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class geo:Geometry;
+      rr:template "http://linkedgeodata.org/triplify/node{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_nodes_2_2_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT  id,
+ST_X(geom) x,
+ST_Y(geom) y
+FROM nodes"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "x";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate wgs:long
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "y";
+          rr:datatype xsd:double;
+          rr:termType rr:Literal
+        ];
+      rr:predicate wgs:lat
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:gadmSameAs
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_resource_k> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_resource_k"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_resource_kv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_int> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_int"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_boolean> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_boolean"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_float> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_float"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:float;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_string> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_string"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/ontology/{k}";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language=''"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_en> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='en'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "en";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ja> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ja";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_fr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ko_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "korm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ar> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ar'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ar";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_de> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='de'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "de";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ru> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ru'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ru";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_sv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_botanical> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='botanical'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_zh> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zh";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_fi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_be> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='be'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "be";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ka> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ka'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ka";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ko> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ko";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_he> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='he'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "he";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_nl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='nl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "nl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ga> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ga'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ga";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ja_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jarm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_el> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='el'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "el";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_it> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='it'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "it";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_es> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='es'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "es";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_zh_pinyin> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_pinyin'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpinyin";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_th> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='th'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "th";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_sr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_cy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_uk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='uk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "uk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ca> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ca'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ca";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_hu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_hsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_fa> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fa'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fa";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_eu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_br> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='br'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "br";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_pl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_hy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_kn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_sl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ro> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ro'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ro";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_sq> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sq'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sq";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_am> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='am'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "am";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_fy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_cs> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cs'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cs";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_gd> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gd'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gd";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_sk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_af> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='af'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "af";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_lb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ja_kana> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_kana'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jakana";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_pt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_hr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_vi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='vi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "vi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_tr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_fur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_bg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='bg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "bg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_eo> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eo'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eo";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_lt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_la> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='la'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "la";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_kk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_gsw> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gsw'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gsw";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_et> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='et'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "et";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_mn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ku> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ku'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ku";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_mk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_lv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_carnaval> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='carnaval'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_hi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_no> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='no'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "no";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_gl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_cv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_is> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='is'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "is";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_gcf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gcf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gcf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_mdf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mdf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mdf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_myv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='myv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "myv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_da> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='da'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "da";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ast> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ast'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ast";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_az> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='az'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "az";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_gv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ba> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ba'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ba";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_scn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='scn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "scn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_dsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='dsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "dsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_ur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_oc> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='oc'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "oc";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_tt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_zh_py> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_py'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_tags_text_lang_tg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_ways_1_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM ways"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "version";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:version
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/user{user_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate dcterms:contributor
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tstamp";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate dcterms:modified
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "changeset_id";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:changeset
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class lgdm:Way, geo:Feature;
+      rr:template "http://linkedgeodata.org/triplify/way{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_ways_2_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT id,
+ST_ASTEXT(linestring) x
+FROM ways"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "x";
+          rr:datatype geo:wktLiteral;
+          rr:termType rr:Literal
+        ];
+      rr:predicate geo:asWKT
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class geo:Geometry;
+      rr:template "http://linkedgeodata.org/triplify/way{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_pos_seq> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM ways"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/geometry/posSeq{id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:posSeq
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_pos_seq_type> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM ways"""
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class lgdo:Seq;
+      rr:template "http://linkedgeodata.org/geometry/posSeq{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:view_waynodes> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *, sequence_id + 1 AS sid
+FROM way_nodes"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "sid";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:sequence_id
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/nodeseq{node_id}/{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_resource_k> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_resource_k"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_resource_kv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_int> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_int"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_boolean> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_boolean"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_float> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_float"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:float;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language=''"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_en> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='en'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "en";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ja> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ja";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_fr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ko_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "korm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ar> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ar'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ar";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_de> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='de'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "de";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ru> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ru'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ru";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_sv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_botanical> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='botanical'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_zh> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zh";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_fi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_be> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='be'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "be";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ka> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ka'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ka";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ko> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ko";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_he> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='he'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "he";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_nl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='nl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "nl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ga> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ga'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ga";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ja_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jarm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_el> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='el'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "el";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_it> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='it'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "it";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_es> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='es'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "es";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_zh_pinyin> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_pinyin'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpinyin";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_th> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='th'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "th";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_sr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_cy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_uk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='uk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "uk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ca> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ca'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ca";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_hu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_hsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_fa> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fa'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fa";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_eu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_br> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='br'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "br";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_pl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_hy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_kn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_sl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ro> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ro'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ro";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_sq> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sq'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sq";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_am> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='am'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "am";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_fy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_cs> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cs'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cs";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_gd> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gd'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gd";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_sk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_af> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='af'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "af";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_lb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ja_kana> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_kana'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jakana";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_pt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_hr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_vi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='vi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "vi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_tr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_fur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_bg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='bg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "bg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_eo> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eo'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eo";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_lt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_la> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='la'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "la";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_kk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_gsw> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gsw'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gsw";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_et> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='et'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "et";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_mn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ku> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ku'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ku";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_mk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_lv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_carnaval> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='carnaval'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_hi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_no> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='no'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "no";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_gl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_cv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_is> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='is'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "is";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_gcf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gcf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gcf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_mdf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mdf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mdf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_myv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='myv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "myv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_da> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='da'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "da";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ast> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ast'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ast";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_az> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='az'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "az";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_gv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ba> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ba'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ba";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_scn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='scn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "scn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_dsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='dsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "dsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_ur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_oc> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='oc'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "oc";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_tt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_zh_py> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_py'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_text_lang_tg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_tags_string> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_tags_string"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/ontology/{k}";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relations_1_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM relations"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "version";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:version
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/user{user_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate dcterms:contributor
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "tstamp";
+          rr:datatype xsd:dateTime;
+          rr:termType rr:Literal
+        ];
+      rr:predicate dcterms:modified
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "changeset_id";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:changeset
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/geometryrelation{id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:members
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class spatial:Feature, lgdm:Relation, lgdo:Seq;
+      rr:template "http://linkedgeodata.org/triplify/relation{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_members_all_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *, sequence_id + 1 AS sid
+FROM relation_members"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "sid";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:sequence_id
+    ], [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "member_role";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:role
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/rmember{relation_id}_{sid}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_members_seq_nodes> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *, sequence_id + 1 AS sid
+FROM relation_members
+WHERE member_type = 'N'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/node{member_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:georef
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/rmember{relation_id}_{sid}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_members_seq_ways> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *, sequence_id + 1 AS sid
+FROM relation_members
+WHERE member_type = 'W'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/way{member_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:georef
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/rmember{relation_id}_{sid}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_members_seq_relations> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *, sequence_id + 1 AS sid
+FROM relation_members
+WHERE member_type = 'R'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/triplify/relation{member_id}";
+          rr:termType rr:IRI
+        ];
+      rr:predicate lgdo:georef
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/rmember{relation_id}_{sid}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_resource_k> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_resource_k"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_resource_kv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "object";
+          rr:termType rr:IRI
+        ];
+      rr:predicate rdf:type
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_int> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_int"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:int;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_boolean> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_boolean"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:boolean;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_float> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_float"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:float;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:column "property";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language=''"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_en> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='en'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "en";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ja> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ja";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_fr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ko_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "korm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ar> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ar'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ar";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_de> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='de'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "de";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ru> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ru'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ru";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_sv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_botanical> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='botanical'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_zh> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zh";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_fi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_be> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='be'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "be";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ka> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ka'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ka";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ko> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ko'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ko";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_he> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='he'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "he";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_nl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='nl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "nl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ga> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ga'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ga";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ja_rm> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_rm'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jarm";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_el> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='el'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "el";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_it> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='it'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "it";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_es> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='es'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "es";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_zh_pinyin> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_pinyin'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpinyin";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_th> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='th'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "th";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_sr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_cy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_uk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='uk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "uk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ca> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ca'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ca";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_hu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_hsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_fa> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fa'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fa";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_eu> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eu'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eu";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_br> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='br'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "br";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_pl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_hy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_kn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_sl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ro> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ro'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ro";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_sq> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sq'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sq";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_am> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='am'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "am";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_fy> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fy'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_cs> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cs'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cs";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_gd> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gd'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gd";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_sk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='sk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "sk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_af> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='af'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "af";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_lb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ja_kana> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ja_kana'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "jakana";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_pt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='pt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "pt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_hr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_vi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='vi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "vi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_tr> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tr'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tr";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_fur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='fur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "fur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_bg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='bg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "bg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_eo> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='eo'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "eo";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_lt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_la> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='la'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "la";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_kk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='kk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "kk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_gsw> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gsw'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gsw";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_et> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='et'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "et";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_mn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ku> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ku'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ku";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_mk> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mk'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mk";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_lv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='lv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "lv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_carnaval> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='carnaval'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_hi> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='hi'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "hi";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_no> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='no'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "no";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_gl> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gl'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gl";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_cv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='cv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "cv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_is> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='is'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "is";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_gcf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gcf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gcf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_mdf> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='mdf'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "mdf";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_myv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='myv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "myv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_da> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='da'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "da";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ast> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ast'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ast";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_az> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='az'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "az";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_gv> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='gv'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "gv";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ba> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ba'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ba";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_scn> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='scn'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "scn";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_dsb> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='dsb'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "dsb";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_ur> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='ur'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "ur";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_oc> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='oc'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "oc";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_tt> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tt'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tt";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_zh_py> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='zh_py'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "zhpy";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_text_lang_tg> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_text
+WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+AND language='tg'"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:language "tg";
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_tags_string> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_tags_string"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "v";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicateMap [ a rr:PredicateMap, rr:TermMap;
+          rr:template "http://linkedgeodata.org/ontology/{k}";
+          rr:termType rr:IRI
+        ]
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_users_1> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM users"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate rdfs:label
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:class lgdo:User;
+      rr:template "http://linkedgeodata.org/triplify/user{id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_node_interlinks> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_node_interlinks
+WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "o_local_name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:shortid
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/node{node_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_way_interlinks> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_way_interlinks
+WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "o_local_name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:shortid
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/way{way_id}";
+      rr:termType rr:IRI
+    ] .
+
+<urn:lgd_relation_interlinks> a rr:TriplesMap;
+  rr:logicalTable [ a rr:R2RMLView;
+      rr:sqlQuery """SELECT *
+FROM lgd_relation_interlinks
+WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))"""
+    ];
+  rr:predicateObjectMap [ a rr:PredicateObjectMap;
+      rr:objectMap [ a rr:ObjectMap, rr:TermMap;
+          rr:column "o_local_name";
+          rr:datatype xsd:string;
+          rr:termType rr:Literal
+        ];
+      rr:predicate lgdo:shortid
+    ];
+  rr:subjectMap [ a rr:SubjectMap, rr:TermMap;
+      rr:template "http://linkedgeodata.org/triplify/relation{relation_id}";
+      rr:termType rr:IRI
+    ] .
