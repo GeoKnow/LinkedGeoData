@@ -1433,7 +1433,7 @@ source		SELECT *
 			AND language='tg'
 
 mappingId	lgd_way_tags_string
-target		lgd:way{node_id} lgdo:{k} {v}^^xsd:string .
+target		lgd:way{way_id} lgdo:{k} {v}^^xsd:string .
 source		SELECT *
 			FROM lgd_way_tags_string
 
@@ -1466,12 +1466,12 @@ source		SELECT *, sequence_id + 1 AS sid
 			WHERE member_type = 'R'
 
 mappingId	lgd_relation_tags_resource_k
-target		lgd:way{way_id} a <{object}> .
+target		lgd:relation{relation_id} a <{object}> .
 source		SELECT *
 			FROM lgd_relation_tags_resource_k
 
 mappingId	lgd_relation_tags_resource_kv
-target		lgd:way{way_id} a <{object}> .
+target		lgd:relation{relation_id} a <{object}> .
 source		SELECT *
 			FROM lgd_relation_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
 
