@@ -26,6 +26,8 @@ services:
     restart: always
     networks:
       - lgd-net
+    ports:
+      - 6543:5432
 
   lgd-nominatim-sync:
     env_file: .env
