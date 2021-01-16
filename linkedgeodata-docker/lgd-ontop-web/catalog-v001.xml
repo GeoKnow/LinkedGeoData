@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="http://purl.org/dc/terms/1.1/" uri="library/dublin_core_elements.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://www.w3.org/2003/01/geo/wgs84_pos" uri="library/wgs84_pos.rdf"/>
+    <uri id="User Entered Import Resolution" name="http://www.w3.org/2004/02/skos/core" uri="library/core.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.opengis.net/ont/sf" uri="library/sf.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.opengis.net/ont/gml" uri="library/gml.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.opengis.net/ont/geosparql" uri="library/geosparql.owl"/>
+</catalog>

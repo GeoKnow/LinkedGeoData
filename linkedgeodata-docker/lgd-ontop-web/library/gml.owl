@@ -1,0 +1,593 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.opengis.net/ont/gml#"
+     xml:base="http://www.opengis.net/ont/gml"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:geo="http://www.opengis.net/ont/geosparql#"
+     xmlns:gml="http://www.opengis.net/ont/gml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:terms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="http://www.opengis.net/ont/gml">
+        <owl:imports rdf:resource="http://www.opengis.net/ont/geosparql"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.opengis.net/ont/geosparql#Geometry -->
+
+    <rdf:Description rdf:about="http://www.opengis.net/ont/geosparql#Geometry">
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractCurveSegment -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractCurveSegment">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Curve Segment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractGeometricPrimitive -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Geometric Primitive</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractGeometry -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractGeometry">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Geometry</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractGriddedSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractGriddedSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractParametricCurveSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Gridded Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractParametricCurveSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractParametricCurveSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractSurfacePatch"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Parametric Curve Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#AbstractSurfacePatch -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#AbstractSurfacePatch">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Abstract Surface Patch</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Arc -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Arc">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#ArcString"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Arc</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#ArcByBulge -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#ArcByBulge">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#ArcStringByBulge"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Arc by Bulge</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#ArcByCenterPoint -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#ArcByCenterPoint">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Arc by Center Point</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#ArcString -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#ArcString">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Arc String</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#ArcStringByBulge -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#ArcStringByBulge">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Arc String by Bulge</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#BSpline -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#BSpline">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#SplineCurve"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">BSpline</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Bezier -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Bezier">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#BSpline"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Bezier</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Circle -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Circle">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Arc"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Circle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#CircleByCenterPoint -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#CircleByCenterPoint">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#ArcByCenterPoint"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">CircleByCenterPoint</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Clothoid -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Clothoid">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Clothoid</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Composite -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Composite">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#GeometricComplex"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Composite</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#CompositeCurve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#CompositeCurve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Composite"/>
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#OrientableCurve"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Composite Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#CompositeSolid -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#CompositeSolid">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Composite"/>
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Solid"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Composite Solid</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#CompositeSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#CompositeSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Composite"/>
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#OrientableSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Composite Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Cone -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Cone">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGriddedSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Cone</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#CubicSpline -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#CubicSpline">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#PolynomialSpline"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Cubic Spline</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Curve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Curve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#OrientableCurve"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Cylinder -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Cylinder">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGriddedSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Cylinder</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Geodesic -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Geodesic">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#GeodesicString"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Geodesic</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#GeodesicString -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#GeodesicString">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Geodesic String</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#GeometricComplex -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#GeometricComplex">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Geometric Complex</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#LineString -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#LineString">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#LineStringSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Line String</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#LineStringSegment -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#LineStringSegment">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Line String Segment</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#LinearRing -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#LinearRing">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Ring"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Linear Ring</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#MultiCurve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#MultiCurve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#MultiGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Multi-Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#MultiGeometry -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#MultiGeometry">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Multi-Geometry</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#MultiPoint -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#MultiPoint">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#MultiGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Multi-Point</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#MultiSolid -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#MultiSolid">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#MultiGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Multi-Solid</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#MultiSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#MultiSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#MultiGeometry"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Multi-Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#OffsetCurve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#OffsetCurve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Offset Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#OrientableCurve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#OrientableCurve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Orientable Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#OrientableSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#OrientableSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Orientable Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Point -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Point">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Point</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Polygon -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Polygon">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Surface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Polygon</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#PolygonPatch -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#PolygonPatch">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractSurfacePatch"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Polygon Patch</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#PolyhedralSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#PolyhedralSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#Surface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Polyhedral Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#PolynomialSpline -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#PolynomialSpline">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#SplineCurve"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Polynomial Spline</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Rectangle -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Rectangle">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#PolygonPatch"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Rectangle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Ring -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Ring">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#CompositeCurve"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Ring</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Shell -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Shell">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#CompositeSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Shell</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Solid -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Solid">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Solid</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Sphere -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Sphere">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGriddedSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Sphere</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#SplineCurve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#SplineCurve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractCurveSegment"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Spline Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Surface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Surface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#AbstractGeometricPrimitive"/>
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#OrientableSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Tin -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Tin">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#TriangulatedSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Triangulated Irregular Network</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#Triangle -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#Triangle">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#PolygonPatch"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Triangle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/ont/gml#TriangulatedSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/ont/gml#TriangulatedSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/ont/gml#PolyhedralSurface"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+        <rdfs:label xml:lang="en">Triangulated Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.opengis.net/ont/geosparql#Feature">
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.opengis.net/ont/geosparql#SpatialObject">
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/ont/gml"/>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

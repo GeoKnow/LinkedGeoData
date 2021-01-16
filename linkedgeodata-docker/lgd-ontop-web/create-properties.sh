@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 cat <<EOL
 jdbc.url=jdbc:${ONTOP_DB_URL}
