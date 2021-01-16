@@ -127,6 +127,7 @@ services:
         - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     container_name: lgd-ontop-web
     environment:
+      - ONTOP_JAVA_ARGS=-Xmx2g
       - ONTOP_DB_NAME=${DB_NAME}
       - ONTOP_DB_USER=${DB_USER}
       - ONTOP_DB_PASSWORD=${DB_PASS}
@@ -134,6 +135,8 @@ services:
       - ONTOP_MAPPING_FILE=/opt/ontop/input/gdm_vkg.obda
       - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/gdm_vkg.owl
       - ONTOP_PROPERTIES_FILE=/opt/ontop/input/gdm_vkg.properties
+      - ONTOP_DEBUG=true
+      - ONTOP_DEV_MODE=true
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
       - 8014:8080
