@@ -26,6 +26,8 @@ services:
     restart: always
     networks:
       - lgd-net
+    ports:
+      - 6543:5432
 
   lgd-nominatim-sync:
     env_file: .env
@@ -127,17 +129,17 @@ services:
         - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     container_name: lgd-ontop-web
     environment:
-      - ONTOP_JAVA_ARGS=-Xmx2g
       - ONTOP_DB_NAME=${DB_NAME}
       - ONTOP_DB_USER=${DB_USER}
       - ONTOP_DB_PASSWORD=${DB_PASS}
 #      - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-      - ONTOP_DEBUG=true
-      - ONTOP_DEV_MODE=true
       - ONTOP_MAPPING_FILE=/opt/ontop/input/lgd.obda
       - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
       - ONTOP_PROPERTIES_FILE=/opt/ontop/input/lgd.properties
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
       - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
+      - ONTOP_DEBUG=1
+      - ONTOP_DEV=1
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
       - 8014:8080
@@ -146,6 +148,21 @@ services:
     networks:
       - lgd-net
 
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - lgd-net
+    depends_on:
+      - lgd-db
+    restart: unless-stopped
 
 #  lgd-nominatim:
 #    build: lgd-nominatim
@@ -176,6 +193,7 @@ volumes:
   lgd-nominatim-sync-vol:
     external:
       name: lgd-nominatim-sync-vol
+  pgadmin:
 
 
 

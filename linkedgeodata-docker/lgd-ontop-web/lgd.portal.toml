@@ -1,0 +1,52 @@
+title="LinkedGeoData.org"
+
+[[tabGroups]]
+
+name="Example Queries"
+[[tabGroups.tabs]]
+name="Restaurants"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX lgdm: <http://linkedgeodata.org/meta/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+SELECT * WHERE {
+  ?x a lgdo:Restaurant .
+  ?x geo:asWKT ?wkt .
+  ?x rdfs:label ?wktLabel .
+}
+LIMIT 1000
+"""
+
+[[tabGroups.tabs]]
+name="Distance and Buffer"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX lgdm: <http://linkedgeodata.org/meta/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+#SELECT * WHERE {
+SELECT ?x ?wkt ?wktLabel ?wktColor WHERE {
+  {  ?x a lgdo:University ; geo:asWKT ?wkt . OPTIONAL {?x rdfs:label ?wktLabel . FILTER (LANG(?wktLabel) = '')}
+    BIND('red' AS ?wktColor)
+  }
+  UNION {
+    ?u a lgdo:University ; geo:asWKT ?uWkt . OPTIONAL {?u rdfs:label ?uktLabel . FILTER (LANG(?uktLabel) = '')}
+    ?x a lgdo:Restaurant ; geo:asWKT ?wkt ; rdfs:label ?wktLabel . FILTER (LANG(?wktLabel) = '')
+	FILTER(geof:distance(?wkt, ?uWkt, uom:metre) < 200)
+    BIND('blue' AS ?wktColor)
+  }
+  UNION {
+    ?u a lgdo:University ; geo:asWKT ?uWkt . OPTIONAL {?u rdfs:label ?uktLabel . FILTER (LANG(?uktLabel) = '')}
+    BIND(geof:buffer(?uWkt, 200, uom:metre) AS ?wkt)  BIND('red' AS ?wktColor)
+}
+  }
+LIMIT 1000
+"""
