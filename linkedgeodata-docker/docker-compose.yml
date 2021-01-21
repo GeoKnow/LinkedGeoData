@@ -116,6 +116,24 @@ services:
       - lgd-net
 
 
+  lgd-pubby-web:
+    image: aksw/dld-present-pubby
+    env_file: .env
+    environment:
+      - STORE_SPARQL_ENDPOINT_URL=${PUBBY_ENDPOINT_URL}
+      - STORE_MAIN_GRAPH=${PUBBY_DEFAULT_GRAPH}
+      - DATASET_BASE=${PUBBY_DATASET_BASE}
+      - WEB_BASE=${PUBBY_WEB_BASE}
+      - INDEX_RESOURCE=${PUBBY_INDEX_RESOURCE}
+      - PORT=8080
+    ports:
+      - 8021:8080
+    depends_on:
+      - lgd-sparqlify-web
+#     - lgd-ontop-web
+    networks:
+      - lgd-net
+
   lgd-ontop-web:
     env_file: .env
     build:

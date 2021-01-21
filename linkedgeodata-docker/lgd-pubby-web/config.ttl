@@ -1,0 +1,78 @@
+# Pubby configuration shipped with the lgd-pubby-web container
+#
+# This configuration connects to the LGD SPARQL endpoint and
+# re-publishes on your local machine, with dereferenceable
+# localhost URIs.
+#
+# This assumes you already have a servlet container running
+# on your machine at http://localhost:8080/ .
+#
+# Install Pubby as the root webapp of your servlet container,
+# and make sure the config-file parameter in Pubby's web.xml
+# points to this configuration file.
+#
+# Then browse to http://localhost:8080/ .
+
+# Prefix declarations to be used in RDF output
+@prefix conf: <http://richard.cyganiak.de/2007/pubby/config.rdf#> .
+#@prefix meta: <http://example.org/metadata#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+#@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix dbp: <http://dbpedia.org/resource/> .
+#@prefix p: <http://localhost:8080/property/> .
+#@prefix yago: <http://localhost:8080/class/yago/> .
+#@prefix geonames: <http://www.geonames.org/ontology#> .
+#@prefix prv:      <http://purl.org/net/provenance/ns#> .
+#@prefix prvTypes: <http://purl.org/net/provenance/types#> .
+#@prefix doap:     <http://usefulinc.com/ns/doap#> .
+#@prefix void:     <http://rdfs.org/ns/void#> .
+
+@prefix ogc:      <http://www.opengis.net/ont/geosparql#> .
+@prefix geom:     <http://geovocab.org/geometry#> .
+@prefix spatial:  <http://geovocab.org/spatial#> . 
+
+@prefix lgdo:     <http://linkedgeodata.org/ontology/> .
+@prefix lgdm:     <http://linkedgeodata.org/meta/> .
+@prefix lgd:      <http://linkedgeodata.org/triplify/> .
+@prefix lgdg: <http://linkedgeodata.org/geometry/> .
+#@prefix lgdn:     <http://linkedgeodata.org/resource/node/> .
+#@prefix lgdw:     <http://linkedgeodata.org/resource/way/> .
+#@prefix lgdwn:    <http://linkedgeodata.org/resource/waynode/> .
+
+
+@prefix meta:     <http://linkedgeodata.org/ld/meta/ontology/> .
+@prefix gadm-o: <http://linkedgeodata.org/ld/gadm2/ontology/> .
+@prefix gadm-r: <http://linkedgeodata.org/ld/gadm2/resource/> .
+
+
+<> a conf:Configuration;
+    conf:projectName "LinkedGeoData";
+    conf:projectHomepage <http://linkedgeodata.org>;
+    conf:webBase <http://linkedgeodata.org/>;
+#    conf:usePrefixesFrom <http://linkedgeodata.org/config.ttl>;
+    conf:defaultLanguage "en";
+    conf:indexResource <http://linkedgeodata.org/triplify/node29857233>;
+
+   conf:dataset [
+        conf:sparqlEndpoint <http://localhost:7531/sparql>;
+        conf:sparqlDefaultGraph <http://linkedgeodata.org/gadm2/>;
+        conf:datasetBase <http://linkedgeodata.org/gadm2/>;
+        conf:fixUnescapedCharacters "(),'!$&*+;=@";
+        ];
+ 
+   conf:dataset [
+        conf:sparqlEndpoint <http://localhost:7531/sparql>;
+        conf:sparqlDefaultGraph <http://linkedgeodata.org/osm/>;
+        conf:datasetBase <http://linkedgeodata.org/>;
+        conf:fixUnescapedCharacters "(),'!$&*+;=@";
+	];
+    .
+
+
