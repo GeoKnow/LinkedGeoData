@@ -1,4 +1,4 @@
-FROM ontop/ontop-endpoint:geof
+FROM ontop/ontop-endpoint:latest
 WORKDIR /opt/ontop
 
 #ADD https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.18/postgresql-42.2.18.jar jdbc/
