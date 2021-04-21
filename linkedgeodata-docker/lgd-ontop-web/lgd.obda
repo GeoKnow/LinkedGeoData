@@ -99,7 +99,7 @@ source		SELECT *
 			AND language='fr'
 
 mappingId	lgd_node_tags_text_lang_ko_rm
-target		lgd:node{node_id} rdfs:label {v}@korm .
+target		lgd:node{node_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -199,7 +199,7 @@ source		SELECT *
 			AND language='ga'
 
 mappingId	lgd_node_tags_text_lang_ja_rm
-target		lgd:node{node_id} rdfs:label {v}@jarm .
+target		lgd:node{node_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -227,7 +227,7 @@ source		SELECT *
 			AND language='es'
 
 mappingId	lgd_node_tags_text_lang_zh_pinyin
-target		lgd:node{node_id} rdfs:label {v}@zhpinyin .
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -402,7 +402,7 @@ source		SELECT *
 
 
 mappingId	lgd_node_tags_text_lang_ja_kana
-target		lgd:node{node_id} rdfs:label {v}@jakana .
+target		lgd:node{node_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -690,7 +690,7 @@ source		SELECT *
 
 
 mappingId	lgd_node_tags_text_lang_zh_py
-target		lgd:node{node_id} rdfs:label {v}@zhpy .
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -794,7 +794,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ko_rm
-target		lgd:way{way_id} rdfs:label {v}@korm .
+target		lgd:way{way_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -906,7 +906,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ja_rm
-target		lgd:way{way_id} rdfs:label {v}@jarm .
+target		lgd:way{way_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -938,7 +938,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_zh_pinyin
-target		lgd:way{way_id} rdfs:label {v}@zhpinyin .
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1130,7 +1130,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ja_kana
-target		lgd:way{way_id} rdfs:label {v}@jakana .
+target		lgd:way{way_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1418,7 +1418,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_zh_py
-target		lgd:way{way_id} rdfs:label {v}@zhpy .
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1529,7 +1529,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ko_rm
-target		lgd:relation{relation_id} rdfs:label {v}@korm .
+target		lgd:relation{relation_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1641,7 +1641,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ja_rm
-target		lgd:relation{relation_id} rdfs:label {v}@jarm .
+target		lgd:relation{relation_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1673,7 +1673,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_zh_pinyin
-target		lgd:relation{relation_id} rdfs:label {v}@zhpinyin .
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1865,7 +1865,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ja_kana
-target		lgd:relation{relation_id} rdfs:label {v}@jakana .
+target		lgd:relation{relation_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -2153,7 +2153,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_zh_py
-target		lgd:relation{relation_id} rdfs:label {v}@zhpy .
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
