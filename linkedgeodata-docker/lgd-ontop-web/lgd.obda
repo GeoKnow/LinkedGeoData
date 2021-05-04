@@ -30,6 +30,7 @@ mappingId	lgd_nodes_3
 target		lgd-geom:node{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
 source		SELECT id,
 			ST_ASTEXT(geom) wkt
+			FROM nodes
 
 mappingId	lgd_nodes_4
 target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double ; lgdo:gadmSameAs <http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point> .
