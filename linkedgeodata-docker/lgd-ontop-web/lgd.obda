@@ -22,17 +22,16 @@ target		lgd:node{id} a lgdm:Node , geo:Feature ; lgdo:version {version}^^xsd:int
 source		SELECT *
 			FROM nodes
 
-mappingId	lgd_nodes_1_2
-target		lgd:node{id} geo:hasGeometry geom:geometry{geom} .
-source		SELECT id, geom FROM nodes
+mappingId	lgd_nodes_2
+target		lgd:node{id} geo:hasGeometry lgd-geom:node{id} .
+source		SELECT id FROM nodes
 
-mappingId	lgd_nodes_2_1
-target		geom:geometry{geom} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
-source		SELECT id, geom,
-			ST_ASTEXT(geom) x
-			FROM nodes
+mappingId	lgd_nodes_3
+target		lgd-geom:node{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
+source		SELECT id,
+			ST_ASTEXT(geom) wkt
 
-mappingId	lgd_nodes_2_2
+mappingId	lgd_nodes_4
 target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double ; lgdo:gadmSameAs <http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point> .
 source		SELECT  id,
 			ST_X(geom) x,
@@ -715,17 +714,17 @@ source		SELECT *
 			FROM ways
 
 mappingId	lgd_ways_2
-target		lgd:way{id} geo:hasGeometry geom:geometry{linestring} .
-source		SELECT id, linestring FROM ways
+target		lgd:way{id} geo:hasGeometry lgd-geom:way{id} .
+source		SELECT id FROM ways
 
 mappingId	lgd_ways_3
-target		geom:geometry{linestring} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
-source		SELECT id, linestring,
-			ST_ASTEXT(linestring) x
+target		lgd-geom:way{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
+source		SELECT id,
+			ST_ASTEXT(linestring) wkt
 			FROM ways
 
 mappingId	lgd_pos_seq
-target		lgd:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
+target		lgd-geom:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
 source		SELECT *
 			FROM ways
 
