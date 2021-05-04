@@ -12,6 +12,7 @@ lgdo:		http://linkedgeodata.org/ontology/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 dcterms:		http://purl.org/dc/terms/
+geom:                	http://geovocab.org/geometry#
 spatial:		http://geovocab.org/spatial#
 lgd-geom:	http://linkedgeodata.org/geometry/
 
@@ -21,9 +22,13 @@ target		lgd:node{id} a lgdm:Node , geo:Feature ; lgdo:version {version}^^xsd:int
 source		SELECT *
 			FROM nodes
 
+mappingId	lgd_nodes_1_2
+target		lgd:node{id} geo:hasGeometry geom:geometry{geom} .
+source		SELECT id, geom FROM nodes
+
 mappingId	lgd_nodes_2_1
-target		lgd:node{id} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
-source		SELECT id,
+target		geom:geometry{geom} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
+source		SELECT id, geom,
 			ST_ASTEXT(geom) x
 			FROM nodes
 
@@ -710,8 +715,12 @@ source		SELECT *
 			FROM ways
 
 mappingId	lgd_ways_2
-target		lgd:way{id} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
-source		SELECT id,
+target		lgd:way{id} geo:hasGeometry geom:geometry{linestring} .
+source		SELECT id, linestring FROM ways
+
+mappingId	lgd_ways_3
+target		geom:geometry{linestring} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
+source		SELECT id, linestring,
 			ST_ASTEXT(linestring) x
 			FROM ways
 
