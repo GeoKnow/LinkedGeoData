@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: all
+.PHONY: all clean
 
 all: target/local.php target/nominatim.jar
 

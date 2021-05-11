@@ -24,15 +24,3 @@ target/lib/nominatim.jar: pom.xml
 	rm -f nominatim.jar
 	ln -s `find -name 'linkedgeodata-nominatim-core-*.jar'` nominatim.jar
 
-create-resources: .env
-	docker network create lgd-net ; true
-	docker volume create lgd-db-vol ; true
-	docker volume create lgd-osm-sync-vol ; true
-	docker volume create lgd-nominatim-sync-vol ; true
-
-remove-resources:
-	docker network rm lgd-net ; true
-	docker volume rm lgd-db-vol ; true
-	docker volume rm lgd-osm-sync-vol ; true
-	docker volume rm lgd-nominatim-sync-vol ; true
-
