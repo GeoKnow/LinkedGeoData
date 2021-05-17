@@ -2186,22 +2186,22 @@ target		lgd:user{id} a lgdo:User ; rdfs:label {name}^^xsd:string .
 source		SELECT *
 			FROM users
 
-mappingId	lgd_node_interlinks
-target		lgd:node{node_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_node_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_node_interlinks
+target          lgd:node{node_id} owl:sameAs {o} .
+source          SELECT substring("s" from 39)::bigint AS "node_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/node%'
 
-mappingId	lgd_way_interlinks
-target		lgd:way{way_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_way_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_way_interlinks
+target          lgd:way{way_id} owl:sameAs {o} .
+source          SELECT substring("s" from 38)::bigint AS "way_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/way%'
 
-mappingId	lgd_relation_interlinks
-target		lgd:relation{relation_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_relation_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_relation_interlinks
+target          lgd:relation{relation_id} owl:sameAs {o} .
+source          SELECT substring("s" from 43)::bigint AS "relation_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/relation%'
 ]]
 
