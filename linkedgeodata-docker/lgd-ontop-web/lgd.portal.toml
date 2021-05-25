@@ -125,7 +125,7 @@ SELECT * WHERE {
     geo:hasGeometry/geo:asWKT ?ag ;
     rdfs:label ?name .
   FILTER(lang(?name) = "" || lang(?name) = "fr")
-  FILTER(geof:sfContains('POLYGON((7.41 43.734, 7.42 43.734, 7.42 43.735, 7.41 43.735, 7.41 43.734))'^^geo:wktLiteral), ?ag)
+  FILTER(geof:sfContains('POLYGON((7.41 43.734, 7.42 43.734, 7.42 43.735, 7.41 43.735, 7.41 43.734))'^^geo:wktLiteral, ?ag))
 }
 """
 
