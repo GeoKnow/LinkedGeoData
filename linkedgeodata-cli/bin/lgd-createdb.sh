@@ -226,7 +226,7 @@ fi
 
 if [ ! -z "$osmFile" ]; then
 #    bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
-    osmosis "$readMode" "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
+    osmosis "$readMode" "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass" enableLinestringBuilder="yes" nodeLocationStoreType="TempFile" 
 fi
 
 #svn checkout https://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata --username RavenArkadon@gmail.com
