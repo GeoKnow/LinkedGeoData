@@ -51,7 +51,7 @@ services:
       - lgd-db
     restart: always
     ports:
-      - 8012:80
+      - ${NOMINATIM_PORT}:80
     networks:
       - lgd-net
 
@@ -87,7 +87,7 @@ services:
 #      - DB_PASS=${DB_PASS}
 #      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
     ports:
-      - 8013:7531
+      - ${SPARQLIFY_PORT}:7531
     depends_on:
       - lgd-osm-sync
     networks:
@@ -105,7 +105,7 @@ services:
       - INDEX_RESOURCE=${PUBBY_INDEX_RESOURCE}
       - PORT=8080
     ports:
-      - 8021:8080
+      - ${PUBBY_PORT}:8080
     depends_on:
       - lgd-sparqlify-web
 #     - lgd-ontop-web
@@ -136,7 +136,7 @@ services:
       - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
-      - 8014:8080
+      - ${ONTOP_PORT}:8080
     depends_on:
       - lgd-osm-sync
     networks:
