@@ -12,6 +12,7 @@ lgdo:		http://linkedgeodata.org/ontology/
 obda:		https://w3id.org/obda/vocabulary#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
 dcterms:		http://purl.org/dc/terms/
+geom:                	http://geovocab.org/geometry#
 spatial:		http://geovocab.org/spatial#
 lgd-geom:	http://linkedgeodata.org/geometry/
 
@@ -21,13 +22,17 @@ target		lgd:node{id} a lgdm:Node , geo:Feature ; lgdo:version {version}^^xsd:int
 source		SELECT *
 			FROM nodes
 
-mappingId	lgd_nodes_2_1
-target		lgd:node{id} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
+mappingId	lgd_nodes_2
+target		lgd:node{id} geo:hasGeometry lgd-geom:node{id} .
+source		SELECT id FROM nodes
+
+mappingId	lgd_nodes_3
+target		lgd-geom:node{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
 source		SELECT id,
-			ST_ASTEXT(geom) x
+			ST_ASTEXT(geom) wkt
 			FROM nodes
 
-mappingId	lgd_nodes_2_2
+mappingId	lgd_nodes_4
 target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double ; lgdo:gadmSameAs <http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point> .
 source		SELECT  id,
 			ST_X(geom) x,
@@ -99,7 +104,7 @@ source		SELECT *
 			AND language='fr'
 
 mappingId	lgd_node_tags_text_lang_ko_rm
-target		lgd:node{node_id} rdfs:label {v}@korm .
+target		lgd:node{node_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -199,7 +204,7 @@ source		SELECT *
 			AND language='ga'
 
 mappingId	lgd_node_tags_text_lang_ja_rm
-target		lgd:node{node_id} rdfs:label {v}@jarm .
+target		lgd:node{node_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -227,7 +232,7 @@ source		SELECT *
 			AND language='es'
 
 mappingId	lgd_node_tags_text_lang_zh_pinyin
-target		lgd:node{node_id} rdfs:label {v}@zhpinyin .
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -402,7 +407,7 @@ source		SELECT *
 
 
 mappingId	lgd_node_tags_text_lang_ja_kana
-target		lgd:node{node_id} rdfs:label {v}@jakana .
+target		lgd:node{node_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -690,7 +695,7 @@ source		SELECT *
 
 
 mappingId	lgd_node_tags_text_lang_zh_py
-target		lgd:node{node_id} rdfs:label {v}@zhpy .
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_node_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -710,13 +715,17 @@ source		SELECT *
 			FROM ways
 
 mappingId	lgd_ways_2
-target		lgd:way{id} a geo:Geometry ; geo:asWKT {x}^^geo:wktLiteral .
+target		lgd:way{id} geo:hasGeometry lgd-geom:way{id} .
+source		SELECT id FROM ways
+
+mappingId	lgd_ways_3
+target		lgd-geom:way{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
 source		SELECT id,
-			ST_ASTEXT(linestring) x
+			ST_ASTEXT(linestring) wkt
 			FROM ways
 
 mappingId	lgd_pos_seq
-target		lgd:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
+target		lgd-geom:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
 source		SELECT *
 			FROM ways
 
@@ -794,7 +803,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ko_rm
-target		lgd:way{way_id} rdfs:label {v}@korm .
+target		lgd:way{way_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -906,7 +915,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ja_rm
-target		lgd:way{way_id} rdfs:label {v}@jarm .
+target		lgd:way{way_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -938,7 +947,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_zh_pinyin
-target		lgd:way{way_id} rdfs:label {v}@zhpinyin .
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1130,7 +1139,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_ja_kana
-target		lgd:way{way_id} rdfs:label {v}@jakana .
+target		lgd:way{way_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1418,7 +1427,7 @@ source		SELECT *
 
 
 mappingId	lgd_way_tags_text_lang_zh_py
-target		lgd:way{way_id} rdfs:label {v}@zhpy .
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_way_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1529,7 +1538,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ko_rm
-target		lgd:relation{relation_id} rdfs:label {v}@korm .
+target		lgd:relation{relation_id} rdfs:label {v}@ko-latn .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1641,7 +1650,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ja_rm
-target		lgd:relation{relation_id} rdfs:label {v}@jarm .
+target		lgd:relation{relation_id} rdfs:label {v}@ja-latn .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1673,7 +1682,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_zh_pinyin
-target		lgd:relation{relation_id} rdfs:label {v}@zhpinyin .
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -1865,7 +1874,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_ja_kana
-target		lgd:relation{relation_id} rdfs:label {v}@jakana .
+target		lgd:relation{relation_id} rdfs:label {v}@ja-kana .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -2153,7 +2162,7 @@ source		SELECT *
 
 
 mappingId	lgd_relation_tags_text_lang_zh_py
-target		lgd:relation{relation_id} rdfs:label {v}@zhpy .
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
 source		SELECT *
 			FROM lgd_relation_tags_text
 			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
@@ -2177,22 +2186,22 @@ target		lgd:user{id} a lgdo:User ; rdfs:label {name}^^xsd:string .
 source		SELECT *
 			FROM users
 
-mappingId	lgd_node_interlinks
-target		lgd:node{node_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_node_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_node_interlinks
+target          lgd:node{node_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 39)::bigint AS "node_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/node%'
 
-mappingId	lgd_way_interlinks
-target		lgd:way{way_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_way_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_way_interlinks
+target          lgd:way{way_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 38)::bigint AS "way_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/way%'
 
-mappingId	lgd_relation_interlinks
-target		lgd:relation{relation_id} lgdo:shortid {o_local_name}^^xsd:string .
-source		SELECT *
-			FROM lgd_relation_interlinks
-			WHERE ((o LIKE 'http://dbpedia.org/%') OR (o LIKE 'http://sws.geonames.org/%'))
+mappingId       lgd_relation_interlinks
+target          lgd:relation{relation_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 43)::bigint AS "relation_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/relation%'
 ]]
 

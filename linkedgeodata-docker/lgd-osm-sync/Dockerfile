@@ -2,8 +2,6 @@ FROM ubuntu:16.04
 #FROM mdillon/postgis:9.5
 MAINTAINER Claus Stadler <cstadler@informatik.uni-leipzig.de>
 
-RUN echo "forcerebuild 9"
-
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update --fix-missing && apt-get install -y postgresql-9.5-postgis-2.2 wget sudo curl osmosis gettext-base osmctools
 
