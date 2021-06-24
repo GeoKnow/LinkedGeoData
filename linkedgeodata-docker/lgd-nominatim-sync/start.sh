@@ -10,6 +10,10 @@ echo "lgd-osm-sync environment:"
 env | grep -i "osm\|db\|post"
 
 
+echo "$DB_HOST:$DB_PORT:$DB_NAME:$DB_USER:$DB_PASS" > /root/.pgpass
+chmod 600 /root/.pgpass
+
+
 # Check the database whether the data was loaded
 statusKey="nominatim:status"
 
