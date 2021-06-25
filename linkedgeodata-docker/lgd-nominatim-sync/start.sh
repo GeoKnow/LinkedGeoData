@@ -23,15 +23,15 @@ statusKey="nominatim:status"
 syncDir="settings"
 
 # Remove the tiger geocoder extension
-psql "$DB_URL" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
+psql "$DB_URL_JDBC" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
 
 
-psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
+psql "$DB_URL_JDBC" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
 
-statusVal=`psql "$DB_URL" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKey'"`
+statusVal=`psql "$DB_URL_JDBC" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKey'"`
 
-echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
+echo "Retrieved status value from $DB_URL_JDBC for key [$statusKey] is '$statusVal'"
 
 mkdir -p "$syncDir"
 
@@ -75,7 +75,7 @@ if [ -z "$statusVal" ]; then
 
 # TODO osmosis init
 
-    psql "$DB_URL" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
+    psql "$DB_URL_JDBC" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
 
 fi
 
