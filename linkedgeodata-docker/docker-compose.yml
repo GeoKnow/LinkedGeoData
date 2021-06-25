@@ -4,17 +4,13 @@ services:
 
   lgd-db:
     env_file: .env
-    build: ./lgd-db
+    build:
+      context: ./lgd-db
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
       - PGDATA=/var/lib/postgresql/data
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
-#      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
-#      - DB_WORK_MEM=${DB_WORK_MEM}
-#      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
     sysctls:
       - kernel.shmmax=4294967296
     volumes:
@@ -27,11 +23,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-nominatim-sync
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - POSTGIS_VERSION=${POSTGIS_VERSION}
-#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
       - lgd-db
     volumes:
@@ -55,11 +46,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-osm-sync
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - POSTGIS_VERSION=${POSTGIS_VERSION}
-#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
       - lgd-db
     volumes:
@@ -71,13 +57,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-sparqlify-web
-#    environment:
-#      - DB_HOST=${DB_HOST}
-#      - DB_PORT=${DB_PORT}
-#      - DB_NAME=${DB_NAME}
-#      - DB_USER=${DB_USER}
-#      - DB_PASS=${DB_PASS}
-#      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
     ports:
       - ${SPARQLIFY_PORT}:7531
     depends_on:
@@ -112,7 +91,7 @@ services:
         - ONTOP_DB_NAME=${DB_NAME}
         - ONTOP_DB_USER=${DB_USER}
         - ONTOP_DB_PASSWORD=${DB_PASS}
-        - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+        - ONTOP_DB_URL=${DB_TYPE_JDBC}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     environment:
       - ONTOP_JAVA_ARGS=-Xmx2g
       - ONTOP_DB_NAME=${DB_NAME}
@@ -134,6 +113,7 @@ services:
       - lgd-net
 
 
+# possible future CKAN container for hosting downloads
 #  lgd-nominatim:
 #    build: lgd-nominatim
 #    dockerfile: Dockerfile
@@ -157,10 +137,6 @@ volumes:
   lgd-db-vol:
   lgd-osm-sync-vol:
   lgd-nominatim-sync-vol:
-
-
-
-#/data/docker-data/lgd-db
 
 networks:
   lgd-net:
