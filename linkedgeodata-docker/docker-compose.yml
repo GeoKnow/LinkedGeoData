@@ -27,7 +27,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-nominatim-sync
-    container_name: lgd-nominatim-sync
     environment:
       - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
@@ -46,7 +45,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-nominatim-web
-    container_name: lgd-nominatim-web
     depends_on:
       - lgd-db
     restart: always
@@ -59,7 +57,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-osm-sync
-    container_name: lgd-osm-sync
     environment:
       - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
@@ -78,7 +75,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-sparqlify-web
-    container_name: lgd-sparqlify-web
 #    environment:
 #      - DB_HOST=${DB_HOST}
 #      - DB_PORT=${DB_PORT}
@@ -121,7 +117,6 @@ services:
         - ONTOP_DB_USER=${DB_USER}
         - ONTOP_DB_PASSWORD=${DB_PASS}
         - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-    container_name: lgd-ontop-web
     environment:
       - ONTOP_JAVA_ARGS=-Xmx2g
       - ONTOP_DB_NAME=${DB_NAME}
