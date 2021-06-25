@@ -27,7 +27,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-nominatim-sync
-    environment:
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
 #      - POSTGIS_VERSION=${POSTGIS_VERSION}
 #      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
@@ -56,7 +55,6 @@ services:
     env_file: .env
     build:
       context: ./lgd-osm-sync
-    environment:
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
 #      - POSTGIS_VERSION=${POSTGIS_VERSION}
 #      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
