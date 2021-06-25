@@ -28,7 +28,6 @@ services:
     build:
       context: ./lgd-nominatim-sync
     environment:
-      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
 #      - POSTGIS_VERSION=${POSTGIS_VERSION}
 #      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
@@ -58,7 +57,6 @@ services:
     build:
       context: ./lgd-osm-sync
     environment:
-      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
 #      - POSTGRES_VERSION=${POSTGRES_VERSION}
 #      - POSTGIS_VERSION=${POSTGIS_VERSION}
 #      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
