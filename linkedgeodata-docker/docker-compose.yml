@@ -104,6 +104,7 @@ services:
       - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
       - ONTOP_PROPERTIES_FILE=/opt/ontop/input/lgd.properties
       - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
       - ${ONTOP_PORT}:8080

@@ -226,7 +226,7 @@ fi
 
 if [ ! -z "$osmFile" ]; then
 #    bzcat "$osmFile" | osmosis --read-xml - --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
-    osmosis "$readMode" "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass" enableLinestringBuilder="yes" nodeLocationStoreType="TempFile" 
+    osmosis "$readMode" "$osmFile" --write-pgsimp host="$dbHost" database="$dbName" user="$dbUser" password="$dbPass"
 fi
 
 #svn checkout https://linkedgeodata.googlecode.com/svn/trunk/ linkedgeodata --username RavenArkadon@gmail.com
@@ -248,7 +248,7 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOsmIndexes.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Mappings.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sql"
-
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
 
 
 # Perform Nominatim upgrade
