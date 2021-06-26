@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>linkedgeodata-nominatim-core</artifactId>
+	<packaging>jar</packaging>
+
+	<!-- <name>LinkedGeoData-Nominatim</name> -->
+	<!-- <description></description> -->
+
+	<parent>
+		<groupId>org.aksw.linkedgeodata</groupId>
+		<artifactId>linkedgeodata-nominatim-parent</artifactId>
+		<version>2.5.1-1-SNAPSHOT</version>
+	</parent>
+
+	<!-- <build> <finalName>linkedgeodata-core</finalName> </build> -->
+
+	<properties>
+		<!-- nominatim.tag defined in parent -->
+		<!-- <nominatim.tag>v2.5.1</nominatim.tag> -->
+		<deb.packageName>linkedgeodata-nominatim-${nominatim.tag}</deb.packageName>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.9.5</version>
+				<configuration>
+					<providerImplementations>
+						<git>jgit</git>
+					</providerImplementations>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-jgit</artifactId>
+						<version>1.9.5</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>clone-github-nominatim</id>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<checkoutDirectory>${project.build.directory}/Nominatim</checkoutDirectory>
+							<connectionType>connection</connectionType>
+							<connectionUrl>scm:git:https://github.com/openstreetmap/Nominatim.git</connectionUrl>
+							<scmVersionType>tag</scmVersionType>
+							<scmVersion>${nominatim.tag}</scmVersion>
+							<skipCheckoutIfExists>true</skipCheckoutIfExists>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>git submodule update</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<workingDirectory>${project.build.directory}/Nominatim</workingDirectory>
+							<executable>git</executable>
+							<arguments>
+								<argument>submodule</argument>
+								<argument>update</argument>
+								<argument>--init</argument>
+								<argument>--recursive</argument>
+							</arguments>
+						</configuration>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-jar-base</id>
+						<!-- here the phase you need -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/Nominatim</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/Nominatim</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>

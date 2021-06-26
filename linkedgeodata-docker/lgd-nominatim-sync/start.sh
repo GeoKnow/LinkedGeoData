@@ -15,6 +15,9 @@ statusKey="nominatim:status"
 
 syncDir="settings"
 
+# Remove the tiger geocoder extension
+psql "$DB_URL" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
+
 
 psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
@@ -25,8 +28,15 @@ echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
 
 mkdir -p "$syncDir"
 
-export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+
+# If there is a sync URL we can automatically determine the update interval
+if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
+  OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+fi
+
+export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-""}
 export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-"$OSM_DATA_SYNC_UPDATE_INTERVAL"}
+
 
 cat ./settings/configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
 cat ./settings/local.php.dist | envsubst > ./settings/local.php
@@ -36,9 +46,6 @@ if [ -z "$statusVal" ]; then
 
   rm -f "$syncDir/data.osm.pbf"
   curl -L "$OSM_DATA_BASE_URL" --create-dirs -o "$syncDir/data.osm.pbf"
-
-  timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
-  lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
 
 #    psql "$DB_URL" -c "CREATE ROLE \"nominatim\";" || true && \
 #    psql "$DB_URL" -c "CREATE ROLE \"www-data\" NOSUPERUSER NOCREATEDB NOCREATEROLE;" || true && \
@@ -66,7 +73,19 @@ if [ -z "$statusVal" ]; then
 fi
 
 
-./utils/update-patched.php --import-osmosis-all --no-npi
+if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
+  timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
+  if [ ! -f "$syncDir/state.txt" ]; then
+    lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
+  fi
+
+  ./utils/update-patched.php --import-osmosis-all --no-npi
+else
+  echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
+fi
+
+
+
 
 #service postgresql start
 #/usr/sbin/apache2ctl -D FOREGROUND

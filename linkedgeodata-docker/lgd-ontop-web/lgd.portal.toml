@@ -1,0 +1,182 @@
+title="LinkedGeoData.org"
+
+[[tabGroups]]
+
+name="Benchmark Queries"
+
+[[tabGroups.tabs]]
+name="Q1 - Distance from Point"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+
+SELECT * WHERE {
+  ?a a lgdo:Bank;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?name .
+  FILTER(lang(?name) = "" || lang(?name) = "fr")
+  BIND (geof:distance('POINT(7.4156749 43.7347546)'^^geo:wktLiteral, ?ag, uom:degree) AS ?distance)
+  FILTER (?distance <= 0.1)
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q2 - Distance from DBPedia Location"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT * WHERE {
+  ?a a lgdo:Bar;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?name .
+  FILTER(lang(?name) = "" || lang(?name) = "fr")
+  ?b owl:sameAs <http://dbpedia.org/resource/Monaco> ;
+    geo:hasGeometry/geo:asWKT ?bg .
+  BIND (geof:distance(?bg, ?ag, uom:degree) AS ?distance)
+  FILTER (?distance <= 0.1)
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q3 - Points within Polygon"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+
+SELECT * WHERE {
+  ?a a lgdo:Bank; 
+  geo:hasGeometry/geo:asWKT ?ag ; 
+    rdfs:label ?name .
+  FILTER(lang(?name) = "" || lang(?name) = "fr")
+  FILTER(geof:sfIntersects(?ag, 'POLYGON((7.41 43.734, 7.42 43.734, 7.42 43.735, 7.41 43.735, 7.41 43.734))'^^geo:wktLiteral))
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q4 - Linestring Intersection"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+
+SELECT * WHERE {
+  ?a a lgdo:Bar ;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?aname .
+  FILTER(lang(?aname) = "" || lang(?aname) = "fr")
+  ?b a lgdo:Restaurant ;
+    geo:hasGeometry/geo:asWKT ?bg ;
+    rdfs:label ?bname .
+  FILTER(lang(?bname) = "" || lang(?bname) = "fr")
+  FILTER(geof:sfIntersects(?ag, ?bg))
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q5 - Within"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT * WHERE {
+  ?a a lgdo:Pharmacy;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?name .
+  FILTER(lang(?name) = "" || lang(?name) = "fr")
+  FILTER(geof:sfWithin(?ag, 'POLYGON((7.41 43.734, 7.42 43.734, 7.42 43.735, 7.41 43.735, 7.41 43.734))'^^geo:wktLiteral))
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q6 - Contains"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT * WHERE {
+  ?a a lgdo:Pharmacy;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?name .
+  FILTER(lang(?name) = "" || lang(?name) = "fr")
+  FILTER(geof:sfContains('POLYGON((7.41 43.734, 7.42 43.734, 7.42 43.735, 7.41 43.735, 7.41 43.734))'^^geo:wktLiteral, ?ag))
+}
+"""
+
+[[tabGroups.tabs]]
+name="Q7 - Buffer and Distance"
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+
+SELECT * WHERE {
+  ?a a lgdo:Bar;
+    geo:hasGeometry/geo:asWKT ?ag ;
+    rdfs:label ?name .
+  FILTER(lang(?name) = "")
+  BIND (geof:buffer('POINT(15.08738 37.5022355)'^^geo:wktLiteral, 500, uom:radian) AS ?bg)
+  FILTER (geof:sfWithin(?ag, ?bg))
+}
+"""
+
+[[tabGroups]]
+
+name="Other Example Queries"
+
+[[tabGroups.tabs]]
+name="Distance and Buffer"
+query="""
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?x ?wkt ?wktLabel ?wktColor WHERE {
+  { ?x a lgdo:University ; geo:hasGeometry/geo:asWKT ?wkt . OPTIONAL {?x rdfs:label ?wktLabel . FILTER (LANG(?wktLabel)= '')}
+  BIND('red' AS ?wktColor)
+  }
+  UNION {
+    ?u a lgdo:University ; geo:hasGeometry/geo:asWKT ?uWkt . OPTIONAL {?u rdfs:label ?uktLabel . FILTER (LANG(?uktLabel) = '')}
+    ?x a lgdo:Restaurant ; geo:hasGeometry/geo:asWKT ?wkt ; rdfs:label ?wktLabel . FILTER (LANG(?wktLabel) = '')
+    FILTER(geof:distance(?wkt, ?uWkt, uom:metre) < 200)
+    BIND('blue' AS ?wktColor)
+  }
+  UNION {
+    ?u a lgdo:University ; geo:hasGeometry/geo:asWKT ?uWkt . OPTIONAL {?u rdfs:label ?uktLabel . FILTER (LANG(?uktLabel) = '')}
+    BIND(geof:buffer(?uWkt, 200, uom:metre) AS ?wkt) BIND ('red' AS ?wktColor)
+}
+}
+"""

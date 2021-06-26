@@ -25,10 +25,15 @@ RUN apt-get -y update --fix-missing && \
 WORKDIR /app/nominatim
 
 # Nominatim install
-ENV NOMINATIM_VERSION v.2.5.0
-RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
-RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recursive --init && \
-  ./autogen.sh && ./configure && make
+#ENV NOMINATIM_VERSION v2.5.1
+#RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
+#RUN cd ./src && git checkout $NOMINATIM_VERSION && git submodule update --recursive --init && \
+#  ./autogen.sh && ./configure && make
+
+COPY target/nominatim.jar .
+RUN unzip nominatim.jar && \
+    mv Nominatim src && \
+    chmod +x src/utils/setup.php
 
 
 RUN echo "force rebuild 2"
@@ -42,9 +47,9 @@ COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
 #ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-COPY start.sh ./start.sh
-
-RUN chmod +x ./start.sh && sleep 1
-ENTRYPOINT ./start.sh
-
+COPY start.sh .
+COPY wait-for-postgres.sh .
+RUN chmod +x ./start.sh ./wait-for-postgres.sh
+RUN sleep 3
+ENTRYPOINT [ "./wait-for-postgres.sh", "./start.sh" ]
 

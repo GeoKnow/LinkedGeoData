@@ -197,5 +197,6 @@ psql -h "$dbHost" -p "$dbPort" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOs
 psql -h "$dbHost" -p "$dbPort" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Mappings.sql"
 psql -h "$dbHost" -p "$dbPort" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
 psql -h "$dbHost" -p "$dbPort" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sql"
+psql -h "$dbHost" -p "$dbPort" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
 
 

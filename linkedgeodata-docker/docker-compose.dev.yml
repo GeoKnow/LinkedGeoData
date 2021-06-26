@@ -1,0 +1,206 @@
+version: '3.3'
+
+services:
+
+  lgd-db:
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
+    build: ./lgd-db
+    container_name: lgd-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - PGDATA=/var/lib/postgresql/data
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
+#      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
+#      - DB_WORK_MEM=${DB_WORK_MEM}
+#      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
+    sysctls:
+      - kernel.shmmax=4294967296
+    volumes:
+      - lgd-db-vol:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - lgd-net
+    ports:
+      - 6543:5432
+
+  lgd-nominatim-sync:
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
+    build:
+      context: ./lgd-nominatim-sync
+    container_name: lgd-nominatim-sync
+    environment:
+      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-nominatim-sync-vol:/app/nominatim/src/settings
+    networks:
+      - lgd-net
+
+  lgd-nominatim-web:
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
+    build:
+      context: ./lgd-nominatim-web
+    container_name: lgd-nominatim-web
+    depends_on:
+      - lgd-db
+    restart: always
+#    environment:
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+    ports:
+      - 8012:80
+    networks:
+      - lgd-net
+
+  lgd-osm-sync:
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
+    build:
+      context: ./lgd-osm-sync
+    container_name: lgd-osm-sync
+    environment:
+      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
+    networks:
+      - lgd-net
+
+  lgd-sparqlify-web:
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
+    build:
+      context: ./lgd-sparqlify-web
+    container_name: lgd-sparqlify-web
+#    environment:
+#      - DB_HOST=${DB_HOST}
+#      - DB_PORT=${DB_PORT}
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
+    ports:
+      - 8013:7531
+    depends_on:
+      - lgd-osm-sync
+    networks:
+      - lgd-net
+
+
+  lgd-ontop-web:
+    env_file: .env
+    build:
+      context: ./lgd-ontop-web
+      args:
+        - ONTOP_DB_NAME=${DB_NAME}
+        - ONTOP_DB_USER=${DB_USER}
+        - ONTOP_DB_PASSWORD=${DB_PASS}
+        - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    container_name: lgd-ontop-web
+    environment:
+      - ONTOP_DB_NAME=${DB_NAME}
+      - ONTOP_DB_USER=${DB_USER}
+      - ONTOP_DB_PASSWORD=${DB_PASS}
+#      - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - ONTOP_MAPPING_FILE=/opt/ontop/input/lgd.obda
+      - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
+      - ONTOP_PROPERTIES_FILE=/opt/ontop/input/lgd.properties
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
+      - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
+      - ONTOP_DEBUG=1
+      - ONTOP_DEV=1
+#      - ONTOP_OPTS=${ONTOP_OPTS}
+    ports:
+      - 8014:8080
+    depends_on:
+      - lgd-osm-sync
+    networks:
+      - lgd-net
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - lgd-net
+    depends_on:
+      - lgd-db
+    restart: unless-stopped
+
+#  lgd-nominatim:
+#    build: lgd-nominatim
+#    dockerfile: Dockerfile
+#    container_name: lgd-nominatim
+#    restart: always
+#    depends_on:
+#      - lgd-db
+#    environment:
+#      - DATABASE_URL=postgresql://ckan:ckan@ckan-db:5432/ckan
+#      - SOLR_URL=http://ckan-solr:8983/solr/ckan
+#      - RECAPTCHA_PUBLIC_KEY=CHANGE_ME
+#      - RECAPTCHA_PRIVATE_KEY=CHANGE_ME
+#      - SITE_URL=http://ckan.vhost.tld
+#      - VIRTUAL_HOST=ckan.vhost.tld
+    #volumes:
+      #- /tmp/ckan-uploads:/var/lib/ckan
+#    networks:
+#      - lgd-net
+
+volumes:
+  lgd-db-vol:
+    external:
+      name: lgd-db-vol
+  lgd-osm-sync-vol:
+    external:
+      name: lgd-osm-sync-vol
+  lgd-nominatim-sync-vol:
+    external:
+      name: lgd-nominatim-sync-vol
+  pgadmin:
+
+
+
+#/data/docker-data/lgd-db
+
+networks:
+  lgd-net:
+    external:
+      name: lgd-net
+

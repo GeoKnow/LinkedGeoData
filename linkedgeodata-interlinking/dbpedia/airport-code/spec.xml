@@ -77,6 +77,6 @@
 		<FILE>review.nt</FILE>
 		<RELATION>owl:sameAs</RELATION>
 	</REVIEW>
-	<EXECUTION>Simple</EXECUTION>
+	<!-- <EXECUTION>Simple</EXECUTION> -->
 	<OUTPUT>TTL</OUTPUT>
 </LIMES>

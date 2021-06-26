@@ -53,39 +53,61 @@ $$
     IMMUTABLE
     RETURNS NULL ON NULL INPUT;
 
+
+-- TODO Validate URIs more thoroughly
+-- TODO Fix URIs where the schema part is missing (by prefixing with http://)
+DROP FUNCTION IF EXISTS lgd_tryparse_uri(str TEXT);
+CREATE FUNCTION lgd_tryparse_uri(str TEXT) RETURNS TEXT AS
+$$
+DECLARE
+BEGIN
+    RETURN CASE WHEN str ~* '^http(s)?://' THEN str ELSE NULL END;
+END;
+$$
+    LANGUAGE 'plpgsql'
+    IMMUTABLE
+    RETURNS NULL ON NULL INPUT;
+
+
+
+
 /****************************************************************************
  * Mapping tables                                                           *
  ****************************************************************************/
 
 -- TODO: Potentially can be removed
-CREATE TABLE simple_polys (
-    way_id BIGINT PRIMARY KEY NOT NULL,
-    area float NOT NULL
-);
+--CREATE TABLE simple_polys (
+--    way_id BIGINT PRIMARY KEY NOT NULL,
+--    area float NOT NULL
+--);
 
 -- TODO: Not Null constraint
-SELECT AddGeometryColumn('simple_polys', 'polygon', 4326, 'GEOMETRY', 2);
-CREATE INDEX idx_simple_polys_polygon ON simple_polys USING GIST(polygon);
+--SELECT AddGeometryColumn('simple_polys', 'polygon', 4326, 'GEOMETRY', 2);
+--CREATE INDEX idx_simple_polys_polygon ON simple_polys USING GIST(polygon);
 
 
 DROP TYPE IF EXISTS lgd_datatype;
-CREATE TYPE lgd_datatype AS ENUM ('boolean', 'int', 'float');
+CREATE TYPE lgd_datatype AS ENUM ('boolean', 'int', 'float', 'uri');
 
 
+-- Explicit datatype mappings
 DROP TABLE IF EXISTS lgd_map_datatype;
 CREATE TABLE lgd_map_datatype (
     k text PRIMARY KEY NOT NULL,
+    property text NOT NULL,
     datatype lgd_datatype NOT NULL
 );
 
-DROP INDEX IF EXISTS idx_lgd_map_datatype;
+DROP INDEX IF EXISTS idx_lgd_map_datatype_k;
 CREATE INDEX idx_lgd_map_datatype_k ON lgd_map_datatype(k);
+
+DROP INDEX IF EXISTS idx_lgd_map_datatype_property;
+CREATE INDEX idx_lgd_map_datatype_property ON lgd_map_datatype(property);
 
 DROP INDEX IF EXISTS idx_lgd_map_datatype_datatype;
 CREATE INDEX idx_lgd_map_datatype_datatype ON lgd_map_datatype(datatype);
 
---DROP INDEX IF EXISTS idx_lgd_map_datatype_datatype;
---CREATE INDEX idx_lgd_map_datatype_datatype_k ON lgd_map_datatype(datatype, k);
+
 
 DROP TABLE IF EXISTS lgd_map_literal;
 CREATE TABLE lgd_map_literal (
@@ -104,6 +126,8 @@ CREATE INDEX idx_lgd_map_literal_language ON lgd_map_literal(language);
 --CREATE INDEX idx_lgd_map_literal_language_property ON lgd_map_literal(language, property);
 
 
+-- Tag labels (e.g. from translate wiki)
+-- TODO Rename to label_kv
 DROP TABLE IF EXISTS lgd_map_label;
 CREATE TABLE lgd_map_label (
     k TEXT NOT NULL,
@@ -129,6 +153,7 @@ CREATE INDEX idx_lgd_map_label_v ON lgd_map_label(v);
 --CREATE INDEX idx_lgd_map_label_k_v ON lgd_map_label(v, k);
 
 
+-- Unconditional mappings
 DROP TABLE IF EXISTS lgd_map_resource_k;
 CREATE TABLE lgd_map_resource_k (
     k text NOT NULL,
@@ -142,6 +167,18 @@ CREATE INDEX idx_lgd_map_resource_k_object ON lgd_map_resource_k USING btree (ob
 --CREATE INDEX idx_lgd_map_resource_k_property_object ON lgd_map_resource_k USING btree (property, object);
 --CREATE INDEX idx_lgd_map_resource_k_object_property ON lgd_map_resource_k USING btree (object, property);
 
+
+-- Default mappings for a key - applied to a tag only if there is no corresponding entry in resource kv
+DROP TABLE IF EXISTS lgd_map_resource_kd;
+CREATE TABLE lgd_map_resource_kd (
+    k text NOT NULL,
+    property text NOT NULL,
+    object text NOT NULL
+);
+
+CREATE INDEX idx_lgd_map_resource_kd_k ON lgd_map_resource_kd USING btree (k);
+CREATE INDEX idx_lgd_map_resource_kd_property ON lgd_map_resource_kd USING btree (property);
+CREATE INDEX idx_lgd_map_resource_kd_object ON lgd_map_resource_kd USING btree (object);
 
 
 DROP TABLE IF EXISTS lgd_map_resource_kv;
@@ -179,13 +216,14 @@ CREATE INDEX idx_lgd_map_resource_prefix_prefix ON lgd_map_resource_prefix USING
 CREATE INDEX idx_lgd_map_resource_prefix_k ON lgd_map_resource_prefix USING btree (k);
 
 
-CREATE TABLE lgd_map_property (
-    k text NOT NULL,
-    property text NOT NULL
-);
+-- TODO No longer used; remove eventually
+--CREATE TABLE lgd_map_property (
+--    k text NOT NULL,
+--    property text NOT NULL
+--);
 
-CREATE INDEX idx_lgd_map_property_k ON lgd_map_property USING btree (k);
-CREATE INDEX idx_lgd_map_property_property ON lgd_map_property USING btree (property);
+-- CREATE INDEX idx_lgd_map_property_k ON lgd_map_property USING btree (k);
+-- CREATE INDEX idx_lgd_map_property_property ON lgd_map_property USING btree (property);
 
 
 
@@ -260,18 +298,18 @@ CREATE TABLE "lgd_relation_interlinks" (
         UNIQUE("relation_id", "o", "source")
 );
 
-CREATE INDEX "idx_lgd_relation_interlinks_relation_id" ON "lgd_relation_interlinks"("way_id");
+CREATE INDEX "idx_lgd_relation_interlinks_relation_id" ON "lgd_relation_interlinks"("relation_id");
 CREATE INDEX "idx_lgd_relation_interlinks_o" ON "lgd_relation_interlinks"("o");
 
 
 
 
 
-CREATE TABLE lgd_relation_geoms(
-    relation_id BIGINT PRIMARY KEY NOT NULL
+--CREATE TABLE lgd_relation_geoms(
+--    relation_id BIGINT PRIMARY KEY NOT NULL
 --    geom geometry NOT NULL
-)
-;
+--)
+--;
 
-SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
-CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);
+--SELECT AddGeometryColumn('lgd_relation_geoms', 'geom', 4326, 'GEOMETRY', 2);
+--CREATE INDEX idx_lgd_relation_geoms_geom ON lgd_relation_geoms USING GIST(geom);

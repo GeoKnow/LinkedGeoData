@@ -1,23 +1,24 @@
-version: '2.1'
+version: '3.3'
 
 services:
 
   lgd-db:
-    extends:
-      file: docker-compose.base.yml
-      service: lgd-db-base
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
     build: ./lgd-db
     container_name: lgd-db
     environment:
-      - POSTGRES_PASSWORD=${DB_PASS}
-      - POSTGRES_USER=${DB_USER}
-      - PGDATA=/var/lib/postgresql/data
       - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_VERSION=${POSTGRES_VERSION}
-      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
-      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
-      - DB_WORK_MEM=${DB_WORK_MEM}
-      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - PGDATA=/var/lib/postgresql/data
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
+#      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
+#      - DB_WORK_MEM=${DB_WORK_MEM}
+#      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
     sysctls:
       - kernel.shmmax=4294967296
     volumes:
@@ -27,90 +28,142 @@ services:
       - lgd-net
 
   lgd-nominatim-sync:
-    extends:
-      file: docker-compose.base.yml
-      service: lgd-db-base
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
     build:
       context: ./lgd-nominatim-sync
     container_name: lgd-nominatim-sync
     environment:
-      - POSTGRES_VERSION=${POSTGRES_VERSION}
-      - POSTGIS_VERSION=${POSTGIS_VERSION}
-      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
-      lgd-db:
-        condition: service_healthy
+      - lgd-db
     volumes:
       - lgd-nominatim-sync-vol:/app/nominatim/src/settings
     networks:
       - lgd-net
 
   lgd-nominatim-web:
-    extends:
-      file: docker-compose.base.yml
-      service: lgd-db-base
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
     build:
       context: ./lgd-nominatim-web
     container_name: lgd-nominatim-web
     depends_on:
-      lgd-db:
-        condition: service_healthy
+      - lgd-db
     restart: always
-    environment:
-      - POSTGRES_VERSION=${POSTGRES_VERSION}
-      - POSTGIS_VERSION=${POSTGIS_VERSION}
-      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+#    environment:
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     ports:
       - 8012:80
     networks:
       - lgd-net
 
   lgd-osm-sync:
-    extends:
-      file: docker-compose.base.yml
-      service: lgd-db-base
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
     build:
       context: ./lgd-osm-sync
     container_name: lgd-osm-sync
     environment:
-      - POSTGRES_VERSION=${POSTGRES_VERSION}
-      - POSTGIS_VERSION=${POSTGIS_VERSION}
-      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
+      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#      - POSTGRES_VERSION=${POSTGRES_VERSION}
+#      - POSTGIS_VERSION=${POSTGIS_VERSION}
+#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
+#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
+#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
-      lgd-db:
-        condition: service_healthy
+      - lgd-db
     volumes:
       - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
     networks:
       - lgd-net
 
   lgd-sparqlify-web:
-    extends:
-      file: docker-compose.base.yml
-      service: lgd-db-base
+    env_file: .env
+#    extends:
+#      file: docker-compose.base.yml
+#      service: lgd-db-base
     build:
       context: ./lgd-sparqlify-web
     container_name: lgd-sparqlify-web
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+#    environment:
+#      - DB_HOST=${DB_HOST}
+#      - DB_PORT=${DB_PORT}
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
     ports:
       - 8013:7531
     depends_on:
-      lgd-db:
-        condition: service_healthy
+      - lgd-osm-sync
     networks:
       - lgd-net
 
+
+  lgd-pubby-web:
+    image: aksw/dld-present-pubby
+    env_file: .env
+    environment:
+      - STORE_SPARQL_ENDPOINT_URL=${PUBBY_ENDPOINT_URL}
+      - STORE_MAIN_GRAPH=${PUBBY_DEFAULT_GRAPH}
+      - DATASET_BASE=${PUBBY_DATASET_BASE}
+      - WEB_BASE=${PUBBY_WEB_BASE}
+      - INDEX_RESOURCE=${PUBBY_INDEX_RESOURCE}
+      - PORT=8080
+    ports:
+      - 8021:8080
+    depends_on:
+      - lgd-sparqlify-web
+#     - lgd-ontop-web
+    networks:
+      - lgd-net
+
+  lgd-ontop-web:
+    env_file: .env
+    build:
+      context: ./lgd-ontop-web
+      args:
+        - ONTOP_DB_NAME=${DB_NAME}
+        - ONTOP_DB_USER=${DB_USER}
+        - ONTOP_DB_PASSWORD=${DB_PASS}
+        - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    container_name: lgd-ontop-web
+    environment:
+      - ONTOP_JAVA_ARGS=-Xmx2g
+      - ONTOP_DB_NAME=${DB_NAME}
+      - ONTOP_DB_USER=${DB_USER}
+      - ONTOP_DB_PASSWORD=${DB_PASS}
+#      - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - ONTOP_DEBUG=true
+      - ONTOP_DEV_MODE=true
+      - ONTOP_MAPPING_FILE=/opt/ontop/input/lgd.obda
+      - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
+      - ONTOP_PROPERTIES_FILE=/opt/ontop/input/lgd.properties
+      - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
+#      - ONTOP_OPTS=${ONTOP_OPTS}
+    ports:
+      - 8014:8080
+    depends_on:
+      - lgd-osm-sync
+    networks:
+      - lgd-net
 
 
 #  lgd-nominatim:

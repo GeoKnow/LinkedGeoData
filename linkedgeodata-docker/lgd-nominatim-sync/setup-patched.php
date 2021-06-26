@@ -127,14 +127,14 @@
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Contrib.'/hstore.sql');
 			pgsqlRunScriptFile(CONST_BasePath.'/sql/hstore_compatability_9_0.sql');
 		} else {
-			pgsqlRunScript('CREATE EXTENSION hstore');
+			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS hstore');
 		}
 
 		if ($fPostgisVersion < 2.0) {
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Postgis.'/postgis.sql');
 			pgsqlRunScriptFile(CONST_Path_Postgresql_Postgis.'/spatial_ref_sys.sql');
 		} else {
-			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS postgis');
+			pgsqlRunScript('CREATE EXTENSION IF NOT EXISTS postgis', false);
 		}
 		if ($fPostgisVersion < 2.1) {
 			// Function was renamed in 2.1 and throws an annoying deprecation warning
@@ -144,7 +144,7 @@
 		preg_match('#POSTGIS="([0-9]+)[.]([0-9]+)[.]([0-9]+)( r([0-9]+))?"#', $sVersionString, $aMatches);
 		if (CONST_Postgis_Version != $aMatches[1].'.'.$aMatches[2])
 		{
-			echo "ERROR: PostGIS version is not correct.  Expected ".CONST_Postgis_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
+			echo "WARNING: PostGIS version is not correct.  Expected ".CONST_Postgis_Version." found ".$aMatches[1].'.'.$aMatches[2]."\n";
 			//exit;
 		}
 
@@ -173,8 +173,8 @@
 		// is only defined in the subsequently called create_tables.
 		// Create dummies here that will be overwritten by the proper
 		// versions in create-tables.
-		pgsqlRunScript('CREATE TABLE place_boundingbox ()');
-		pgsqlRunScript('create type wikipedia_article_match as ()');
+		pgsqlRunScript('CREATE TABLE IF NOT EXISTS place_boundingbox ()', false);
+		pgsqlRunScript('create type wikipedia_article_match as ()', false);
 	}
 
 	if ($aCMDResult['import-data'] || $aCMDResult['all'])
@@ -874,6 +874,7 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 	function pgsqlRunScript($sScript, $bfatal = true)
 	{
 		global $aCMDResult;
+try {
 		// Convert database DSN to psql parameters
 		$aDSNInfo = DB::parseDSN(CONST_Database_DSN);
 		if (!isset($aDSNInfo['port']) || !$aDSNInfo['port']) $aDSNInfo['port'] = 5432;
@@ -901,6 +902,14 @@ echo "osm2pgsql cmd: $osm2pgsql\n";
 		{
 			fail("pgsql returned with error code ($iReturn)");
 		}
+} catch (Exception $e) {
+		if ($bfatal)
+		{
+			fail("" . $e);
+		} else {
+            echo "WARNING: $e\n";
+        }
+}
 	}
 
 	function pgsqlRunRestoreData($sDumpFile)

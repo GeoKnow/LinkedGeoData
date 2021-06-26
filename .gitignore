@@ -22,3 +22,9 @@ release.properties
 target
 
 linkedgeodata-trash
+
+links.nt
+limes.log
+review.nt
+
+.env

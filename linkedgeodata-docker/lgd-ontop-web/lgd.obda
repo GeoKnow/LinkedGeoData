@@ -1,0 +1,2207 @@
+[PrefixDeclaration]
+geo:		http://www.opengis.net/ont/geosparql#
+lgd:		http://linkedgeodata.org/triplify/
+ogc:		http://www.opengis.net/ont/geosparql#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+wgs:		http://www.w3.org/2003/01/geo/wgs84_pos#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+lgdm:		http://linkedgeodata.org/meta/
+lgdo:		http://linkedgeodata.org/ontology/
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+dcterms:		http://purl.org/dc/terms/
+geom:                	http://geovocab.org/geometry#
+spatial:		http://geovocab.org/spatial#
+lgd-geom:	http://linkedgeodata.org/geometry/
+
+[MappingDeclaration] @collection [[
+mappingId	lgd_nodes_1
+target		lgd:node{id} a lgdm:Node , geo:Feature ; lgdo:version {version}^^xsd:int ; dcterms:contributor lgd:user{user_id} ; dcterms:modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
+source		SELECT *
+			FROM nodes
+
+mappingId	lgd_nodes_2
+target		lgd:node{id} geo:hasGeometry lgd-geom:node{id} .
+source		SELECT id FROM nodes
+
+mappingId	lgd_nodes_3
+target		lgd-geom:node{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
+source		SELECT id,
+			ST_ASTEXT(geom) wkt
+			FROM nodes
+
+mappingId	lgd_nodes_4
+target		lgd:node{id} wgs:long {x}^^xsd:double ; wgs:lat {y}^^xsd:double ; lgdo:gadmSameAs <http://gadm.geovocab.org/services/withinRegion?lat={y}&long={x}#point> .
+source		SELECT  id,
+			ST_X(geom) x,
+			ST_Y(geom) y
+			FROM nodes
+
+mappingId	lgd_node_tags_resource_k
+target		lgd:node{node_id} a <{object}> .
+source		SELECT *
+			FROM lgd_node_tags_resource_k
+
+mappingId	lgd_node_tags_resource_kv
+target		lgd:node{node_id} a <{object}> .
+source		SELECT *
+			FROM lgd_node_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
+
+mappingId	lgd_node_tags_int
+target		lgd:node{node_id} <{property}> {v}^^xsd:int .
+source		SELECT *
+			FROM lgd_node_tags_int
+
+mappingId	lgd_node_tags_boolean
+target		lgd:node{node_id} <{property}> {v}^^xsd:boolean .
+source		SELECT *
+			FROM lgd_node_tags_boolean
+
+mappingId	lgd_node_tags_float
+target		lgd:node{node_id} <{property}> {v}^^xsd:float .
+source		SELECT *
+			FROM lgd_node_tags_float
+
+mappingId	lgd_node_tags_string
+target		lgd:node{node_id} lgdo:{k} {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_node_tags_string
+
+mappingId	lgd_node_tags_text
+target		lgd:node{node_id} <{property}> {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'
+
+mappingId	lgd_node_tags_text_lang
+target		lgd:node{node_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language=''
+
+mappingId	lgd_node_tags_text_lang_en
+target		lgd:node{node_id} rdfs:label {v}@en .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='en'
+
+mappingId	lgd_node_tags_text_lang_ja
+target		lgd:node{node_id} rdfs:label {v}@ja .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja'
+
+mappingId	lgd_node_tags_text_lang_fr
+target		lgd:node{node_id} rdfs:label {v}@fr .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fr'
+
+mappingId	lgd_node_tags_text_lang_ko_rm
+target		lgd:node{node_id} rdfs:label {v}@ko-latn .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko_rm'
+
+mappingId	lgd_node_tags_text_lang_ar
+target		lgd:node{node_id} rdfs:label {v}@ar .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ar'
+
+mappingId	lgd_node_tags_text_lang_de
+target		lgd:node{node_id} rdfs:label {v}@de .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='de'
+
+mappingId	lgd_node_tags_text_lang_ru
+target		lgd:node{node_id} rdfs:label {v}@ru .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ru'
+
+mappingId	lgd_node_tags_text_lang_sv
+target		lgd:node{node_id} rdfs:label {v}@sv .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sv'
+
+
+mappingId	lgd_node_tags_text_lang_botanical
+target		lgd:node{node_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='botanical'
+
+
+mappingId	lgd_node_tags_text_lang_zh
+target		lgd:node{node_id} rdfs:label {v}@zh .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh'
+
+mappingId	lgd_node_tags_text_lang_fi
+target		lgd:node{node_id} rdfs:label {v}@fi .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fi'
+
+mappingId	lgd_node_tags_text_lang_be
+target		lgd:node{node_id} rdfs:label {v}@be .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='be'
+
+mappingId	lgd_node_tags_text_lang_ka
+target		lgd:node{node_id} rdfs:label {v}@ka .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ka'
+
+mappingId	lgd_node_tags_text_lang_ko
+target		lgd:node{node_id} rdfs:label {v}@ko .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko'
+
+mappingId	lgd_node_tags_text_lang_he
+target		lgd:node{node_id} rdfs:label {v}@he .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='he'
+
+mappingId	lgd_node_tags_text_lang_nl
+target		lgd:node{node_id} rdfs:label {v}@nl .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='nl'
+
+mappingId	lgd_node_tags_text_lang_ga
+target		lgd:node{node_id} rdfs:label {v}@ga .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ga'
+
+mappingId	lgd_node_tags_text_lang_ja_rm
+target		lgd:node{node_id} rdfs:label {v}@ja-latn .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_rm'
+
+mappingId	lgd_node_tags_text_lang_el
+target		lgd:node{node_id} rdfs:label {v}@el .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='el'
+
+mappingId	lgd_node_tags_text_lang_it
+target		lgd:node{node_id} rdfs:label {v}@it .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='it'
+
+mappingId	lgd_node_tags_text_lang_es
+target		lgd:node{node_id} rdfs:label {v}@es .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='es'
+
+mappingId	lgd_node_tags_text_lang_zh_pinyin
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_pinyin'
+
+mappingId	lgd_node_tags_text_lang_th
+target		lgd:node{node_id} rdfs:label {v}@th .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='th'
+
+mappingId	lgd_node_tags_text_lang_sr
+target		lgd:node{node_id} rdfs:label {v}@sr .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sr'
+
+mappingId	lgd_node_tags_text_lang_cy
+target		lgd:node{node_id} rdfs:label {v}@cy .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cy'
+
+mappingId	lgd_node_tags_text_lang_uk
+target		lgd:node{node_id} rdfs:label {v}@uk .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='uk'
+
+mappingId	lgd_node_tags_text_lang_ca
+target		lgd:node{node_id} rdfs:label {v}@ca .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ca'
+
+mappingId	lgd_node_tags_text_lang_hu
+target		lgd:node{node_id} rdfs:label {v}@hu .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hu'
+
+mappingId	lgd_node_tags_text_lang_hsb
+target		lgd:node{node_id} rdfs:label {v}@hsb .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hsb'
+
+mappingId	lgd_node_tags_text_lang_fa
+target		lgd:node{node_id} rdfs:label {v}@fa .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fa'
+
+mappingId	lgd_node_tags_text_lang_eu
+target		lgd:node{node_id} rdfs:label {v}@eu .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eu'
+
+mappingId	lgd_node_tags_text_lang_br
+target		lgd:node{node_id} rdfs:label {v}@br .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='br'
+
+mappingId	lgd_node_tags_text_lang_pl
+target		lgd:node{node_id} rdfs:label {v}@pl .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pl'
+
+mappingId	lgd_node_tags_text_lang_hy
+target		lgd:node{node_id} rdfs:label {v}@hy .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hy'
+
+mappingId	lgd_node_tags_text_lang_kn
+target		lgd:node{node_id} rdfs:label {v}@kn .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kn'
+
+mappingId	lgd_node_tags_text_lang_sl
+target		lgd:node{node_id} rdfs:label {v}@sl .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sl'
+
+mappingId	lgd_node_tags_text_lang_ro
+target		lgd:node{node_id} rdfs:label {v}@ro .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ro'
+
+mappingId	lgd_node_tags_text_lang_sq
+target		lgd:node{node_id} rdfs:label {v}@sq .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sq'
+
+mappingId	lgd_node_tags_text_lang_am
+target		lgd:node{node_id} rdfs:label {v}@am .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='am'
+
+
+mappingId	lgd_node_tags_text_lang_fy
+target		lgd:node{node_id} rdfs:label {v}@fy .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fy'
+
+
+mappingId	lgd_node_tags_text_lang_cs
+target		lgd:node{node_id} rdfs:label {v}@cs .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cs'
+
+
+mappingId	lgd_node_tags_text_lang_gd
+target		lgd:node{node_id} rdfs:label {v}@gd .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gd'
+
+
+mappingId	lgd_node_tags_text_lang_sk
+target		lgd:node{node_id} rdfs:label {v}@sk .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sk'
+
+
+mappingId	lgd_node_tags_text_lang_af
+target		lgd:node{node_id} rdfs:label {v}@af .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='af'
+
+
+mappingId	lgd_node_tags_text_lang_lb
+target		lgd:node{node_id} rdfs:label {v}@lb .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lb'
+
+
+mappingId	lgd_node_tags_text_lang_ja_kana
+target		lgd:node{node_id} rdfs:label {v}@ja-kana .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_kana'
+
+
+mappingId	lgd_node_tags_text_lang_pt
+target		lgd:node{node_id} rdfs:label {v}@pt .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pt'
+
+
+mappingId	lgd_node_tags_text_lang_hr
+target		lgd:node{node_id} rdfs:label {v}@hr .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hr'
+
+
+mappingId	lgd_node_tags_text_lang_vi
+target		lgd:node{node_id} rdfs:label {v}@vi .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='vi'
+
+
+mappingId	lgd_node_tags_text_lang_tr
+target		lgd:node{node_id} rdfs:label {v}@tr .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tr'
+
+
+mappingId	lgd_node_tags_text_lang_fur
+target		lgd:node{node_id} rdfs:label {v}@fur .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fur'
+
+
+mappingId	lgd_node_tags_text_lang_bg
+target		lgd:node{node_id} rdfs:label {v}@bg .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='bg'
+
+
+mappingId	lgd_node_tags_text_lang_eo
+target		lgd:node{node_id} rdfs:label {v}@eo .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eo'
+
+
+mappingId	lgd_node_tags_text_lang_lt
+target		lgd:node{node_id} rdfs:label {v}@lt .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lt'
+
+
+mappingId	lgd_node_tags_text_lang_la
+target		lgd:node{node_id} rdfs:label {v}@la .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='la'
+
+
+mappingId	lgd_node_tags_text_lang_kk
+target		lgd:node{node_id} rdfs:label {v}@kk .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kk'
+
+
+mappingId	lgd_node_tags_text_lang_gsw
+target		lgd:node{node_id} rdfs:label {v}@gsw .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gsw'
+
+
+mappingId	lgd_node_tags_text_lang_et
+target		lgd:node{node_id} rdfs:label {v}@et .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='et'
+
+
+mappingId	lgd_node_tags_text_lang_mn
+target		lgd:node{node_id} rdfs:label {v}@mn .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mn'
+
+
+mappingId	lgd_node_tags_text_lang_ku
+target		lgd:node{node_id} rdfs:label {v}@ku .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ku'
+
+
+mappingId	lgd_node_tags_text_lang_mk
+target		lgd:node{node_id} rdfs:label {v}@mk .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mk'
+
+
+mappingId	lgd_node_tags_text_lang_lv
+target		lgd:node{node_id} rdfs:label {v}@lv .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lv'
+
+
+mappingId	lgd_node_tags_text_lang_carnaval
+target		lgd:node{node_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='carnaval'
+
+
+mappingId	lgd_node_tags_text_lang_hi
+target		lgd:node{node_id} rdfs:label {v}@hi .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hi'
+
+
+mappingId	lgd_node_tags_text_lang_no
+target		lgd:node{node_id} rdfs:label {v}@no .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='no'
+
+
+mappingId	lgd_node_tags_text_lang_gl
+target		lgd:node{node_id} rdfs:label {v}@gl .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gl'
+
+
+mappingId	lgd_node_tags_text_lang_cv
+target		lgd:node{node_id} rdfs:label {v}@cv .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cv'
+
+
+mappingId	lgd_node_tags_text_lang_is
+target		lgd:node{node_id} rdfs:label {v}@is .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='is'
+
+
+mappingId	lgd_node_tags_text_lang_gcf
+target		lgd:node{node_id} rdfs:label {v}@gcf .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gcf'
+
+
+mappingId	lgd_node_tags_text_lang_mdf
+target		lgd:node{node_id} rdfs:label {v}@mdf .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mdf'
+
+
+mappingId	lgd_node_tags_text_lang_myv
+target		lgd:node{node_id} rdfs:label {v}@myv .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='myv'
+
+
+mappingId	lgd_node_tags_text_lang_da
+target		lgd:node{node_id} rdfs:label {v}@da .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='da'
+
+
+mappingId	lgd_node_tags_text_lang_ast
+target		lgd:node{node_id} rdfs:label {v}@ast .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ast'
+
+
+mappingId	lgd_node_tags_text_lang_az
+target		lgd:node{node_id} rdfs:label {v}@az .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='az'
+
+
+mappingId	lgd_node_tags_text_lang_gv
+target		lgd:node{node_id} rdfs:label {v}@gv .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gv'
+
+
+mappingId	lgd_node_tags_text_lang_ba
+target		lgd:node{node_id} rdfs:label {v}@ba .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ba'
+
+
+mappingId	lgd_node_tags_text_lang_scn
+target		lgd:node{node_id} rdfs:label {v}@scn .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='scn'
+
+
+mappingId	lgd_node_tags_text_lang_dsb
+target		lgd:node{node_id} rdfs:label {v}@dsb .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='dsb'
+
+
+mappingId	lgd_node_tags_text_lang_ur
+target		lgd:node{node_id} rdfs:label {v}@ur .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ur'
+
+
+mappingId	lgd_node_tags_text_lang_oc
+target		lgd:node{node_id} rdfs:label {v}@oc .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='oc'
+
+
+mappingId	lgd_node_tags_text_lang_tt
+target		lgd:node{node_id} rdfs:label {v}@tt .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tt'
+
+
+mappingId	lgd_node_tags_text_lang_zh_py
+target		lgd:node{node_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_py'
+
+
+mappingId	lgd_node_tags_text_lang_tg
+target		lgd:node{node_id} rdfs:label {v}@tg .
+source		SELECT *
+			FROM lgd_node_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tg'
+
+mappingId	lgd_ways_1
+target		lgd:way{id} a lgdm:Way , geo:Feature ; lgdo:version {version}^^xsd:int ; dcterms:contributor lgd:user{user_id} ; dcterms:modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int .
+source		SELECT *
+			FROM ways
+
+mappingId	lgd_ways_2
+target		lgd:way{id} geo:hasGeometry lgd-geom:way{id} .
+source		SELECT id FROM ways
+
+mappingId	lgd_ways_3
+target		lgd-geom:way{id} a geo:Geometry ; geo:asWKT {wkt}^^geo:wktLiteral .
+source		SELECT id,
+			ST_ASTEXT(linestring) wkt
+			FROM ways
+
+mappingId	lgd_pos_seq
+target		lgd-geom:way{id} lgdo:posSeq lgd-geom:posSeq{id} .
+source		SELECT *
+			FROM ways
+
+mappingId	lgd_pos_seq_type
+target		lgd-geom:posSeq{id} a lgdo:Seq .
+source		SELECT *
+			FROM ways
+
+mappingId	view_waynodes
+target		lgd:nodeseq{node_id}/{way_id} lgdo:sequence_id {sid}^^xsd:int .
+source		SELECT *, sequence_id + 1 AS sid
+			FROM way_nodes
+
+mappingId	lgd_way_tags_resource_k
+target		lgd:way{way_id} a <{object}> .
+source		SELECT *
+			FROM lgd_way_tags_resource_k
+
+mappingId	lgd_way_tags_resource_kv
+target		lgd:way{way_id} a <{object}> .
+source		SELECT *
+			FROM lgd_way_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
+
+mappingId	lgd_way_tags_int
+target		lgd:way{way_id} <{property}> {v}^^xsd:int .
+source		SELECT *
+			FROM lgd_way_tags_int
+
+mappingId	lgd_way_tags_boolean
+target		lgd:way{way_id} <{property}> {v}^^xsd:boolean .
+source		SELECT *
+			FROM lgd_way_tags_boolean
+
+mappingId	lgd_way_tags_float
+target		lgd:way{way_id} <{property}> {v}^^xsd:float .
+source		SELECT *
+			FROM lgd_way_tags_float
+
+mappingId	lgd_way_tags_text
+target		lgd:way{way_id} <{property}> {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'
+
+mappingId	lgd_way_tags_text_lang
+target		lgd:way{way_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language=''
+
+
+mappingId	lgd_way_tags_text_lang_en
+target		lgd:way{way_id} rdfs:label {v}@en .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='en'
+
+
+mappingId	lgd_way_tags_text_lang_ja
+target		lgd:way{way_id} rdfs:label {v}@ja .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja'
+
+
+mappingId	lgd_way_tags_text_lang_fr
+target		lgd:way{way_id} rdfs:label {v}@fr .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fr'
+
+
+mappingId	lgd_way_tags_text_lang_ko_rm
+target		lgd:way{way_id} rdfs:label {v}@ko-latn .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko_rm'
+
+
+mappingId	lgd_way_tags_text_lang_ar
+target		lgd:way{way_id} rdfs:label {v}@ar .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ar'
+
+
+mappingId	lgd_way_tags_text_lang_de
+target		lgd:way{way_id} rdfs:label {v}@de .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='de'
+
+
+mappingId	lgd_way_tags_text_lang_ru
+target		lgd:way{way_id} rdfs:label {v}@ru .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ru'
+
+
+mappingId	lgd_way_tags_text_lang_sv
+target		lgd:way{way_id} rdfs:label {v}@sv .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sv'
+
+
+mappingId	lgd_way_tags_text_lang_botanical
+target		lgd:way{way_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='botanical'
+
+
+mappingId	lgd_way_tags_text_lang_zh
+target		lgd:way{way_id} rdfs:label {v}@zh .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh'
+
+
+mappingId	lgd_way_tags_text_lang_fi
+target		lgd:way{way_id} rdfs:label {v}@fi .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fi'
+
+
+mappingId	lgd_way_tags_text_lang_be
+target		lgd:way{way_id} rdfs:label {v}@be .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='be'
+
+
+mappingId	lgd_way_tags_text_lang_ka
+target		lgd:way{way_id} rdfs:label {v}@ka .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ka'
+
+
+mappingId	lgd_way_tags_text_lang_ko
+target		lgd:way{way_id} rdfs:label {v}@ko .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko'
+
+
+mappingId	lgd_way_tags_text_lang_he
+target		lgd:way{way_id} rdfs:label {v}@he .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='he'
+
+
+mappingId	lgd_way_tags_text_lang_nl
+target		lgd:way{way_id} rdfs:label {v}@nl .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='nl'
+
+
+mappingId	lgd_way_tags_text_lang_ga
+target		lgd:way{way_id} rdfs:label {v}@ga .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ga'
+
+
+mappingId	lgd_way_tags_text_lang_ja_rm
+target		lgd:way{way_id} rdfs:label {v}@ja-latn .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_rm'
+
+
+mappingId	lgd_way_tags_text_lang_el
+target		lgd:way{way_id} rdfs:label {v}@el .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='el'
+
+
+mappingId	lgd_way_tags_text_lang_it
+target		lgd:way{way_id} rdfs:label {v}@it .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='it'
+
+
+mappingId	lgd_way_tags_text_lang_es
+target		lgd:way{way_id} rdfs:label {v}@es .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='es'
+
+
+mappingId	lgd_way_tags_text_lang_zh_pinyin
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_pinyin'
+
+
+mappingId	lgd_way_tags_text_lang_th
+target		lgd:way{way_id} rdfs:label {v}@th .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='th'
+
+
+mappingId	lgd_way_tags_text_lang_sr
+target		lgd:way{way_id} rdfs:label {v}@sr .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sr'
+
+
+mappingId	lgd_way_tags_text_lang_cy
+target		lgd:way{way_id} rdfs:label {v}@cy .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cy'
+
+
+mappingId	lgd_way_tags_text_lang_uk
+target		lgd:way{way_id} rdfs:label {v}@uk .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='uk'
+
+
+mappingId	lgd_way_tags_text_lang_ca
+target		lgd:way{way_id} rdfs:label {v}@ca .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ca'
+
+
+mappingId	lgd_way_tags_text_lang_hu
+target		lgd:way{way_id} rdfs:label {v}@hu .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hu'
+
+
+mappingId	lgd_way_tags_text_lang_hsb
+target		lgd:way{way_id} rdfs:label {v}@hsb .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hsb'
+
+
+mappingId	lgd_way_tags_text_lang_fa
+target		lgd:way{way_id} rdfs:label {v}@fa .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fa'
+
+
+mappingId	lgd_way_tags_text_lang_eu
+target		lgd:way{way_id} rdfs:label {v}@eu .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eu'
+
+
+mappingId	lgd_way_tags_text_lang_br
+target		lgd:way{way_id} rdfs:label {v}@br .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='br'
+
+
+mappingId	lgd_way_tags_text_lang_pl
+target		lgd:way{way_id} rdfs:label {v}@pl .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pl'
+
+
+mappingId	lgd_way_tags_text_lang_hy
+target		lgd:way{way_id} rdfs:label {v}@hy .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hy'
+
+
+mappingId	lgd_way_tags_text_lang_kn
+target		lgd:way{way_id} rdfs:label {v}@kn .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kn'
+
+
+mappingId	lgd_way_tags_text_lang_sl
+target		lgd:way{way_id} rdfs:label {v}@sl .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sl'
+
+
+mappingId	lgd_way_tags_text_lang_ro
+target		lgd:way{way_id} rdfs:label {v}@ro .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ro'
+
+
+mappingId	lgd_way_tags_text_lang_sq
+target		lgd:way{way_id} rdfs:label {v}@sq .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sq'
+
+
+mappingId	lgd_way_tags_text_lang_am
+target		lgd:way{way_id} rdfs:label {v}@am .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='am'
+
+
+mappingId	lgd_way_tags_text_lang_fy
+target		lgd:way{way_id} rdfs:label {v}@fy .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fy'
+
+
+mappingId	lgd_way_tags_text_lang_cs
+target		lgd:way{way_id} rdfs:label {v}@cs .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cs'
+
+
+mappingId	lgd_way_tags_text_lang_gd
+target		lgd:way{way_id} rdfs:label {v}@gd .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gd'
+
+
+mappingId	lgd_way_tags_text_lang_sk
+target		lgd:way{way_id} rdfs:label {v}@sk .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sk'
+
+
+mappingId	lgd_way_tags_text_lang_af
+target		lgd:way{way_id} rdfs:label {v}@af .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='af'
+
+
+mappingId	lgd_way_tags_text_lang_lb
+target		lgd:way{way_id} rdfs:label {v}@lb .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lb'
+
+
+mappingId	lgd_way_tags_text_lang_ja_kana
+target		lgd:way{way_id} rdfs:label {v}@ja-kana .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_kana'
+
+
+mappingId	lgd_way_tags_text_lang_pt
+target		lgd:way{way_id} rdfs:label {v}@pt .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pt'
+
+
+mappingId	lgd_way_tags_text_lang_hr
+target		lgd:way{way_id} rdfs:label {v}@hr .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hr'
+
+
+mappingId	lgd_way_tags_text_lang_vi
+target		lgd:way{way_id} rdfs:label {v}@vi .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='vi'
+
+
+mappingId	lgd_way_tags_text_lang_tr
+target		lgd:way{way_id} rdfs:label {v}@tr .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tr'
+
+
+mappingId	lgd_way_tags_text_lang_fur
+target		lgd:way{way_id} rdfs:label {v}@fur .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fur'
+
+
+mappingId	lgd_way_tags_text_lang_bg
+target		lgd:way{way_id} rdfs:label {v}@bg .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='bg'
+
+
+mappingId	lgd_way_tags_text_lang_eo
+target		lgd:way{way_id} rdfs:label {v}@eo .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eo'
+
+
+mappingId	lgd_way_tags_text_lang_lt
+target		lgd:way{way_id} rdfs:label {v}@lt .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lt'
+
+
+mappingId	lgd_way_tags_text_lang_la
+target		lgd:way{way_id} rdfs:label {v}@la .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='la'
+
+
+mappingId	lgd_way_tags_text_lang_kk
+target		lgd:way{way_id} rdfs:label {v}@kk .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kk'
+
+
+mappingId	lgd_way_tags_text_lang_gsw
+target		lgd:way{way_id} rdfs:label {v}@gsw .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gsw'
+
+
+mappingId	lgd_way_tags_text_lang_et
+target		lgd:way{way_id} rdfs:label {v}@et .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='et'
+
+
+mappingId	lgd_way_tags_text_lang_mn
+target		lgd:way{way_id} rdfs:label {v}@mn .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mn'
+
+
+mappingId	lgd_way_tags_text_lang_ku
+target		lgd:way{way_id} rdfs:label {v}@ku .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ku'
+
+
+mappingId	lgd_way_tags_text_lang_mk
+target		lgd:way{way_id} rdfs:label {v}@mk .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mk'
+
+
+mappingId	lgd_way_tags_text_lang_lv
+target		lgd:way{way_id} rdfs:label {v}@lv .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lv'
+
+
+mappingId	lgd_way_tags_text_lang_carnaval
+target		lgd:way{way_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='carnaval'
+
+
+mappingId	lgd_way_tags_text_lang_hi
+target		lgd:way{way_id} rdfs:label {v}@hi .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hi'
+
+
+mappingId	lgd_way_tags_text_lang_no
+target		lgd:way{way_id} rdfs:label {v}@no .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='no'
+
+
+mappingId	lgd_way_tags_text_lang_gl
+target		lgd:way{way_id} rdfs:label {v}@gl .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gl'
+
+
+mappingId	lgd_way_tags_text_lang_cv
+target		lgd:way{way_id} rdfs:label {v}@cv .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cv'
+
+
+mappingId	lgd_way_tags_text_lang_is
+target		lgd:way{way_id} rdfs:label {v}@is .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='is'
+
+
+mappingId	lgd_way_tags_text_lang_gcf
+target		lgd:way{way_id} rdfs:label {v}@gcf .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gcf'
+
+
+mappingId	lgd_way_tags_text_lang_mdf
+target		lgd:way{way_id} rdfs:label {v}@mdf .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mdf'
+
+
+mappingId	lgd_way_tags_text_lang_myv
+target		lgd:way{way_id} rdfs:label {v}@myv .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='myv'
+
+
+mappingId	lgd_way_tags_text_lang_da
+target		lgd:way{way_id} rdfs:label {v}@da .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='da'
+
+
+mappingId	lgd_way_tags_text_lang_ast
+target		lgd:way{way_id} rdfs:label {v}@ast .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ast'
+
+
+mappingId	lgd_way_tags_text_lang_az
+target		lgd:way{way_id} rdfs:label {v}@az .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='az'
+
+
+mappingId	lgd_way_tags_text_lang_gv
+target		lgd:way{way_id} rdfs:label {v}@gv .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gv'
+
+
+mappingId	lgd_way_tags_text_lang_ba
+target		lgd:way{way_id} rdfs:label {v}@ba .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ba'
+
+
+mappingId	lgd_way_tags_text_lang_scn
+target		lgd:way{way_id} rdfs:label {v}@scn .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='scn'
+
+
+mappingId	lgd_way_tags_text_lang_dsb
+target		lgd:way{way_id} rdfs:label {v}@dsb .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='dsb'
+
+
+mappingId	lgd_way_tags_text_lang_ur
+target		lgd:way{way_id} rdfs:label {v}@ur .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ur'
+
+
+mappingId	lgd_way_tags_text_lang_oc
+target		lgd:way{way_id} rdfs:label {v}@oc .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='oc'
+
+
+mappingId	lgd_way_tags_text_lang_tt
+target		lgd:way{way_id} rdfs:label {v}@tt .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tt'
+
+
+mappingId	lgd_way_tags_text_lang_zh_py
+target		lgd:way{way_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_py'
+
+
+mappingId	lgd_way_tags_text_lang_tg
+target		lgd:way{way_id} rdfs:label {v}@tg .
+source		SELECT *
+			FROM lgd_way_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tg'
+
+mappingId	lgd_way_tags_string
+target		lgd:way{way_id} lgdo:{k} {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_way_tags_string
+
+mappingId	lgd_relations_1
+target		lgd:relation{id} a lgdm:Relation , spatial:Feature , lgdo:Seq ; lgdo:version {version}^^xsd:int ; dcterms:contributor lgd:user{user_id} ; dcterms:modified {tstamp}^^xsd:dateTime ; lgdo:changeset {changeset_id}^^xsd:int ; lgdo:members lgd:geometryrelation{id} .
+source		SELECT *
+			FROM relations
+
+mappingId	lgd_relation_members_all
+target		lgd:rmember{relation_id}_{sid} lgdo:sequence_id {sid}^^xsd:int ; lgdo:role {member_role}^^xsd:string .
+source		SELECT *, sequence_id + 1 AS sid
+			FROM relation_members
+
+mappingId	lgd_relation_members_seq_nodes
+target		lgd:rmember{relation_id}_{sid} lgdo:georef lgd:node{member_id} .
+source		SELECT *, sequence_id + 1 AS sid
+			FROM relation_members
+			WHERE member_type = 'N'
+
+mappingId	lgd_relation_members_seq_ways
+target		lgd:rmember{relation_id}_{sid} lgdo:georef lgd:way{member_id} .
+source		SELECT *, sequence_id + 1 AS sid
+			FROM relation_members
+			WHERE member_type = 'W'
+
+mappingId	lgd_relation_members_seq_relations
+target		lgd:rmember{relation_id}_{sid} lgdo:georef lgd:relation{member_id} .
+source		SELECT *, sequence_id + 1 AS sid
+			FROM relation_members
+			WHERE member_type = 'R'
+
+mappingId	lgd_relation_tags_resource_k
+target		lgd:relation{relation_id} a <{object}> .
+source		SELECT *
+			FROM lgd_relation_tags_resource_k
+
+mappingId	lgd_relation_tags_resource_kv
+target		lgd:relation{relation_id} a <{object}> .
+source		SELECT *
+			FROM lgd_relation_tags_resource_kv WHERE property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
+
+mappingId	lgd_relation_tags_int
+target		lgd:relation{relation_id} <{property}> {v}^^xsd:int .
+source		SELECT *
+			FROM lgd_relation_tags_int
+
+mappingId	lgd_relation_tags_boolean
+target		lgd:relation{relation_id} <{property}> {v}^^xsd:boolean .
+source		SELECT *
+			FROM lgd_relation_tags_boolean
+
+mappingId	lgd_relation_tags_float
+target		lgd:relation{relation_id} <{property}> {v}^^xsd:float .
+source		SELECT *
+			FROM lgd_relation_tags_float
+
+mappingId	lgd_relation_tags_text
+target		lgd:relation{relation_id} <{property}> {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property != 'http://www.w3.org/2000/01/rdf-schema#label'
+
+mappingId	lgd_relation_tags_text_lang
+target		lgd:relation{relation_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language=''
+
+
+mappingId	lgd_relation_tags_text_lang_en
+target		lgd:relation{relation_id} rdfs:label {v}@en .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='en'
+
+
+mappingId	lgd_relation_tags_text_lang_ja
+target		lgd:relation{relation_id} rdfs:label {v}@ja .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja'
+
+
+mappingId	lgd_relation_tags_text_lang_fr
+target		lgd:relation{relation_id} rdfs:label {v}@fr .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fr'
+
+
+mappingId	lgd_relation_tags_text_lang_ko_rm
+target		lgd:relation{relation_id} rdfs:label {v}@ko-latn .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko_rm'
+
+
+mappingId	lgd_relation_tags_text_lang_ar
+target		lgd:relation{relation_id} rdfs:label {v}@ar .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ar'
+
+
+mappingId	lgd_relation_tags_text_lang_de
+target		lgd:relation{relation_id} rdfs:label {v}@de .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='de'
+
+
+mappingId	lgd_relation_tags_text_lang_ru
+target		lgd:relation{relation_id} rdfs:label {v}@ru .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ru'
+
+
+mappingId	lgd_relation_tags_text_lang_sv
+target		lgd:relation{relation_id} rdfs:label {v}@sv .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sv'
+
+
+mappingId	lgd_relation_tags_text_lang_botanical
+target		lgd:relation{relation_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='botanical'
+
+
+mappingId	lgd_relation_tags_text_lang_zh
+target		lgd:relation{relation_id} rdfs:label {v}@zh .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh'
+
+
+mappingId	lgd_relation_tags_text_lang_fi
+target		lgd:relation{relation_id} rdfs:label {v}@fi .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fi'
+
+
+mappingId	lgd_relation_tags_text_lang_be
+target		lgd:relation{relation_id} rdfs:label {v}@be .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='be'
+
+
+mappingId	lgd_relation_tags_text_lang_ka
+target		lgd:relation{relation_id} rdfs:label {v}@ka .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ka'
+
+
+mappingId	lgd_relation_tags_text_lang_ko
+target		lgd:relation{relation_id} rdfs:label {v}@ko .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ko'
+
+
+mappingId	lgd_relation_tags_text_lang_he
+target		lgd:relation{relation_id} rdfs:label {v}@he .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='he'
+
+
+mappingId	lgd_relation_tags_text_lang_nl
+target		lgd:relation{relation_id} rdfs:label {v}@nl .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='nl'
+
+
+mappingId	lgd_relation_tags_text_lang_ga
+target		lgd:relation{relation_id} rdfs:label {v}@ga .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ga'
+
+
+mappingId	lgd_relation_tags_text_lang_ja_rm
+target		lgd:relation{relation_id} rdfs:label {v}@ja-latn .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_rm'
+
+
+mappingId	lgd_relation_tags_text_lang_el
+target		lgd:relation{relation_id} rdfs:label {v}@el .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='el'
+
+
+mappingId	lgd_relation_tags_text_lang_it
+target		lgd:relation{relation_id} rdfs:label {v}@it .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='it'
+
+
+mappingId	lgd_relation_tags_text_lang_es
+target		lgd:relation{relation_id} rdfs:label {v}@es .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='es'
+
+
+mappingId	lgd_relation_tags_text_lang_zh_pinyin
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_pinyin'
+
+
+mappingId	lgd_relation_tags_text_lang_th
+target		lgd:relation{relation_id} rdfs:label {v}@th .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='th'
+
+
+mappingId	lgd_relation_tags_text_lang_sr
+target		lgd:relation{relation_id} rdfs:label {v}@sr .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sr'
+
+
+mappingId	lgd_relation_tags_text_lang_cy
+target		lgd:relation{relation_id} rdfs:label {v}@cy .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cy'
+
+
+mappingId	lgd_relation_tags_text_lang_uk
+target		lgd:relation{relation_id} rdfs:label {v}@uk .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='uk'
+
+
+mappingId	lgd_relation_tags_text_lang_ca
+target		lgd:relation{relation_id} rdfs:label {v}@ca .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ca'
+
+
+mappingId	lgd_relation_tags_text_lang_hu
+target		lgd:relation{relation_id} rdfs:label {v}@hu .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hu'
+
+
+mappingId	lgd_relation_tags_text_lang_hsb
+target		lgd:relation{relation_id} rdfs:label {v}@hsb .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hsb'
+
+
+mappingId	lgd_relation_tags_text_lang_fa
+target		lgd:relation{relation_id} rdfs:label {v}@fa .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fa'
+
+
+mappingId	lgd_relation_tags_text_lang_eu
+target		lgd:relation{relation_id} rdfs:label {v}@eu .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eu'
+
+
+mappingId	lgd_relation_tags_text_lang_br
+target		lgd:relation{relation_id} rdfs:label {v}@br .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='br'
+
+
+mappingId	lgd_relation_tags_text_lang_pl
+target		lgd:relation{relation_id} rdfs:label {v}@pl .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pl'
+
+
+mappingId	lgd_relation_tags_text_lang_hy
+target		lgd:relation{relation_id} rdfs:label {v}@hy .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hy'
+
+
+mappingId	lgd_relation_tags_text_lang_kn
+target		lgd:relation{relation_id} rdfs:label {v}@kn .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kn'
+
+
+mappingId	lgd_relation_tags_text_lang_sl
+target		lgd:relation{relation_id} rdfs:label {v}@sl .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sl'
+
+
+mappingId	lgd_relation_tags_text_lang_ro
+target		lgd:relation{relation_id} rdfs:label {v}@ro .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ro'
+
+
+mappingId	lgd_relation_tags_text_lang_sq
+target		lgd:relation{relation_id} rdfs:label {v}@sq .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sq'
+
+
+mappingId	lgd_relation_tags_text_lang_am
+target		lgd:relation{relation_id} rdfs:label {v}@am .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='am'
+
+
+mappingId	lgd_relation_tags_text_lang_fy
+target		lgd:relation{relation_id} rdfs:label {v}@fy .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fy'
+
+
+mappingId	lgd_relation_tags_text_lang_cs
+target		lgd:relation{relation_id} rdfs:label {v}@cs .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cs'
+
+
+mappingId	lgd_relation_tags_text_lang_gd
+target		lgd:relation{relation_id} rdfs:label {v}@gd .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gd'
+
+
+mappingId	lgd_relation_tags_text_lang_sk
+target		lgd:relation{relation_id} rdfs:label {v}@sk .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='sk'
+
+
+mappingId	lgd_relation_tags_text_lang_af
+target		lgd:relation{relation_id} rdfs:label {v}@af .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='af'
+
+
+mappingId	lgd_relation_tags_text_lang_lb
+target		lgd:relation{relation_id} rdfs:label {v}@lb .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lb'
+
+
+mappingId	lgd_relation_tags_text_lang_ja_kana
+target		lgd:relation{relation_id} rdfs:label {v}@ja-kana .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ja_kana'
+
+
+mappingId	lgd_relation_tags_text_lang_pt
+target		lgd:relation{relation_id} rdfs:label {v}@pt .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='pt'
+
+
+mappingId	lgd_relation_tags_text_lang_hr
+target		lgd:relation{relation_id} rdfs:label {v}@hr .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hr'
+
+
+mappingId	lgd_relation_tags_text_lang_vi
+target		lgd:relation{relation_id} rdfs:label {v}@vi .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='vi'
+
+
+mappingId	lgd_relation_tags_text_lang_tr
+target		lgd:relation{relation_id} rdfs:label {v}@tr .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tr'
+
+
+mappingId	lgd_relation_tags_text_lang_fur
+target		lgd:relation{relation_id} rdfs:label {v}@fur .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='fur'
+
+
+mappingId	lgd_relation_tags_text_lang_bg
+target		lgd:relation{relation_id} rdfs:label {v}@bg .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='bg'
+
+
+mappingId	lgd_relation_tags_text_lang_eo
+target		lgd:relation{relation_id} rdfs:label {v}@eo .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='eo'
+
+
+mappingId	lgd_relation_tags_text_lang_lt
+target		lgd:relation{relation_id} rdfs:label {v}@lt .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lt'
+
+
+mappingId	lgd_relation_tags_text_lang_la
+target		lgd:relation{relation_id} rdfs:label {v}@la .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='la'
+
+
+mappingId	lgd_relation_tags_text_lang_kk
+target		lgd:relation{relation_id} rdfs:label {v}@kk .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='kk'
+
+
+mappingId	lgd_relation_tags_text_lang_gsw
+target		lgd:relation{relation_id} rdfs:label {v}@gsw .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gsw'
+
+
+mappingId	lgd_relation_tags_text_lang_et
+target		lgd:relation{relation_id} rdfs:label {v}@et .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='et'
+
+
+mappingId	lgd_relation_tags_text_lang_mn
+target		lgd:relation{relation_id} rdfs:label {v}@mn .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mn'
+
+
+mappingId	lgd_relation_tags_text_lang_ku
+target		lgd:relation{relation_id} rdfs:label {v}@ku .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ku'
+
+
+mappingId	lgd_relation_tags_text_lang_mk
+target		lgd:relation{relation_id} rdfs:label {v}@mk .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mk'
+
+
+mappingId	lgd_relation_tags_text_lang_lv
+target		lgd:relation{relation_id} rdfs:label {v}@lv .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='lv'
+
+
+mappingId	lgd_relation_tags_text_lang_carnaval
+target		lgd:relation{relation_id} rdfs:label {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='carnaval'
+
+
+mappingId	lgd_relation_tags_text_lang_hi
+target		lgd:relation{relation_id} rdfs:label {v}@hi .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='hi'
+
+
+mappingId	lgd_relation_tags_text_lang_no
+target		lgd:relation{relation_id} rdfs:label {v}@no .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='no'
+
+
+mappingId	lgd_relation_tags_text_lang_gl
+target		lgd:relation{relation_id} rdfs:label {v}@gl .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gl'
+
+
+mappingId	lgd_relation_tags_text_lang_cv
+target		lgd:relation{relation_id} rdfs:label {v}@cv .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='cv'
+
+
+mappingId	lgd_relation_tags_text_lang_is
+target		lgd:relation{relation_id} rdfs:label {v}@is .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='is'
+
+
+mappingId	lgd_relation_tags_text_lang_gcf
+target		lgd:relation{relation_id} rdfs:label {v}@gcf .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gcf'
+
+
+mappingId	lgd_relation_tags_text_lang_mdf
+target		lgd:relation{relation_id} rdfs:label {v}@mdf .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='mdf'
+
+
+mappingId	lgd_relation_tags_text_lang_myv
+target		lgd:relation{relation_id} rdfs:label {v}@myv .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='myv'
+
+
+mappingId	lgd_relation_tags_text_lang_da
+target		lgd:relation{relation_id} rdfs:label {v}@da .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='da'
+
+
+mappingId	lgd_relation_tags_text_lang_ast
+target		lgd:relation{relation_id} rdfs:label {v}@ast .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ast'
+
+
+mappingId	lgd_relation_tags_text_lang_az
+target		lgd:relation{relation_id} rdfs:label {v}@az .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='az'
+
+
+mappingId	lgd_relation_tags_text_lang_gv
+target		lgd:relation{relation_id} rdfs:label {v}@gv .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='gv'
+
+
+mappingId	lgd_relation_tags_text_lang_ba
+target		lgd:relation{relation_id} rdfs:label {v}@ba .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ba'
+
+
+mappingId	lgd_relation_tags_text_lang_scn
+target		lgd:relation{relation_id} rdfs:label {v}@scn .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='scn'
+
+
+mappingId	lgd_relation_tags_text_lang_dsb
+target		lgd:relation{relation_id} rdfs:label {v}@dsb .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='dsb'
+
+
+mappingId	lgd_relation_tags_text_lang_ur
+target		lgd:relation{relation_id} rdfs:label {v}@ur .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='ur'
+
+
+mappingId	lgd_relation_tags_text_lang_oc
+target		lgd:relation{relation_id} rdfs:label {v}@oc .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='oc'
+
+
+mappingId	lgd_relation_tags_text_lang_tt
+target		lgd:relation{relation_id} rdfs:label {v}@tt .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tt'
+
+
+mappingId	lgd_relation_tags_text_lang_zh_py
+target		lgd:relation{relation_id} rdfs:label {v}@zh-pny .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='zh_py'
+
+
+mappingId	lgd_relation_tags_text_lang_tg
+target		lgd:relation{relation_id} rdfs:label {v}@tg .
+source		SELECT *
+			FROM lgd_relation_tags_text
+			WHERE property='http://www.w3.org/2000/01/rdf-schema#label'
+			AND language='tg'
+
+mappingId	lgd_relation_tags_string
+target		lgd:relation{relation_id} lgdo:{k} {v}^^xsd:string .
+source		SELECT *
+			FROM lgd_relation_tags_string
+
+mappingId	lgd_users
+target		lgd:user{id} a lgdo:User ; rdfs:label {name}^^xsd:string .
+source		SELECT *
+			FROM users
+
+mappingId       lgd_node_interlinks
+target          lgd:node{node_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 39)::bigint AS "node_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/node%'
+
+mappingId       lgd_way_interlinks
+target          lgd:way{way_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 38)::bigint AS "way_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/way%'
+
+mappingId       lgd_relation_interlinks
+target          lgd:relation{relation_id} owl:sameAs <{o}> .
+source          SELECT substring("s" from 43)::bigint AS "relation_id",  "o"
+                        FROM lgd_interlinks
+                        WHERE   "s" LIKE 'http://linkedgeodata.org/triplify/relation%'
+]]
+

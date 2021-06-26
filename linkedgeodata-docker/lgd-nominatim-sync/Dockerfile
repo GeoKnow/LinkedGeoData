@@ -6,10 +6,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "force rebuild 7"
 
 RUN \
-    apt-get -y update --fix-missing && \
+    apt -y update --fix-missing && \
 #    apt-get upgrade -y && \
-    apt-get install -y software-properties-common wget git curl sudo && \
-    apt-get update
+    apt install -y software-properties-common wget git curl sudo
+#    apt-get update
 
 
 ENV POSTGRES_CLIENT_VERSION 9.5
@@ -34,14 +34,16 @@ RUN wget -qO - http://cstadler.aksw.org/repos/apt/conf/packages.precise.gpg.key 
 WORKDIR /app/nominatim
 
 # Nominatim install
-ENV NOMINATIM_VERSION v2.5.1
-RUN git clone https://github.com/openstreetmap/Nominatim ./src
-RUN cd ./src && git checkout "$NOMINATIM_VERSION"
+#ENV NOMINATIM_VERSION v2.5.1
+#RUN git clone https://github.com/openstreetmap/Nominatim ./src
+#RUN cd ./src && git checkout "$NOMINATIM_VERSION"
 
 #RUN git clone --recursive https://github.com/openstreetmap/Nominatim ./src
 #RUN cd ./src && git checkout "$NOMINATIM_VERSION" && git submodule update --recursive --init && \
 #  ./autogen.sh && ./configure && make
 
+COPY target/nominatim.jar .
+RUN unzip nominatim.jar && mv Nominatim src
 
 RUN echo "force rebuild b6"
 
@@ -59,6 +61,9 @@ RUN chmod +x ./src/utils/setup-patched.php
 
 COPY update-patched.php ./src/utils/
 RUN chmod +x ./src/utils/update-patched.php
+
+COPY lib-patched.php ./lib/lib.php
+RUN chmod +x ./lib/lib.php
 
 COPY target/nominatim ./src/nominatim/
 RUN chmod +x ./src/nominatim/nominatim
@@ -95,7 +100,10 @@ COPY configuration.txt.dist ./src/settings/
 #EXPOSE 5432
 #EXPOSE 8080
 
-COPY start.sh .
 
-CMD ./start.sh
+COPY start.sh .
+COPY wait-for-postgres.sh .
+RUN chmod +x ./start.sh ./wait-for-postgres.sh
+RUN sleep 3
+CMD [ "./wait-for-postgres.sh", "./start.sh" ]
 
