@@ -8,8 +8,11 @@ nav_order: 4
 
 ## Planet Endpoint
 
-Because the whole OSM data for the planet has become quite difficult to handle due to its size, we currently do not provide this service.
+Because the whole OSM data for the planet has become quite difficult to handle due to its size, we no longer provide *new* datasets.
 Instead, there are now services for selected regions.
+
+* Legacy SPARQL Endpoint: [http://linkedgeodata.org/sparql](http://linkedgeodata.org/sparql)
+
 
 ## Regional Endpoints
 

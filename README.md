@@ -25,7 +25,7 @@ Dockerfiles for services such as a Linked Data or SPARQL interfaces should be de
 
 The architecture shown in the image below. The docker setup is located in the [linkedgeodata-docker](linkedgeodata-docker) folder.
 
-![LGD Dockerized Architecture Overview](images/lgd-architecture-2021-01-18.png)
+![LGD Dockerized Architecture Overview](docs/assets/images/lgd-architecture-2021-01-18.png)
 
 * This project first uses Osmosis to initialize a 'raw' OpenStreetMap postgis database (using simple schema) from a `.osm.pdf` file.
 * Then, this database is extended with additional tables containing RDF mapping - and interlinking - information. Also, helper views are provided for simplifying access to the integrated information.
