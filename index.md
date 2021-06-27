@@ -12,11 +12,11 @@ permalink: /
 ## Powered By
 
 <p align="center" style="width: 100%">
-  <a href= "https://www.openstreetmap.org"><img alt="OpenStreetMap" src="docs/assets/images/240px-public-images-osm_logo.png" width="50px"></a>
-  <img alt="University of Leipzig" src="docs/assets/images/logo_leipzig.gif" width="19%">
-  <img alt="Virtuoso" src="docs/assets/images/openlinklogo_wstrap_190x70.png" width="19%">
-  <img alt="Ontop" src="docs/assets/images/ontop-logo.png" width="19%">
-  <img alt="Sparqlify" src="docs/assets/images/sparqlify-logo.png" width="19%">
+  <a href="https://www.openstreetmap.org"><img alt="OpenStreetMap" src="docs/assets/images/240px-public-images-osm_logo.png" width="50px"></a>
+  <a href="https://www.uni-leipzig.de/"><img alt="University of Leipzig" src="docs/assets/images/logo_leipzig.gif" width="19%"></a>
+  <a href="https://virtuoso.openlinksw.com/"><img alt="Virtuoso" src="docs/assets/images/openlinklogo_wstrap_190x70.png" width="19%"></a>
+  <a href="https://ontop-vkg.org/"><img alt="Ontop" src="docs/assets/images/ontop-logo.png" width="19%"></a>
+  <a href="https://github.com/SmartDataAnalytics/Sparqlify"><img alt="Sparqlify" src="docs/assets/images/sparqlify-logo.png" width="19%"></a>
 </p>
 
 
