@@ -4,21 +4,13 @@ services:
 
   lgd-db:
     env_file: .env
-#    extends:
-#      file: docker-compose.base.yml
-#      service: lgd-db-base
-    build: ./lgd-db
-    container_name: lgd-db
+    build:
+      context: ./lgd-db
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
       - PGDATA=/var/lib/postgresql/data
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - DB_SHARED_BUFFERS=${DB_SHARED_BUFFERS}
-#      - DB_EFFECTIVE_CACHE_SIZE=${DB_EFFECTIVE_CACHE_SIZE}
-#      - DB_WORK_MEM=${DB_WORK_MEM}
-#      - DB_MAINTENANCE_WORK_MEM=${DB_MAINTENANCE_WORK_MEM}
     sysctls:
       - kernel.shmmax=4294967296
     volumes:
@@ -29,19 +21,8 @@ services:
 
   lgd-nominatim-sync:
     env_file: .env
-#    extends:
-#      file: docker-compose.base.yml
-#      service: lgd-db-base
     build:
       context: ./lgd-nominatim-sync
-    container_name: lgd-nominatim-sync
-    environment:
-      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - POSTGIS_VERSION=${POSTGIS_VERSION}
-#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
       - lgd-db
     volumes:
@@ -51,41 +32,20 @@ services:
 
   lgd-nominatim-web:
     env_file: .env
-#    extends:
-#      file: docker-compose.base.yml
-#      service: lgd-db-base
     build:
       context: ./lgd-nominatim-web
-    container_name: lgd-nominatim-web
     depends_on:
       - lgd-db
     restart: always
-#    environment:
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - POSTGIS_VERSION=${POSTGIS_VERSION}
-#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     ports:
-      - 8012:80
+      - ${NOMINATIM_PORT}:80
     networks:
       - lgd-net
 
   lgd-osm-sync:
     env_file: .env
-#    extends:
-#      file: docker-compose.base.yml
-#      service: lgd-db-base
     build:
       context: ./lgd-osm-sync
-    container_name: lgd-osm-sync
-    environment:
-      - DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-#      - POSTGRES_VERSION=${POSTGRES_VERSION}
-#      - POSTGIS_VERSION=${POSTGIS_VERSION}
-#      - OSM_DATA_BASE_URL=${OSM_DATA_BASE_URL}
-#      - OSM_DATA_SYNC_URL=${OSM_DATA_SYNC_URL}
-#      - OSM_DATA_SYNC_CRUNCH_INTERVAL=${OSM_DATA_SYNC_CRUNCH_INTERVAL}
     depends_on:
       - lgd-db
     volumes:
@@ -95,21 +55,10 @@ services:
 
   lgd-sparqlify-web:
     env_file: .env
-#    extends:
-#      file: docker-compose.base.yml
-#      service: lgd-db-base
     build:
       context: ./lgd-sparqlify-web
-    container_name: lgd-sparqlify-web
-#    environment:
-#      - DB_HOST=${DB_HOST}
-#      - DB_PORT=${DB_PORT}
-#      - DB_NAME=${DB_NAME}
-#      - DB_USER=${DB_USER}
-#      - DB_PASS=${DB_PASS}
-#      - SPARQLIFY_OPTS=${SPARQLIFY_OPTS}
     ports:
-      - 8013:7531
+      - ${SPARQLIFY_PORT}:7531
     depends_on:
       - lgd-osm-sync
     networks:
@@ -127,7 +76,7 @@ services:
       - INDEX_RESOURCE=${PUBBY_INDEX_RESOURCE}
       - PORT=8080
     ports:
-      - 8021:8080
+      - ${PUBBY_PORT}:8080
     depends_on:
       - lgd-sparqlify-web
 #     - lgd-ontop-web
@@ -142,8 +91,7 @@ services:
         - ONTOP_DB_NAME=${DB_NAME}
         - ONTOP_DB_USER=${DB_USER}
         - ONTOP_DB_PASSWORD=${DB_PASS}
-        - ONTOP_DB_URL=${DB_TYPE}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-    container_name: lgd-ontop-web
+        - ONTOP_DB_URL=${DB_TYPE_JDBC}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     environment:
       - ONTOP_JAVA_ARGS=-Xmx2g
       - ONTOP_DB_NAME=${DB_NAME}
@@ -159,13 +107,14 @@ services:
       - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
 #      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
-      - 8014:8080
+      - ${ONTOP_PORT}:8080
     depends_on:
       - lgd-osm-sync
     networks:
       - lgd-net
 
 
+# possible future CKAN container for hosting downloads
 #  lgd-nominatim:
 #    build: lgd-nominatim
 #    dockerfile: Dockerfile
@@ -187,21 +136,9 @@ services:
 
 volumes:
   lgd-db-vol:
-    external:
-      name: lgd-db-vol
   lgd-osm-sync-vol:
-    external:
-      name: lgd-osm-sync-vol
   lgd-nominatim-sync-vol:
-    external:
-      name: lgd-nominatim-sync-vol
-
-
-
-#/data/docker-data/lgd-db
 
 networks:
   lgd-net:
-    external:
-      name: lgd-net
 

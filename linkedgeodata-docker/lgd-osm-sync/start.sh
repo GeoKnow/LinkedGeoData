@@ -11,12 +11,12 @@ statusKey="lgd-osm-sync:status"
 syncDir="osm/sync"
 
 
-psql "$DB_URL" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
+psql "$DB_URL_JDBC" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
 #psql "$DB_URL" -c "DELETE FROM \"status\" WHERE \"k\" = '$statusKey';"
 
-statusVal=`psql "$DB_URL" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKey'"`
+statusVal=`psql "$DB_URL_JDBC" -tc "SELECT \"v\" FROM \"status\" WHERE "k"='$statusKey'"`
 
-echo "Retrieved status value from $DB_URL for key [$statusKey] is '$statusVal'"
+echo "Retrieved status value from $DB_URL_JDBC for key [$statusKey] is '$statusVal'"
 
 mkdir -p "$syncDir"
 
@@ -42,7 +42,7 @@ if [ -z "$statusVal" ]; then
 #  lgd-createdb -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "data.osm.bpf" 
   lgd-createdb -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W "$DB_PASS" -f "$syncDir/data.osm.pbf"
 
-  psql "$DB_URL" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
+  psql "$DB_URL_JDBC" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
 fi
 
 

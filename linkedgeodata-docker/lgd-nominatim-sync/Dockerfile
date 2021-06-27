@@ -49,11 +49,6 @@ RUN echo "force rebuild b6"
 
 # Nominatim create site
 
-# FIXME Eventually get rid of the need for the .pgpass file, but the latest osm2pgsql tool fails to read password from the PGPASS environment variable
-# Alternatively, create the file dynamically within the container
-COPY target/.pgpass /root/
-RUN chmod 600 /root/.pgpass
-
 COPY local.php.dist ./src/settings/
 
 COPY setup-patched.php ./src/utils/
