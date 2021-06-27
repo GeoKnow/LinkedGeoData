@@ -29,7 +29,7 @@ The community project Linked Geo Data was started and is administered by the AKS
 University of Leipzig is a public body represented by its rector. More information, particularly regarding its supervisory body, can be found at Imprint of Universität Leipzig.
 
 
-# Haftungshinweis
+# Legal Information (German) - Haftungshinweis
 
 ## Haftung für Inhalte
 
