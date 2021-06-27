@@ -69,7 +69,7 @@ Run the query on Virtuoso or Sparqlify
 </details>
 
 <details>
-  <summary markdown="span">Get all icons associated with the schema</details>
+  <summary markdown="span">Get all icons associated with the schema</summary>
 
 ```sparql
 Prefix lgdo: <http://linkedgeodata.org/ontology/>
