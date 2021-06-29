@@ -7,9 +7,6 @@ all: target/.pgpass target/nominatim.jar target/nominatim target/osm2pgsql targe
 target:
 	mkdir -p target
 
-target/.pgpass: target ../.env
-	source ../.env && echo "$$DB_HOST:$$DB_PORT:$$DB_NAME:$$DB_USER:$$DB_PASS" > target/.pgpass
-
 target/nominatim.jar: target ../target/lib/nominatim.jar
 	$(MAKE) -C .. target/lib/nominatim.jar
 	cp ../target/lib/nominatim.jar target

@@ -241,19 +241,19 @@ Also, its only needed to build the jar that contains nominatim - once it is depl
 		<repository>
 			<id>maven.aksw.internal</id>
 			<name>University Leipzig, AKSW Maven Internal Repository</name>
-			<url>http://maven.aksw.org/repository/internal</url>
+			<url>https://maven.aksw.org/repository/internal</url>
 		</repository>
 
 		<repository>
 			<id>maven.aksw.snapshot</id>
 			<name>University Leipzig, AKSW Maven Snapshot Repository</name>
-			<url>http://maven.aksw.org/repository/snapshots</url>
+			<url>https://maven.aksw.org/repository/snapshots</url>
 		</repository>
 
-		<repository>
-			<id>org.topbraid</id>
-			<url>http://topquadrant.com/repository/spin</url>
-		</repository>
+                <repository>
+                        <id>com.topquadrant.internal</id>
+                        <url>https://www.topquadrant.com/repository/spin</url>
+                </repository>
 	</repositories>
 
 
@@ -402,16 +402,17 @@ Also, its only needed to build the jar that contains nominatim - once it is depl
 	</dependencyManagement>
 
 	<distributionManagement>
+		
 		<repository>
 			<id>maven.aksw.internal</id>
 			<name>AKSW Internal Release Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/internal</url>
+			<url>https://maven.aksw.org/archiva/repository/internal</url>
 		</repository>
 
 		<snapshotRepository>
 			<id>maven.aksw.snapshots</id>
 			<name>AKSW Snapshot Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+			<url>https://maven.aksw.org/archiva/repository/snapshots</url>
 		</snapshotRepository>
 
 	</distributionManagement>

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: all build clean
+.PHONY: all clean
 
 # We need to build the nominatim.so file
 all: target/nominatim.so target/postgresql.conf
