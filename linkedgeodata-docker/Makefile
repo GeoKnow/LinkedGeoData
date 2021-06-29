@@ -11,7 +11,8 @@ $(SUBDIRS):
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
-#all: .env
+all: .env target/lib/nominatim.jar
+
 
 .env: env.dist
 	cp -n env.dist .env
