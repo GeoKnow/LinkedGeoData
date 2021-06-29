@@ -42,5 +42,3 @@ GADM used to state the following license, which seems to have been removed (over
 
 Natural Earth is under public domain. If you use the data, please check their site on how to cite them properly.a
 
-
-
