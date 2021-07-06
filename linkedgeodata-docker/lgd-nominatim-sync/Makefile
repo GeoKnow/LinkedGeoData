@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: all clean
 
-all: target/.pgpass target/nominatim.jar target/nominatim target/osm2pgsql target/nominatim.so
+all: target/nominatim.jar target/nominatim target/osm2pgsql target/nominatim.so
 
 target:
 	mkdir -p target
