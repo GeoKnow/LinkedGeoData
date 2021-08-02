@@ -20,8 +20,6 @@ all: .env target/lib/nominatim.jar
 # We bundled nominatim as a maven artifact so we can download it by exploiting maven's repository infrastructure
 .ONESHELL:
 target/lib/nominatim.jar: pom.xml
-	mvn install
-	cd target/lib
-	rm -f nominatim.jar
-	ln -s `find -name 'linkedgeodata-nominatim-core-*.jar'` nominatim.jar
+	mvn install 
+	cd target/lib && rm -f nominatim.jar && ln -s `find . -name 'linkedgeodata-nominatim-core-*.jar'` nominatim.jar
 
