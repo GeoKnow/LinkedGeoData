@@ -1,5 +1,32 @@
 title="LinkedGeoData.org"
 
+[defaultTab]
+query="""
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX geom: <http://geovocab.org/geometry#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX lgd: <http://linkedgeodata.org/triplify/>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX lgdm: <http://linkedgeodata.org/meta/>
+PREFIX lgd-geom: <http://linkedgeodata.org/geometry/>
+
+SELECT * WHERE {
+#DESCRIBE ?x ?g WHERE {
+    ?x a lgdo:Bar ;
+		geo:hasGeometry ?g;
+	  	rdfs:label ?wktLabel .
+	?g geo:asWKT ?wkt ;    
+    FILTER(lang(?wktLabel) = "" || lang(?wktLabel) = "en")
+} 
+LIMIT 1
+"""
+
 [[tabGroups]]
 
 name="Benchmark Queries"
