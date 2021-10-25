@@ -27,6 +27,7 @@ services:
       - lgd-db
     volumes:
       - lgd-nominatim-sync-vol:/app/nominatim/src/settings
+    restart: always
     networks:
       - lgd-net
 
@@ -50,6 +51,7 @@ services:
       - lgd-db
     volumes:
       - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
+    restart: always
     networks:
       - lgd-net
 
@@ -61,6 +63,7 @@ services:
       - ${SPARQLIFY_PORT}:7531
     depends_on:
       - lgd-osm-sync
+    restart: always
     networks:
       - lgd-net
 
@@ -80,6 +83,7 @@ services:
     depends_on:
       - lgd-sparqlify-web
 #     - lgd-ontop-web
+    restart: always
     networks:
       - lgd-net
 
@@ -105,6 +109,7 @@ services:
       - ${ONTOP_PORT}:8080
     depends_on:
       - lgd-osm-sync
+    restart: always
     networks:
       - lgd-net
 
