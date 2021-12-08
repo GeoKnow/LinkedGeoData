@@ -20,10 +20,13 @@ RUN chmod +x create-properties.sh
 RUN sleep 3
 # Substitute ':' with '\:' - affects e.g. url schemas
 
-
-#RUN ONTOP_DB_NAME="lgd" ONTOP_DB_USER="lgd" ONTOP_DB_PASSWORD="lgdpwd" ONTOP_DB_URL="postgresql://lgd:lgdpwd@lgd-db:5432/lgd" ./create-properties.sh | sed 's|:|\\:|g' > input/gdm_vkg.properties
-#RUN ONTOP_DEBUG=true ONTOP_DEV_MODE=true ONTOP_DB_NAME="lgd" ONTOP_DB_USER="lgd" ONTOP_DB_PASSWORD="lgdpwd" ONTOP_DB_URL="postgresql://lgd-db:5432/lgd" ./create-properties.sh | sed 's|:|\\:|g' > input/gdm_vkg.properties
-#RUN ONTOP_DB_NAME="lgd" ONTOP_DB_USER="lgd" ONTOP_DB_PASSWORD="lgdpwd" ONTOP_DB_URL="postgresql://lgd:lgdpwd@lgd-db:5432/lgd" ./create-properties.sh | sed 's|:|\\:|g' > input/lgd.properties
+### Custom script to expand Ontop-Metamappings
+### Assumes ONTOP_OBDA_FILE= "lgd.obda"
+### Uncomment below to run
+# ADD expand-metamappings.sh input/expand-metamappings.sh
+# ADD metamappings input/metamappings
+# RUN chmod +x input/expand-metamappings.sh
+# RUN cd input && ./expand-metamappings.sh
 
 RUN ONTOP_DB_NAME="lgd" ONTOP_DB_USER="lgd" ONTOP_DB_PASSWORD="lgdpwd" ONTOP_DB_URL="postgresql://lgd-db:5432/lgd" ./create-properties.sh | sed 's|:|\\:|g' > input/lgd.properties
 

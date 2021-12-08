@@ -1,0 +1,7 @@
+http://linkedgeodata.org/frequency
+http://linkedgeodata.org/ele
+http://linkedgeodata.org/opengeodb-lon
+http://linkedgeodata.org/maxweight
+http://linkedgeodata.org/opengeodb-lat
+http://linkedgeodata.org/TMC-cid58-tabcd1-lclversion
+http://linkedgeodata.org/maxheight
