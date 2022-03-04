@@ -93,7 +93,6 @@ services:
       context: ./lgd-ontop-web
     environment:
       - ONTOP_JAVA_ARGS=-Xmx2g
-      - ONTOP_DB_NAME=${DB_NAME}
       - ONTOP_DB_USER=${DB_USER}
       - ONTOP_DB_PASSWORD=${DB_PASS}
       - ONTOP_DB_URL=jdbc:${DB_TYPE_JDBC}://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -104,7 +103,6 @@ services:
       - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
       - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
       - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
-#      - ONTOP_OPTS=${ONTOP_OPTS}
     ports:
       - ${ONTOP_PORT}:8080
     depends_on:
