@@ -40,8 +40,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 
-import jakarta.ws.rs.core.UriBuilder;
-
 public class OsmRepoCoreDaoImpl
     implements OsmRepoCoreDao
 {
@@ -81,7 +79,8 @@ public class OsmRepoCoreDaoImpl
 
     @Override
     public State getMostRecentState() throws Exception {
-        URI uri = UriBuilder.fromUri(baseUri).path("state.txt").build();
+        // URI uri = UriBuilder.fromUri(baseUri).path("state.txt").build();
+    	URI uri = new URI(baseUri + "/state.txt");
         State result = getState(uri);
         return result;
     }
@@ -89,7 +88,8 @@ public class OsmRepoCoreDaoImpl
     @Override
     public State getState(long seqId) throws Exception {
         String path = sequenceIdFormatter.apply(seqId) + ".state.txt";
-        URI uri = UriBuilder.fromUri(baseUri).path(path).build(); // path("state.txt")
+        // URI uri = UriBuilder.fromUri(baseUri).path(path).build(); // path("state.txt")
+        URI uri = new URI(baseUri + "/" + path);
         State result = getState(uri);
         return result;
     }

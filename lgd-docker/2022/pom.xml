@@ -28,6 +28,9 @@
 	</developers>
 
 	<properties>
+		<ver.slf4j>1.8.0-beta4</ver.slf4j>
+		<ver.log4j>2.17.1</ver.log4j>
+
 		<ver.nominatim>4.0.1</ver.nominatim>
 		<ver.jena>4.4.0</ver.jena>
 		<ver.jenax>4.4.0-1</ver.jenax>
@@ -146,7 +149,7 @@
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>1.6.8</version>
+					<version>1.6.12</version>
 					<extensions>true</extensions>
 					<configuration>
 						<serverId>ossrh</serverId>
@@ -253,10 +256,22 @@
 				<version>${ver.guava}</version>
 			</dependency>
 
+<!-- 			<dependency> -->
+<!-- 				<groupId>jakarta.ws.rs</groupId> -->
+<!-- 				<artifactId>jakarta.ws.rs-api</artifactId> -->
+<!-- 				<version>${ver.rs-api}</version> -->
+<!-- 			</dependency> -->
+
 			<dependency>
-				<groupId>jakarta.ws.rs</groupId>
-				<artifactId>jakarta.ws.rs-api</artifactId>
-				<version>${ver.rs-api}</version>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j18-impl</artifactId>
+				<version>${ver.log4j}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${ver.slf4j}</version>
 			</dependency>
 
 		</dependencies>
