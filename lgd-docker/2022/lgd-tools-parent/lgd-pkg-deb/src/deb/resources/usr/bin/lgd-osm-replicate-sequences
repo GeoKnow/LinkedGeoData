@@ -1,0 +1,4 @@
+#!/bin/sh
+
+java -cp "/usr/share/linkedgeodata/linkedgeodata.jar" "org.aksw.linkedgeodata.cli.command.osm.CommandOsmReplicateSequences" "$@"
+

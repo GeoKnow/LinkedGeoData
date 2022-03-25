@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/bin/bash /usr/share/linkedgeodata/lgd-createdb.sh "$@"
+
