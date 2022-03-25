@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.aksw.linkedgeodata</groupId>
+    <artifactId>lgd-docker</artifactId>
+    <parent>
+	    <groupId>org.aksw.linkedgeodata</groupId>
+	    <artifactId>lgd-parent</artifactId>
+	    <version>5.0.0-SNAPSHOT</version>
+    </parent>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.aksw.linkedgeodata</groupId>
+	    <artifactId>lgd-pkg-nominatim</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>
+                    maven-dependency-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <phase>prepare-package</phase>
+                            <!-- <phase>package</phase> -->
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- <useBaseVersion>false</useBaseVersion> -->
+                        <overWriteReleases>
+                        false</overWriteReleases>
+                        <overWriteSnapshots>
+                        true</overWriteSnapshots>
+                        <excludeTransitive>true</excludeTransitive>
+                        <includeScope>runtime</includeScope>
+                        <outputDirectory>
+                        ${project.build.directory}/lib</outputDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+</project>
