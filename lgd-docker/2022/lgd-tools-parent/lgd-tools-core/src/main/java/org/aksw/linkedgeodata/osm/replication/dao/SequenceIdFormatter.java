@@ -4,9 +4,9 @@ import java.util.function.Function;
 
 import org.apache.jena.ext.com.google.common.base.Splitter;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
-import jersey.repackaged.com.google.common.base.Joiner;
 
 public class SequenceIdFormatter
     implements Function<Long, String>

@@ -1,14 +1,14 @@
 package org.aksw.linkedgeodata.core.init;
 
+import org.aksw.jenax.arq.util.implementation.SimpleImplementation;
 import org.aksw.linkedgeodata.osm.replication.dao.State;
 import org.aksw.linkedgeodata.osm.replication.dao.StateImpl;
 import org.apache.jena.enhanced.BuiltinPersonalities;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.system.JenaSubsystemLifecycle;
+import org.apache.jena.sys.JenaSubsystemLifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.topbraid.spin.util.SimpleImplementation;
 
 public class InitJenaLinkedGeoData
     implements JenaSubsystemLifecycle
@@ -30,7 +30,7 @@ public class InitJenaLinkedGeoData
     public static void init() {
 
         BuiltinPersonalities.model
-            .add(State.class, new SimpleImplementation(State.asNode(), StateImpl.class));
+            .add(State.class, new SimpleImplementation(StateImpl::new));
     }
 
 

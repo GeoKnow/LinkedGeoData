@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,8 +24,6 @@ import java.util.Properties;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javax.ws.rs.core.UriBuilder;
 
 import org.aksw.linkedgeodata.core.init.InitJenaLinkedGeoData;
 import org.apache.commons.io.IOUtils;
@@ -38,9 +37,10 @@ import org.apache.jena.vocabulary.RDFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.codepoetics.protonpack.StreamUtils;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+
+import jakarta.ws.rs.core.UriBuilder;
 
 public class OsmRepoCoreDaoImpl
     implements OsmRepoCoreDao
@@ -181,10 +181,16 @@ public class OsmRepoCoreDaoImpl
         List<String> lines = IOUtils.readLines(in, StandardCharsets.UTF_8);
 
         Multimap<String, Entry<Long, String>> result = LinkedListMultimap.create();
-        StreamUtils.zipWithIndex(lines.stream()).forEach(indexedLine -> {
 
-            String line = indexedLine.getValue().trim();
-            long index = indexedLine.getIndex();
+        Iterator<String> it = lines.iterator();
+
+
+
+        //StreamUtils.zipWithIndex(lines.stream()).forEach(indexedLine -> {
+        long index = 0;
+        for (; it.hasNext();  ++index) {
+
+            String line = it.next().trim();
             String k;
             String v;
 
@@ -207,7 +213,7 @@ public class OsmRepoCoreDaoImpl
             result.put(k, tmp);
 
 //            return r;
-        });
+        };
 
 //        .collect(Collectors.toMap(
 //                Entry::getKey,

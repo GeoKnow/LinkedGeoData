@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>lgd-parent</artifactId>
-   	<groupId>org.aksw.linkedgeodata</groupId>
+	<groupId>org.aksw.linkedgeodata</groupId>
 	<version>5.0.0-SNAPSHOT</version>
 
 	<name>LinkedGeoData - Parent</name>
@@ -29,6 +29,12 @@
 
 	<properties>
 		<ver.nominatim>4.0.1</ver.nominatim>
+		<ver.jena>4.4.0</ver.jena>
+		<ver.jenax>4.4.0-1</ver.jenax>
+		<ver.aksw-commons>0.9.2</ver.aksw-commons>
+		<ver.guava>31.0.1-jre</ver.guava>
+		<ver.rs-api>3.0.0</ver.rs-api>
+
 		<maven.compiler.release>11</maven.compiler.release>
 
 		<java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
@@ -44,18 +50,10 @@
 	<build>
 		<plugins>
 			<!-- That's a sledge hammer solution - but at least it works ... -->
-			<!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<arguments>-P!source-artifacts</arguments>
-					<useReleaseProfile>false</useReleaseProfile>
-					<goals>-Dmaven.test.skip=true deploy</goals>
-				</configuration>
-			</plugin>
-			-->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-release-plugin</artifactId>
+				<version>2.3</version> <configuration> <arguments>-P!source-artifacts</arguments>
+				<useReleaseProfile>false</useReleaseProfile> <goals>-Dmaven.test.skip=true
+				deploy</goals> </configuration> </plugin> -->
 
 			<!--Maven Compiler Plugin -->
 			<plugin>
@@ -145,6 +143,29 @@
 					</executions>
 				</plugin>
 
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>1.6.8</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+
+				<plugin>
+					<groupId>de.jutzig</groupId>
+					<artifactId>github-release-plugin</artifactId>
+					<version>1.3.0</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -172,6 +193,49 @@
 				<artifactId>lgd-pkg-nominatim</artifactId>
 				<version>${ver.nominatim}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.linkedgeodata</groupId>
+				<artifactId>lgd-tools-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.linkedgeodata</groupId>
+				<artifactId>lgd-tools-cli</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-arq</artifactId>
+				<version>${ver.jena}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.jenax</groupId>
+				<artifactId>jenax-arq-utils</artifactId>
+				<version>${ver.jenax}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.commons</groupId>
+				<artifactId>aksw-commons-picocli</artifactId>
+				<version>${ver.aksw-commons}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${ver.guava}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jakarta.ws.rs</groupId>
+				<artifactId>jakarta.ws.rs-api</artifactId>
+				<version>${ver.rs-api}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

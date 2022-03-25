@@ -2,32 +2,37 @@ package org.aksw.linkedgeodata.cli.command.osm;
 
 import java.time.Instant;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
+import org.aksw.commons.picocli.CmdCommonBase;
 import org.aksw.linkedgeodata.osm.replication.dao.OsmRepoDao;
 import org.aksw.linkedgeodata.osm.replication.dao.OsmRepoDaoImpl;
 import org.aksw.linkedgeodata.osm.replication.dao.State;
 import org.aksw.linkedgeodata.osm.replication.dao.StateImpl;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-public class CommandOsmReplicateSequences {
 
-    @Parameter(names = {"-u", "-url"}, description = "OSM Repository base URL")
+@Command(name = "sequences", description = "Retrieve the appropriate state.txt file for a given timestamp")
+public class CmdLgdOsmReplicateSequences
+	extends CmdCommonBase
+	implements Callable<Integer>
+{
+
+    @Option(names = {"-u", "-url"}, description = "OSM Repository base URL")
     public String osmReplicationRepoBaseUrl = null;
 
-    @Parameter(names = {"-t", "-timestamp"}, description = "Timestamp")
+    @Option(names = {"-t", "-timestamp"}, description = "Timestamp")
     public String timestamp = null;
 
-    @Parameter(names = {"-d", "-duration"}, description = "Duration")
+    @Option(names = {"-d", "-duration"}, description = "Duration")
     public Boolean returnDuration = false;
     //public String cmd
 
-    public static void main(String[] args) throws Exception {
 
-        CommandOsmReplicateSequences options = new CommandOsmReplicateSequences();
-        JCommander jCommander = new JCommander(options);
-        jCommander.parse(args);
+    public Integer call() throws Exception {
+        CmdLgdOsmReplicateSequences options = this;
 
         OsmRepoDao repoDao = OsmRepoDaoImpl.create(options.osmReplicationRepoBaseUrl);
 
@@ -43,12 +48,6 @@ public class CommandOsmReplicateSequences {
             properties.store(System.out, null);
         }
 
-//        if(commandLineArgs.isHelp())
-//        {
-//            jCommander.usage();
-//            System.exit(0);
-//        }
-//
-//
+        return 0;
     }
 }
