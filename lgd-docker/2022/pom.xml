@@ -38,6 +38,9 @@
 		<ver.guava>31.0.1-jre</ver.guava>
 		<ver.rs-api>3.0.0</ver.rs-api>
 
+
+		<ver.sparqlify>0.9.1-SNAPSHOT</ver.sparqlify>
+
 		<maven.compiler.release>11</maven.compiler.release>
 
 		<java.version.javadoc>http://java.sun.com/javase/6/docs/api/</java.version.javadoc>
@@ -51,6 +54,16 @@
 	</modules>
 
 	<build>
+                <resources>
+                        <resource>
+                                <directory>src/main/resources</directory>
+                        </resource>
+                        <resource>
+                                <directory>src/main/resources-filtered</directory>
+                                <filtering>true</filtering>
+                        </resource>
+                </resources>
+
 		<plugins>
 			<!-- That's a sledge hammer solution - but at least it works ... -->
 			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-release-plugin</artifactId>
@@ -201,13 +214,13 @@
 		<repository>
 			<id>maven.aksw.internal</id>
 			<name>University Leipzig, AKSW Maven Internal Repository</name>
-			<url>http://maven.aksw.org/repository/internal</url>
+			<url>https://maven.aksw.org/repository/internal</url>
 		</repository>
 
 		<repository>
 			<id>maven.aksw.snapshot</id>
 			<name>University Leipzig, AKSW Maven Snapshot Repository</name>
-			<url>http://maven.aksw.org/repository/snapshots</url>
+			<url>https://maven.aksw.org/repository/snapshots</url>
 		</repository>
 	</repositories>
 
@@ -255,6 +268,14 @@
 				<artifactId>guava</artifactId>
 				<version>${ver.guava}</version>
 			</dependency>
+
+
+                <dependency>
+                        <groupId>org.aksw.sparqlify</groupId>
+                        <artifactId>sparqlify-cli</artifactId>
+			<version>${ver.sparqlify}</version>
+                </dependency>
+
 
 <!-- 			<dependency> -->
 <!-- 				<groupId>jakarta.ws.rs</groupId> -->

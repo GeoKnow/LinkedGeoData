@@ -3,7 +3,7 @@ Version: [[version]]
 Section: web
 Priority: optional
 Architecture: all
-Depends: java-runtime-headless
+Depends: default-jre
 Maintainer: Claus Stadler <cstadler@informatik.uni-leipzig.de>
 Description: LinkedGeoData Command Line Interfaces
 Distribution: ldstack-nightly
