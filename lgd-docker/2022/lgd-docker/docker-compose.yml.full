@@ -1,0 +1,142 @@
+version: '3.3'
+
+services:
+
+  lgd-db:
+    env_file: .env
+    build:
+      context: ./lgd-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - PGDATA=/var/lib/postgresql/data
+    sysctls:
+      - kernel.shmmax=4294967296
+    volumes:
+      - lgd-db-vol:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-nominatim-sync:
+    env_file: .env
+    build:
+      context: ./lgd-nominatim-sync
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-nominatim-sync-vol:/app/nominatim/src/settings
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-nominatim-web:
+    env_file: .env
+    build:
+      context: ./lgd-nominatim-web
+    depends_on:
+      - lgd-db
+    restart: always
+    ports:
+      - ${NOMINATIM_PORT}:80
+    networks:
+      - lgd-net
+
+  lgd-osm-sync:
+    env_file: .env
+    build:
+      context: ./lgd-osm-sync
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-sparqlify-web:
+    env_file: .env
+    build:
+      context: ./lgd-sparqlify-web
+    ports:
+      - ${SPARQLIFY_PORT}:7531
+    depends_on:
+      - lgd-osm-sync
+    restart: always
+    networks:
+      - lgd-net
+
+
+  lgd-pubby-web:
+    image: aksw/dld-present-pubby
+    env_file: .env
+    environment:
+      - STORE_SPARQL_ENDPOINT_URL=${PUBBY_ENDPOINT_URL}
+      - STORE_MAIN_GRAPH=${PUBBY_DEFAULT_GRAPH}
+      - DATASET_BASE=${PUBBY_DATASET_BASE}
+      - WEB_BASE=${PUBBY_WEB_BASE}
+      - INDEX_RESOURCE=${PUBBY_INDEX_RESOURCE}
+      - PORT=8080
+    ports:
+      - ${PUBBY_PORT}:8080
+    depends_on:
+      - lgd-sparqlify-web
+#     - lgd-ontop-web
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-ontop-web:
+    env_file: .env
+    build:
+      context: ./lgd-ontop-web
+    environment:
+      - ONTOP_JAVA_ARGS=-Xmx2g
+      - ONTOP_DB_USER=${DB_USER}
+      - ONTOP_DB_PASSWORD=${DB_PASS}
+      - ONTOP_DB_URL=jdbc:${DB_TYPE_JDBC}://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - ONTOP_DB_DRIVER=org.postgresql.Driver
+      - ONTOP_DEBUG=true
+      - ONTOP_DEV_MODE=true
+      - ONTOP_MAPPING_FILE=/opt/ontop/input/lgd.obda
+      - ONTOP_ONTOLOGY_FILE=/opt/ontop/input/lgd.owl
+      - ONTOP_XML_CATALOG_FILE=/opt/ontop/input/catalog-v001.xml
+      - ONTOP_PORTAL_FILE=/opt/ontop/input/lgd.portal.toml
+    ports:
+      - ${ONTOP_PORT}:8080
+    depends_on:
+      - lgd-osm-sync
+    restart: always
+    networks:
+      - lgd-net
+
+
+# possible future CKAN container for hosting downloads
+#  lgd-nominatim:
+#    build: lgd-nominatim
+#    dockerfile: Dockerfile
+#    container_name: lgd-nominatim
+#    restart: always
+#    depends_on:
+#      - lgd-db
+#    environment:
+#      - DATABASE_URL=postgresql://ckan:ckan@ckan-db:5432/ckan
+#      - SOLR_URL=http://ckan-solr:8983/solr/ckan
+#      - RECAPTCHA_PUBLIC_KEY=CHANGE_ME
+#      - RECAPTCHA_PRIVATE_KEY=CHANGE_ME
+#      - SITE_URL=http://ckan.vhost.tld
+#      - VIRTUAL_HOST=ckan.vhost.tld
+    #volumes:
+      #- /tmp/ckan-uploads:/var/lib/ckan
+#    networks:
+#      - lgd-net
+
+volumes:
+  lgd-db-vol:
+  lgd-osm-sync-vol:
+  lgd-nominatim-sync-vol:
+
+networks:
+  lgd-net:
+
