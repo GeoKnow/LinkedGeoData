@@ -1,32 +1,38 @@
-.PHONY: all
+.PHONY: all help
+
+NOMINATIM_VERSION = 4.0.1
 
 .ONESHELL:
-all: target/nominatim.so target/osm2pgsql
+all: target/nominatim.so target/osm2pgsql target/nominatim ## Build all target artifacts using a docker container
 
-target:
+target: ## Create the target directory for artifacts
 	mkdir -p target
 
-target/nominatim.jar: ../target/lib/nominatim.jar | target
+target/nominatim.jar: ../target/lib/nominatim.jar | target ## Setup the nominatim bundle using a goal in the parent makefile
 	$(MAKE) -C .. target/lib/nominatim.jar
 	cp ../target/lib/nominatim.jar target
 
-target/delete-me-to-unsuppress-docker-build: target/nominatim.jar target/country_osm_grid.sql.gz Dockerfile | target
-	docker build -t lgd-nominatim-build .
+target/delete-me-to-unsuppress-docker-build: target/nominatim.jar target/country_osm_grid.sql.gz Dockerfile | target ## (Re-)build the docker image on modification of certain resources
+	docker build -t lgd-build-nominatim:$(NOMINATIM_VERSION) .
 	touch target/delete-me-to-unsuppress-docker-build
 
-target/country_osm_grid.sql.gz: | target
+target/country_osm_grid.sql.gz: | target ## Download of auxiliary data needed by nominatim
 	wget -O target/country_osm_grid.sql.gz.tmp https://www.nominatim.org/data/country_grid.sql.gz
 	mv target/country_osm_grid.sql.gz.tmp target/country_osm_grid.sql.gz
 
-target/nominatim.so: target/delete-me-to-unsuppress-docker-build
+target/nominatim.so: target/delete-me-to-unsuppress-docker-build ## Build the nominatim shared library for use with postgresql
 	docker run --rm --entrypoint cat lgd-nominatim-build /app/nominatim/module/nominatim.so > target/nominatim.so
 
-target/osm2pgsql: target/delete-me-to-unsuppress-docker-build
+target/osm2pgsql: target/delete-me-to-unsuppress-docker-build ## Build osm2pgsql
 	docker run --rm --entrypoint cat lgd-nominatim-build /app/nominatim/osm2pgsql/osm2pgsql > target/osm2pgsql
 
-#target/nominatim: target/delete-me-to-unsuppress-docker-build
-#	docker run --rm --entrypoint cat lgd-nominatim-build /app/nominatim/src/nominatim/nominatim > target/nominatim
+target/nominatim: target/delete-me-to-unsuppress-docker-build ## Build the nominatim executable
+	docker run --rm --entrypoint cat lgd-nominatim-build /app/nominatim/nominatim > target/nominatim
 
-clean:
+clean: ## Delete the target folder and its contained artifacts
 	rm -rf target
+
+help:  ## Show these help instructions
+	@sed -rn 's/^([a-zA-Z_./| -]+):.*?## (.*)$$/"\1" "\2"/p' < $(MAKEFILE_LIST) | xargs printf "make %-30s # %s\n"
+
 

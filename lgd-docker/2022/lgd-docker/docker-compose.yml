@@ -1,0 +1,41 @@
+version: '3.3'
+
+services:
+
+  lgd-db:
+    env_file: .env
+    build:
+      context: ./lgd-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - PGDATA=/var/lib/postgresql/data
+    sysctls:
+      - kernel.shmmax=4294967296
+    volumes:
+      - lgd-db-vol:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - lgd-net
+
+  lgd-nominatim-sync:
+    env_file: .env
+    build:
+      context: ./lgd-nominatim-sync
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-nominatim-sync-vol:/app/nominatim/src/settings
+    restart: always
+    networks:
+      - lgd-net
+
+volumes:
+  lgd-db-vol:
+  lgd-osm-sync-vol:
+  lgd-nominatim-sync-vol:
+
+networks:
+  lgd-net:
+

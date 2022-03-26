@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Implicitly export all variables
-set -a
+# Implicitly export (a)ll variables; (e)rrors in pipe cause termination
+set -ae
 
 # Note: This script restarts itself under the postgres user if needed
 

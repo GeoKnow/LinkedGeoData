@@ -15,7 +15,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 
-@Command(name = "sequences", description = "Retrieve the appropriate state.txt file for a given timestamp")
+@Command(name = "replicate-sequences", description = "Retrieve the appropriate state.txt file for a given timestamp")
 public class CmdLgdOsmReplicateSequences
 	extends CmdCommonBase
 	implements Callable<Integer>
