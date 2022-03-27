@@ -9,8 +9,8 @@ if [ ! -f "$NOMINATIM_ENV" ]; then
 	echo 'NOMINATIM_FLATNODE_FILE=flatnode.file' > "$NOMINATIM_ENV"
 fi
 
-: ${DB_URL_PDO:=${NOMINATIM_DATABASE_DSN}}
-: ${NOMINATIM_DATABASE_DSN:=${DB_URL_PDO}}
+: ${DB_DSN_PDO:=${NOMINATIM_DATABASE_DSN}}
+: ${NOMINATIM_DATABASE_DSN:=${DB_DSN_PDO}}
 
 echo "lgd-nominatim-sync environment:"
 env | grep -Ei "^(osm|db|post|pg)"
@@ -27,7 +27,7 @@ statusKey="nominatim:status"
 syncDir="settings"
 
 # Remove the tiger geocoder extension
-# psql "$DB_URL_JDBC" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
+psql "$DB_URL_JDBC" -c "DROP EXTENSION IF EXISTS postgis_tiger_geocoder"
 
 
 psql "$DB_URL_JDBC" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"
@@ -41,7 +41,7 @@ mkdir -p "$syncDir"
 
 # If there is a sync URL we can automatically determine the update interval
 if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
-  OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+  OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
 fi
 
 export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-""}
@@ -49,21 +49,25 @@ export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-"$OSM_DA
 
 
 cat ./settings/configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
-cat ./settings/local.php.dist | envsubst > ./settings/local.php
 
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then 
 
+  # Download data
   rm -f "$syncDir/data.osm.pbf"
   curl -L "$OSM_DATA_BASE_URL" --create-dirs -o "$syncDir/data.osm.pbf"
 
-	./nominatim import --osm-file "$syncDir/data.osm.pbf"
+  # Create www-data user
+  PGPASSWORD="$DB_PASS" createuser -U "$DB_USER" -h "$DB_HOST" www-data || true
+
+  ./nominatim import --osm-file "$syncDir/data.osm.pbf"
+  ./nominatim special-phrases --import-from-wiki
 
 	# ./utils/setup-patched.php --osm-file "$syncDir/data.osm.pbf" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2
 
 # TODO osmosis init
 
-    psql "$DB_URL_JDBC" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
+  psql "$DB_URL_JDBC" -c "INSERT INTO \"status\"(\"k\", \"v\") VALUES('$statusKey', 'loaded')"
 
 fi
 
@@ -74,7 +78,8 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
     lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
   fi
 
-  ./utils/update-patched.php --import-osmosis-all --no-npi
+  # ./utils/update-patched.php --import-osmosis-all --no-npi
+  echo "Replication not yet implemented"
 else
   echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi

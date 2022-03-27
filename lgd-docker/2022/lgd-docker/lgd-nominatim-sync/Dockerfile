@@ -5,6 +5,8 @@ COPY target/lgd-tools.deb .
 RUN dpkg -i lgd-tools.deb || true
 RUN apt-get install -y -f
 
+COPY configuration.txt.dist ./settings/
+
 COPY start.sh .
 COPY wait-for-postgres.sh .
 

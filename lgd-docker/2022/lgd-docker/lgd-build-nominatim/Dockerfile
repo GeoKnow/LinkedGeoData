@@ -27,6 +27,9 @@ COPY target/nominatim.jar .
 RUN unzip nominatim.jar
 RUN mv Nominatim src
 
+COPY database_import.py.patch .
+RUN patch src/nominatim/tools/database_import.py database_import.py.patch
+
 COPY target/country_osm_grid.sql.gz src/data/
 
 RUN cmake src

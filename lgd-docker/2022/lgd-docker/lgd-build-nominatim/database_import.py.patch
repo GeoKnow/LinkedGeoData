@@ -1,0 +1,10 @@
+47c47
+<     proc = subprocess.run(['createdb'], env=get_pg_env(dsn), check=False)
+---
+> #    proc = subprocess.run(['createdb'], env=get_pg_env(dsn), check=False)
+49,50c49,50
+<     if proc.returncode != 0:
+<         raise UsageError('Creating new database failed.')
+---
+> #    if proc.returncode != 0:
+> #        raise UsageError('Creating new database failed.')
