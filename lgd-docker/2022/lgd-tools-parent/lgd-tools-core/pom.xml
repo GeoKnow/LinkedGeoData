@@ -16,6 +16,11 @@
 	<!-- <build> <finalName>linkedgeodata-core</finalName> </build> -->
 
 	<dependencies>
+                <dependency>
+                        <groupId>org.apache.linkedgeodata</groupId>
+                        <artifactId>lgd-tool-resources</artifactId>
+                </dependency>
+
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-arq</artifactId>

@@ -233,6 +233,12 @@
 				<version>${ver.nominatim}</version>
 			</dependency>
 
+                        <dependency>
+                                <groupId>org.aksw.linkedgeodata</groupId>
+                                <artifactId>lgd-tools-resources</artifactId>
+                                <version>${project.version}</version>
+                        </dependency>
+
 			<dependency>
 				<groupId>org.aksw.linkedgeodata</groupId>
 				<artifactId>lgd-tools-core</artifactId>

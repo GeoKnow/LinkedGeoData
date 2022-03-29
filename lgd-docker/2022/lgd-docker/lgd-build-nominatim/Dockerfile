@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php-cgi \
 
 # lgd-osm-sync
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
-    wget curl osmosis gettext-base osmctools default-jre
+    wget curl osmosis gettext-base osmctools default-jre-headless
 
 WORKDIR /app/nominatim
 

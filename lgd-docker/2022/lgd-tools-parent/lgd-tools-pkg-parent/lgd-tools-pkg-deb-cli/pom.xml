@@ -71,6 +71,7 @@
 										<!-- </mapper> -->
 										<!-- </data> -->
 
+<!--
 										<data>
 											<type>directory</type>
 											<src>${basedir}/src/deb/resources/usr/bin</src>
@@ -80,6 +81,7 @@
 												<filemode>755</filemode>
 											</mapper>
 										</data>
+-->
 
 										<data>
 											<type>file</type>
@@ -99,6 +101,38 @@
 												<filemode>755</filemode>
 											</mapper>
 										</data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../../sml</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/share/${deb.packageName}/sml</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../../sql</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/share/${deb.packageName}/sql</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../../bin</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/bin</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+
 
 										<data>
 											<type>link</type>
@@ -127,7 +161,34 @@
 
 
 	<build>
-		<plugins>
+                <plugins>
+
+
+<plugin>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>3.0.2</version>
+    <executions>
+        <execution>
+            <id>copy-resource-one</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/test</outputDirectory>
+                <resources>
+                    <resource>
+                        <directory>../../../bin/</directory>
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

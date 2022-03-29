@@ -1,0 +1,4 @@
+dbJdbcUrl=jdbc:postgresql://localhost:5432/lgd
+dbUser="postgres"
+dbPass="postgres"
+

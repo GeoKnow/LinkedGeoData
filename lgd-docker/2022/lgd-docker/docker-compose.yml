@@ -31,6 +31,18 @@ services:
     networks:
       - lgd-net
 
+  lgd-osm-sync:
+    env_file: .env
+    build:
+      context: ./lgd-osm-sync
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
+    restart: always
+    networks:
+      - lgd-net
+
 volumes:
   lgd-db-vol:
   lgd-osm-sync-vol:

@@ -15,4 +15,35 @@
     <dependencies>
     </dependencies>
 
+<build>
+<plugins>
+<plugin>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>3.0.2</version>
+    <executions>
+        <execution>
+            <id>copy-resource-one</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                <resources>
+                    <resource>
+                        <directory>../../</directory>
+                        <includes>
+                            <include>sql/*</include>
+			<include>sml/*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+</plugins>
+</build>
+
+
 </project>
