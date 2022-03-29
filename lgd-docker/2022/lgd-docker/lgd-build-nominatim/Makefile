@@ -13,7 +13,11 @@ target/nominatim.jar: | target ## Setup the nominatim bundle using a goal in the
 	$(MAKE) -C .. target/lib/nominatim.jar
 	cp ../target/lib/nominatim.jar target
 
-target/delete-me-to-unsuppress-docker-build: target/nominatim.jar target/country_osm_grid.sql.gz Dockerfile | target ## (Re-)build the docker image on modification of certain resources
+target/lgd-tools.deb: | target ## Prepare the lgd deb package
+	$(MAKE) -C ../.. target/lgd-tools.deb
+	mv ../../target/lgd-tools.deb target/
+
+target/delete-me-to-unsuppress-docker-build: Dockerfile target/nominatim.jar target/country_osm_grid.sql.gz target/lgd-tools.deb | target ## (Re-)build the docker image on modification of certain resources
 	docker build -t $(NOMINATIM_IMG) .
 	touch target/delete-me-to-unsuppress-docker-build
 
@@ -22,13 +26,13 @@ target/country_osm_grid.sql.gz: | target ## Download of auxiliary data needed by
 	mv target/country_osm_grid.sql.gz.tmp target/country_osm_grid.sql.gz
 
 target/nominatim.so: target/delete-me-to-unsuppress-docker-build ## Build the nominatim shared library for use with postgresql
-	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /app/nominatim/module/nominatim.so > target/nominatim.so
+	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /lgd/nominatim/module/nominatim.so > target/nominatim.so
 
 target/osm2pgsql: target/delete-me-to-unsuppress-docker-build ## Build osm2pgsql
-	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /app/nominatim/osm2pgsql/osm2pgsql > target/osm2pgsql
+	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /lgd/nominatim/osm2pgsql/osm2pgsql > target/osm2pgsql
 
 target/nominatim: target/delete-me-to-unsuppress-docker-build ## Build the nominatim executable
-	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /app/nominatim/nominatim > target/nominatim
+	docker run --rm --entrypoint cat $(NOMINATIM_IMG) /lgd/nominatim/nominatim > target/nominatim
 
 clean: ## Delete the target folder and its contained artifacts
 	rm -rf target

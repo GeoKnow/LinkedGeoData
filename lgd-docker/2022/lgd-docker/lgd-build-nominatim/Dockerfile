@@ -17,11 +17,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php-cgi \
     python3-icu python3-datrie \
     unzip
 
-# lgd-osm-sync
+# deps for lgd-osm-sync
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
     wget curl osmosis gettext-base osmctools default-jre-headless
 
-WORKDIR /app/nominatim
+
+WORKDIR /lgd/setup
+
+COPY target/lgd-tools.deb .
+RUN dpkg -i lgd-tools.deb
+
+WORKDIR /lgd/nominatim
 
 COPY target/nominatim.jar .
 RUN unzip nominatim.jar

@@ -17,8 +17,8 @@
 
 	<dependencies>
                 <dependency>
-                        <groupId>org.apache.linkedgeodata</groupId>
-                        <artifactId>lgd-tool-resources</artifactId>
+                        <groupId>org.aksw.linkedgeodata</groupId>
+                        <artifactId>lgd-tools-resources</artifactId>
                 </dependency>
 
 		<dependency>

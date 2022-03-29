@@ -71,7 +71,6 @@
 										<!-- </mapper> -->
 										<!-- </data> -->
 
-<!--
 										<data>
 											<type>directory</type>
 											<src>${basedir}/src/deb/resources/usr/bin</src>
@@ -81,7 +80,6 @@
 												<filemode>755</filemode>
 											</mapper>
 										</data>
--->
 
 										<data>
 											<type>file</type>

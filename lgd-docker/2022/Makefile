@@ -3,7 +3,7 @@ TOPTARGETS := all clean
 
 SUBDIRS := $(wildcard */.)
 
-$(TOPTARGETS): target/lgd-tools.deb $(SUBDIRS)
+$(TOPTARGETS): $(SUBDIRS)
 
 # Invoke 'make' on every subfolder that contains a Makefile (and is not called 'target')
 $(SUBDIRS):
@@ -12,8 +12,11 @@ $(SUBDIRS):
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
 .ONESHELL:
-all: target/lgd.deb ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
+all: target/lgd-tools.deb ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
 
+
+clean: ## Remove all files under 'target'
+	rm -rf target
 
 target/lgd-tools.deb: pom.xml ## Build the LGD debian package used by the sync containers from this lgd's java code
 	mvn -Pdeb clean install

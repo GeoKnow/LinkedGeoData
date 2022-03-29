@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y postgresql-14-postgis-
 
 # TODO We actually just need the postgres client stuff, together with some postgis sql scripts - so no full db server needed
 
-WORKDIR /app/linkedgeodata
+WORKDIR /lgd/osmosis
 
 # TODO install lgd the deb package here
 

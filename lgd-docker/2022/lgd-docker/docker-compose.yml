@@ -26,26 +26,26 @@ services:
     depends_on:
       - lgd-db
     volumes:
-      - lgd-nominatim-sync-vol:/app/nominatim/src/settings
+      - lgd-nominatim-sync-vol:/lgd/nominatim/src/settings
     restart: always
     networks:
       - lgd-net
 
-  lgd-osm-sync:
-    env_file: .env
-    build:
-      context: ./lgd-osm-sync
-    depends_on:
-      - lgd-db
-    volumes:
-      - lgd-osm-sync-vol:/app/linkedgeodata/osm/sync
-    restart: always
-    networks:
-      - lgd-net
+#  lgd-osmosis-sync:
+#    env_file: .env
+#    build:
+#      context: ./lgd-osmosis-sync
+#    depends_on:
+#      - lgd-db
+#    volumes:
+#      - lgd-osmosis-sync-vol:/lgd/osmosis/sync
+#    restart: always
+#    networks:
+#      - lgd-net
 
 volumes:
   lgd-db-vol:
-  lgd-osm-sync-vol:
+  lgd-osmosis-sync-vol:
   lgd-nominatim-sync-vol:
 
 networks:
