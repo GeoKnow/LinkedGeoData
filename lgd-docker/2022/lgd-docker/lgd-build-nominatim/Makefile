@@ -13,11 +13,11 @@ target/nominatim.jar: | target ## Setup the nominatim bundle using a goal in the
 	$(MAKE) -C .. target/lib/nominatim.jar
 	cp ../target/lib/nominatim.jar target
 
-target/lgd-tools.deb: | target ## Prepare the lgd deb package
-	$(MAKE) -C ../.. target/lgd-tools.deb
-	mv ../../target/lgd-tools.deb target/
+target/linkedgeodata.deb: | target ## Prepare the lgd deb package
+	$(MAKE) -C ../.. target/linkedgeodata.deb
+	mv ../../target/linkedgeodata.deb target/
 
-target/delete-me-to-unsuppress-docker-build: Dockerfile target/nominatim.jar target/country_osm_grid.sql.gz target/lgd-tools.deb | target ## (Re-)build the docker image on modification of certain resources
+target/delete-me-to-unsuppress-docker-build: Dockerfile target/nominatim.jar target/country_osm_grid.sql.gz target/linkedgeodata.deb | target ## (Re-)build the docker image on modification of certain resources
 	docker build -t $(NOMINATIM_IMG) .
 	touch target/delete-me-to-unsuppress-docker-build
 

@@ -2,15 +2,15 @@ SHELL := /bin/bash
 
 .PHONY: all clean
 
-all: target/lgd-tools.deb
+all: target/linkedgeodata.deb
 
 
 target:
 	mkdir -p target
 
-target/lgd-tools.deb: | target ## Setup the lgd tools debian package
-	$(MAKE) -C ../.. target/lgd-tools.deb
-	cp ../../target/lgd-tools.deb target
+target/linkedgeodata.deb: | target ## Setup the lgd tools debian package
+	$(MAKE) -C ../.. target/linkedgeodata.deb
+	cp ../../target/linkedgeodata.deb target
 	
 clean:
 	rm -rf target

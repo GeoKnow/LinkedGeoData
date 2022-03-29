@@ -12,17 +12,17 @@ $(SUBDIRS):
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
 .ONESHELL:
-all: target/lgd-tools.deb ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
+all: target/linkedgeodata.deb ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
 
 
 clean: ## Remove all files under 'target'
 	rm -rf target
 
-target/lgd-tools.deb: pom.xml ## Build the LGD debian package used by the sync containers from this lgd's java code
+target/linkedgeodata.deb: pom.xml ## Build the LGD debian package used by the sync containers from this lgd's java code
 	mvn -Pdeb clean install
-	file=`find . -name 'linkedgeodata-cli_*.deb'`
+	file=`find lgd-pkg-parent -name 'linkedgeodata_*.deb'`
 	mkdir -p target
-	mv "$$file" target/lgd-tools.deb
+	cp "$$file" target/linkedgeodata.deb # use ln -s ?
 
 # Ugliness: We should not depend on the existence of the target folder in the rule below:
 # We should touch a file if the artifact already is in the local m2 repo

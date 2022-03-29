@@ -1,0 +1,12 @@
+Package: [[deb.packageName]]
+Version: [[version]]
+Section: web
+Priority: optional
+Architecture: all
+Depends: default-jre-headless
+Maintainer: Claus Stadler <cstadler@informatik.uni-leipzig.de>
+Description: LinkedGeoData Command Line Interfaces
+Distribution: ldstack-nightly
+Homepage: http://linkedgeodata.org/
+Vcs-Git: git@github.com:GeoKnow/LinkedGeoData.git
+Vcs-Browser: https://github.com/GeoKnow/LinkedGeoData

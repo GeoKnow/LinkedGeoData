@@ -24,8 +24,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
 
 WORKDIR /lgd/setup
 
-COPY target/lgd-tools.deb .
-RUN dpkg -i lgd-tools.deb
+COPY target/linkedgeodata.deb .
+RUN dpkg -i linkedgeodata.deb
 
 WORKDIR /lgd/nominatim
 

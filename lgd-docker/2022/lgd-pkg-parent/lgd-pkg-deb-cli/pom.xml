@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.aksw.linkedgeodata</groupId>
+		<artifactId>lgd-pkg-parent</artifactId>
+		<version>5.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>lgd-pkg-deb-cli</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<deb.packageName>linkedgeodata</deb.packageName>
+		<deb.jarFile>${project.artifactId}-${project.version}.jar</deb.jarFile>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aksw.linkedgeodata</groupId>
+			<artifactId>lgd-tools-cli</artifactId>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>deb</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+					</plugin>
+
+					<plugin>
+						<artifactId>jdeb</artifactId>
+						<groupId>org.vafer</groupId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jdeb</goal>
+								</goals>
+								<configuration>
+									<deb>${project.build.directory}/${deb.packageName}_[[version]]_all.deb</deb>
+									<changesOut>${project.build.directory}/${deb.packageName}_[[version]]_all.changes</changesOut>
+
+									<!-- <timestamped>true</timestamped> -->
+									<snapshotExpand>true</snapshotExpand>
+									<snapshotEnv />
+
+									<signPackage>${jdeb.signPackage}</signPackage>
+									<signMethod>dpkg-sig</signMethod>
+									<signRole>builder</signRole>
+									<keyring>${jdeb.keyring}</keyring>
+									<key>${jdeb.key}</key>
+									<passphrase>${jdeb.passphrase}</passphrase>
+
+									<dataSet>
+
+										<!-- Uncomment for including an existing etc folder -->
+										<!-- <data> -->
+										<!-- <type>directory</type> -->
+										<!-- <src>${basedir}/src/deb/resources/etc</src> -->
+										<!-- <mapper> -->
+										<!-- <type>perm</type> -->
+										<!-- <prefix>/etc</prefix> -->
+										<!-- </mapper> -->
+										<!-- </data> -->
+
+										<data>
+											<type>directory</type>
+											<src>${basedir}/src/deb/resources/usr/bin</src>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/bin</prefix>
+												<filemode>755</filemode>
+											</mapper>
+										</data>
+
+										<data>
+											<type>file</type>
+											<src>${project.build.directory}/${deb.jarFile}</src>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/${deb.packageName}</prefix>
+											</mapper>
+										</data>
+
+										<data>
+											<type>directory</type>
+											<src>${project.build.directory}/lib</src>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/${deb.packageName}/lib</prefix>
+												<filemode>755</filemode>
+											</mapper>
+										</data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../sml</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/share/${deb.packageName}/sml</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../sql</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/share/${deb.packageName}/sql</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+                                                                                <data>
+                                                                                        <type>directory</type>
+                                                                                        <src>${basedir}/../../bin</src>
+                                                                                        <mapper>
+                                                                                                <type>perm</type>
+                                                                                                <prefix>/usr/share/${deb.packageName}/bin</prefix>
+                                                                                                <filemode>755</filemode>
+                                                                                        </mapper>
+                                                                                </data>
+
+
+
+										<data>
+											<type>link</type>
+											<symlink>true</symlink>
+											<linkName>/usr/share/${deb.packageName}/${deb.packageName}.jar</linkName>
+											<linkTarget>/usr/share/${deb.packageName}/${deb.jarFile}</linkTarget>
+										</data>
+
+									</dataSet>
+
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+	<build>
+                <plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<configuration>
+					<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
+

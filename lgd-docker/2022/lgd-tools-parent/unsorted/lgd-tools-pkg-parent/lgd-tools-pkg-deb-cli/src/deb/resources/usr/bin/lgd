@@ -1,0 +1,8 @@
+#!/bin/sh
+
+LIB_DIR="/usr/share/linkedgeodata-cli/"
+MAIN_CLASS="org.aksw.linkedgeodata.cli.main.MainCliLinkedGeoData"
+
+# EXTRA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.invoke=ALL-UNNAMED"
+java $EXTRA_OPTS $JAVA_OPTS -cp "$LIB_DIR:$LIB_DIR/lib/*" "$MAIN_CLASS" "$@"
+
