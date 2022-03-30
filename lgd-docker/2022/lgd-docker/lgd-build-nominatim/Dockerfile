@@ -19,8 +19,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php-cgi \
 
 # deps for lgd-osm-sync
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
-    wget curl osmosis gettext-base osmctools default-jre-headless
+    wget curl gettext-base osmctools postgresql-client-14 default-jre-headless
 
+
+# Temporarily comment out the exclude for the doc folder
+# The osmosis package puts its sql scripts there
+RUN sed -i -E 's|^(path-exclude=/usr/share/doc/\*)$|#\1|g' /etc/dpkg/dpkg.cfg.d/excludes
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y osmosis
+
+RUN sed -i -E 's|^#(path-exclude=/usr/share/doc/\*)$|\1|g' /etc/dpkg/dpkg.cfg.d/excludes
 
 WORKDIR /lgd/setup
 

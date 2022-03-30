@@ -23,7 +23,7 @@ mkdir -p "$syncDir"
 
 # If there is a sync URL we can automatically determine the update interval
 if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
-  OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
+  OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
 fi
 
 export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-""}
@@ -49,11 +49,11 @@ fi
 if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
   timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
   if [ ! -f "$syncDir/state.txt" ]; then
-    lgd-osm-replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
+    lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
   fi
 
   cd osm
-  /usr/share/linkedgeodata/lgd-run-sync.sh
+  /usr/share/linkedgeodata/bin/lgd-run-sync.sh
 else
   echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi

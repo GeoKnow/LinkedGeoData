@@ -27,21 +27,21 @@ services:
       - lgd-db
     volumes:
       - lgd-nominatim-sync-vol:/lgd/nominatim/src/settings
-    restart: always
+    restart: on-failure
     networks:
       - lgd-net
 
-#  lgd-osmosis-sync:
-#    env_file: .env
-#    build:
-#      context: ./lgd-osmosis-sync
-#    depends_on:
-#      - lgd-db
-#    volumes:
-#      - lgd-osmosis-sync-vol:/lgd/osmosis/sync
-#    restart: always
-#    networks:
-#      - lgd-net
+  lgd-osmosis-sync:
+    env_file: .env
+    build:
+      context: ./lgd-osmosis-sync
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-osmosis-sync-vol:/lgd/osmosis/sync
+    restart: on-failure
+    networks:
+      - lgd-net
 
 volumes:
   lgd-db-vol:

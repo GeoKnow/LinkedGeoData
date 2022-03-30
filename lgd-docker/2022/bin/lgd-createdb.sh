@@ -154,7 +154,7 @@ echoerr "  Password already configured: $passLineExists"
 echoerr ""
 echoerr "Paths"
 echoerr "  Osmosis SQL files: $osmosisSqlPath"
-echoerr "  PostGIS files: $postgisPath"
+#echoerr "  PostGIS files: $postgisPath"
 echoerr "  LGD-SQL files: $lgdSqlPath"
 echoerr ""
 echoerr "Dataset"
@@ -199,10 +199,10 @@ if [ $passLineExists -eq 0 ]; then
 fi
 
 
-createdb -h "$dbHost" -U "$dbUser" "$dbName"
+createdb -h "$dbHost" -U "$dbUser" "$dbName" || true
 createlang -h "$dbHost" -U "$dbUser" plpgsql "$dbName"
-psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/postgis.sql"
-psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/spatial_ref_sys.sql"
+#psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/postgis.sql"
+#psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/spatial_ref_sys.sql"
 
 psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6.sql"
 psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6_linestring.sql"
@@ -251,32 +251,34 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sq
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
 
 
+# TODO The old lgd setup bundled up a nomintim template and allowed this script to make use of it
+# Should be restore this behavior or keep it separate?
 # Perform Nominatim upgrade
 
 if ! [ "$noNominatim" = true ]; then
 
   # Create a copy of the nominatim setup
-  nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
+#  nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
 
-  nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
+#  nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
 
-  echoerr "Creating copy of nominatim at $nominatimFolder"
+#  echoerr "Creating copy of nominatim at $nominatimFolder"
 
-  cp -rf "$nominatimSource"/* "$nominatimFolder"
+#  cp -rf "$nominatimSource"/* "$nominatimFolder"
 
 
   #cd "$nominatimFolder"
 
   #Update settings
-  export POSTGRES_VERSION=9.5
-  export POSTGIS_VERSION=2.3
-  export DB_URL="pgsql://$dbUser:$dbPass@$dbHost:$dbPort/$dbName"
+#  export POSTGRES_VERSION=9.5
+#  export POSTGIS_VERSION=2.3
+#  export DB_URL="pgsql://$dbUser:$dbPass@$dbHost:$dbPort/$dbName"
 
-  cat "$nominatimFolder/settings/local.php.dist" | envsubst > "$nominatimFolder/settings/local.php"
+#  cat "$nominatimFolder/settings/local.php.dist" | envsubst > "$nominatimFolder/settings/local.php"
 
-  (cd "$nominatimFolder" && ./utils/setup-patched.php --osm-file "$osmFile" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2)
+#  (cd "$nominatimFolder" && ./utils/setup-patched.php --osm-file "$osmFile" --import-data --setup-db --create-functions --create-tables --create-partition-tables --create-partition-functions --import-wikipedia-articles --load-data --calculate-postcodes --index --create-search-indices --threads 2)
 
-  psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3-Nominatim.sql"
+#  psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3-Nominatim.sql"
 
 fi
 
