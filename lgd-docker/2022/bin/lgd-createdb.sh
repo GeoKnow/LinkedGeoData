@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_FILE="$(realpath "${BASH_SOURCE:-$0}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_FILE")"
+
 #
 # Script for creating a LinkedGeoData database on Postgres
 #
@@ -38,8 +41,10 @@ where:
 #
 configFiles[0]="/etc/linkedgeodata/lgd.conf.dist"
 configFiles[1]="/etc/linkedgeodata/lgd.conf"
-configFiles[2]="./lgd.conf.dist"
-configFiles[3]="./lgd.conf"
+configFiles[2]="$SCRIPT_DIR/lgd.conf.dist"
+configFiles[3]="./lgd.conf.dist"
+configFiles[4]="./lgd.conf"
+
 
 for configFile in "${configFiles[@]}"; do
         [ -f "$configFile" ] && source "$configFile"
@@ -239,7 +244,7 @@ lgdTmpDir="/tmp/linkedgeodata"
 
 rm -rf "$lgdTmpDir"
 mkdir -p "$lgdTmpDir"
-"$lgdPrepareInterlinksCmd" > "$lgdTmpDir/interlinks.sql"
+#"$lgdPrepareInterlinksCmd" > "$lgdTmpDir/interlinks.sql"
 
 # LGD Modifications
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Physical Schema.sql"
@@ -247,7 +252,7 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Indiv
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOsmIndexes.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Mappings.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sql"
+#psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sql"
 psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
 
 
@@ -255,9 +260,9 @@ psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
 # Should be restore this behavior or keep it separate?
 # Perform Nominatim upgrade
 
-if ! [ "$noNominatim" = true ]; then
+#if ! [ "$noNominatim" = true ]; then
 
-  # Create a copy of the nominatim setup
+# Create a copy of the nominatim setup
 #  nominatimSource="/usr/share/lib/linkedgeodata-nominatim-v2.5.1"
 
 #  nominatimFolder=`mktemp -d -t lgd-nominatim-XXX`
@@ -280,5 +285,5 @@ if ! [ "$noNominatim" = true ]; then
 
 #  psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3-Nominatim.sql"
 
-fi
+#fi
 

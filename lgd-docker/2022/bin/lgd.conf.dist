@@ -1,10 +1,20 @@
 #!/bin/bash
-source ../../linkedgeodata-debian/src/deb/resources/etc/linkedgeodata/lgd.conf.dist
 
-lgdPrepareInterlinksCmd="./lgd-prepare-interlinks.sh"
+CONF_FILE="$(realpath "${BASH_SOURCE:-$0}")"
+CONF_DIR="$(dirname "$CONF_FILE")"
 
-lgdSqlPath="../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sql"
-lgdSmlPath="../../linkedgeodata-core/src/main/resources/org/aksw/linkedgeodata/sml"
+# Relativize paths against the this config file's directory
+lgdSqlPath="$CONF_DIR/../sql"
+lgdSmlPath="$CONF_DIR/../sml"
+
+# Default location of SQL resources in the osmosis debian package
+osmosisSqlPath="/usr/share/doc/osmosis/examples/"
 
 osmosis="osmosis"
+
+
+# Legacy
+
+# Interlinking stuff is so old that it needs revision
+#lgdPrepareInterlinksCmd="./lgd-prepare-interlinks.sh"
 
