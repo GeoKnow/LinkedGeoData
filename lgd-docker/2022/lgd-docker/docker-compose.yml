@@ -43,10 +43,25 @@ services:
     networks:
       - lgd-net
 
+  lgd-sparqlify-web:
+    env_file: .env
+    build:
+      context: ./lgd-sparqlify-web
+    ports:
+      - ${SPARQLIFY_PORT}:7531
+    depends_on:
+      - lgd-db
+    volumes:
+      - lgd-sparqlify-web-vol:/lgd/sparqlify/conf
+    restart: always
+    networks:
+      - lgd-net
+
 volumes:
   lgd-db-vol:
   lgd-osmosis-sync-vol:
   lgd-nominatim-sync-vol:
+  lgd-sparqlify-web-vol:
 
 networks:
   lgd-net:
