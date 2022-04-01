@@ -43,6 +43,18 @@ services:
     networks:
       - lgd-net
 
+  lgd-nominatim-web:
+    env_file: .env
+    build:
+      context: ./lgd-nominatim-web
+    depends_on:
+      - lgd-db
+    restart: always
+    ports:
+      - ${NOMINATIM_PORT}:80
+    networks:
+      - lgd-net
+
   lgd-ontop-web:
     env_file: .env
     build:
@@ -99,7 +111,6 @@ services:
     restart: always
     networks:
       - lgd-net
-
 
 volumes:
   lgd-db-vol:

@@ -3,7 +3,7 @@ MAINTAINER Claus Stadler <cstadler@informatik.uni-leipzig.de>
 
 RUN apt-get -qq -y update --fix-missing
 
-# deps for nominatim according to doc
+# Deps for nominatim according to doc
 # Based on https://nominatim.org/release-docs/develop/appendix/Install-on-Ubuntu-20/
 # Adapted for Ubuntu 22.04
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php-cgi \
@@ -17,10 +17,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php-cgi \
     python3-icu python3-datrie \
     unzip
 
-# deps for lgd-osm-sync
+# Deps for the nominatim web site
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
+    apache2 libapache2-mod-php
+
+# Deps for lgd-osmosis-sync
+# Note: osmosis is installed with extra settings separately below
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
     wget curl gettext-base osmctools postgresql-client-14 default-jre-headless
-
 
 # Temporarily comment out the exclude for the doc folder
 # The osmosis package puts its sql scripts there
@@ -48,4 +52,7 @@ COPY target/country_osm_grid.sql.gz src/data/
 
 RUN cmake src
 RUN make
+
+# tokenizer.php actually only gets generated on import
+COPY tokenizer.php tokenizer/tokenizer.php
 
