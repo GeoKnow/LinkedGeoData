@@ -183,7 +183,7 @@ Create View classes_kv As
     }
     With
         ?s = uri(?object)
-        ?t = uri(?object, "/key/", spy:urlEncode(?k), "/value/", spy:urlEncode(?v))
+        ?t = uri(?object, "/key/", ENCODE_FOR_URI(?k), "/value/", ENCODE_FOR_URI(?v))
         ?k = plainLiteral(?k)
         ?v = plainLiteral(?v)
     Constrain
@@ -436,7 +436,7 @@ Create View lgd_node_tags_int As
     }
     With
         ?s = uri(concat(lgd:node, ?node_id))
-        //?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        //?p = uri(concat('http://linkedgeodata.org/ontology/', ENCODE_FOR_URI(?k)))
         ?p = uri(?property)
         ?o = typedLiteral(?v, xsd:int)
     Constrain
@@ -476,7 +476,7 @@ Create View lgd_node_tags_string As
     }
     With
         ?s = uri(concat(lgd:node, ?node_id))
-        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ENCODE_FOR_URI(?k)))
         ?o = plainLiteral(?v)
     From
         lgd_node_tags_string
@@ -709,7 +709,7 @@ Create View lgd_way_tags_string As
     }
     With
         ?s = uri(concat(lgd:way, ?way_id))
-        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ENCODE_FOR_URI(?k)))
         ?o = plainLiteral(?v)
     From
         lgd_way_tags_string
@@ -956,7 +956,7 @@ Create View lgd_relation_tags_string As
     }
     With
         ?s = uri(concat(lgd:relation, ?relation_id))
-        ?p = uri(concat('http://linkedgeodata.org/ontology/', spy:urlEncode(?k)))
+        ?p = uri(concat('http://linkedgeodata.org/ontology/', ENCODE_FOR_URI(?k)))
         ?o = plainLiteral(?v)
     From
         lgd_relation_tags_string

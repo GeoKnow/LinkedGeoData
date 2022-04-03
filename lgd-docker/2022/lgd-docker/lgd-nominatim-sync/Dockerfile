@@ -5,8 +5,6 @@ COPY target/linkedgeodata.deb .
 RUN dpkg -i linkedgeodata.deb || true
 RUN apt-get install -y -f
 
-COPY configuration.txt.dist ./settings/
-
 COPY start.sh .
 COPY wait-for-postgres.sh .
 

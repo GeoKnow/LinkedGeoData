@@ -44,11 +44,12 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
   OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-`lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -d`}
 fi
 
-export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-""}
-export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-"$OSM_DATA_SYNC_UPDATE_INTERVAL"}
+# Simply use 1/10 of the update interval as the recheck interval's fallback value
+export OSM_DATA_SYNC_UPDATE_INTERVAL=${OSM_DATA_SYNC_UPDATE_INTERVAL:-"0"}
+export OSM_DATA_SYNC_RECHECK_INTERVAL=${OSM_DATA_SYNC_RECHECK_INTERVAL:-$((OSM_DATA_SYNC_UPDATE_INTERVAL / 10))}
 
-
-cat ./settings/configuration.txt.dist | envsubst > "$syncDir/configuration.txt"
+export NOMINATIM_REPLICATION_UPDATE_INTERVAL="${OSM_DATA_SYNC_UPDATE_INTERVAL}"
+export NOMINATIM_REPLICATION_RECHECK_INTERVAL="${OSM_DATA_SYNC_RECHECK_INTERVAL}"
 
 # If the status is empty, then load the data
 if [ -z "$statusVal" ]; then 
@@ -73,13 +74,10 @@ fi
 
 
 if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
-  timestamp=`osmconvert --out-timestamp "$syncDir/data.osm.pbf"`
-  if [ ! -f "$syncDir/state.txt" ]; then
-    lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
-  fi
-
-  # ./utils/update-patched.php --import-osmosis-all --no-npi
-  echo "Replication not yet implemented"
+  echo "Starting replication with $OSM_DATA_SYNC_URL with update/recheck intervals: $NOMINATIM_REPLICATION_UPDATE_INTERVAL/$NOMINATIM_REPLICATION_RECHECK_INTERVAL"
+  # Multiple inits don't cause errors but may this lead to missing updates?
+  ./nominatim replication --init
+  ./nominatim replication --catch-up
 else
   echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi
