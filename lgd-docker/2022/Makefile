@@ -18,9 +18,9 @@ all: target/linkedgeodata.deb ## Recursively prepare all resources (using builds
 clean: ## Remove all files under 'target'
 	rm -rf target
 
-target/linkedgeodata.deb: pom.xml ## Build the LGD debian package used by the sync containers from this lgd's java code
-	mvn -Pdeb clean install
-	file=`find lgd-pkg-parent -name 'linkedgeodata_*.deb'`
+target/linkedgeodata.deb: lgd-tools-parent/pom.xml ## Build the LGD debian package used by the sync containers from this lgd's java code
+	mvn -f lgd-tools-parent/pom.xml -Pdeb clean install
+	file=`find lgd-tools-parent/lgd-tools-pkg-parent/lgd-tools-pkg-deb-cli -name 'linkedgeodata_*.deb'`
 	mkdir -p target
 	cp "$$file" target/linkedgeodata.deb # use ln -s ?
 
