@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 MAINTAINER Claus Stadler <cstadler@informatik.uni-leipzig.de>
 
-RUN apt-get -qq -y update --fix-missing
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y update --fix-missing
 
 # Deps for nominatim according to doc
 # Based on https://nominatim.org/release-docs/develop/appendix/Install-on-Ubuntu-20/
