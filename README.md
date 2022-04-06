@@ -34,7 +34,7 @@ Services will run under these ports:
 
 ## Recent Updates
 
-<iframe src="http://linkedgeodata.org/docs/updates.html" />
+* Please refer to the [Update Section](http://linkedgeodata.org/docs/updates)
 
 ## How It Works
 
