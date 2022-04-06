@@ -8,7 +8,7 @@ env | grep -i "osm\|db\|post"
 # Check the database whether the data was loaded
 statusKey="lgd-osm-sync:status"
 
-syncDir="osm/sync"
+syncDir="sync"
 
 
 psql "$DB_URL_JDBC" -c "CREATE TABLE IF NOT EXISTS \"status\"(\"k\" text PRIMARY KEY NOT NULL, \"v\" text);"

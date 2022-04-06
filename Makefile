@@ -12,7 +12,7 @@ $(SUBDIRS):
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
 .ONESHELL:
-all: target/linkedgeodata.deb ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
+all: lgd-thirdparty/nominatim/lgd-pkg-nominatim-4.0.1/target target/linkedgeodata.deb  ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
 
 
 clean: ## Remove all files under 'target'
