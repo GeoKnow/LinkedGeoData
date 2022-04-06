@@ -17,10 +17,10 @@ docker-compose up
 
 Services will run under these ports:
 
-* Nominatim: http://localhost:8012/
+* Nominatim: http://localhost:8012/nominatim
 * Sparqlify: http://localhost:8013/sparql
-* Ontop: http://localhost:8014/
-* Pubby: http://localhost8021/
+* Ontop: http://localhost:8014/ and http://localhost:8014/sparql
+* Pubby: http://localhost:8021/
 
 ### Important Notes
 * The default settings are in [lgd-docker/env.dist](lgd-docker/env.dist).
