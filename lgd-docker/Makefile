@@ -3,7 +3,7 @@ TOPTARGETS := all clean
 
 SUBDIRS := $(wildcard */.)
 
-$(TOPTARGETS): target/lib/nominatim.jar $(SUBDIRS)
+$(TOPTARGETS): $(SUBDIRS)
 
 # Invoke 'make' on every subfolder that contains a Makefile (and is not called 'target')
 $(SUBDIRS):
