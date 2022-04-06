@@ -7,6 +7,15 @@ nav_order: 2
 ## Updates
 
 <details open>
+  <summary markdown="span">2022</summary>
+
+|        |   |
+|--------|---|
+| Apr 7  | Modernized docker setup - Ubuntu 14.04 &rarr; 22.04, Postgres 9.5 &rarr; 14, Postgis 2.2 &rarr; 3.1 |
+
+</details>
+
+<details>
   <summary markdown="span">2021</summary>
 
 |        |   |
