@@ -11,7 +11,7 @@ nav_order: 2
 
 |        |   |
 |--------|---|
-| Apr 7  | Modernized docker setup - Ubuntu 14.04 &rarr; 22.04, Postgres 9.5 &rarr; 14, Postgis 2.2 &rarr; 3.1 |
+| Apr 7  | Modernized docker setup - Ubuntu 14.04 &rarr; 22.04, Postgres 9.5 &rarr; 14, Postgis 2.2 &rarr; 3.2 |
 
 </details>
 
