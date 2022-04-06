@@ -5,6 +5,30 @@ The project web site can be found [here](http://linkedgeodata.org).
 If you are running [Ubuntu](http://www.ubuntu.com) then this repository contains everything you need to transform OpenStreetMap data to RDF yourself.
 For other systems please consider contributing adaptions of the existing scripts.
 
+### Quick Start
+
+The following commands should get you started with a running Monaco dataset:
+```bash
+make
+cd lgd-docker
+docker-compose up
+```
+
+Services will run under these ports:
+
+* Nominatim: http://localhost:8012/
+* Sparqlify: http://localhost:8013/sparql
+* Ontop: http://localhost:8014/
+* Pubby: http://localhost8021/
+
+
+* The default settings are in [lgd-docker/env.dist](lgd-docker/env.dist).
+* If the file `lgd-docker/.env`. does not exist then the `make` invocation will also create it from `env.dist`.
+* Most configuration changes, such as port and database settings, take effect when restarting the containers.
+* Many data and config files are stored in volumes whose naming is `${parent-directory}_${service-name}-vol`. For example `lgd-docker_lgd-osmosis-sync-vol`. You can check existing volumes with `docker volume ls`.
+* Before starting the containers the sources for the initial data and incremental updates can be configured. These settings should not be changed after starting the containers.
+
+
 ### Contributions Welcome
 The docker-based architecture is aimed at making it easy to contribute new or alternative components that can sit side-by-side with the core of the system - which
 is the a virtual knowledge graph view over an OSM database.
