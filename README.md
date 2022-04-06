@@ -9,6 +9,7 @@ For other systems please consider contributing adaptions of the existing scripts
 
 The following commands should get you started with a running Monaco dataset:
 ```bash
+make clean
 make
 cd lgd-docker
 docker-compose up
@@ -27,6 +28,7 @@ Services will run under these ports:
 * Most configuration changes, such as port and database settings, take effect when restarting the containers.
 * Many data and config files are stored in volumes whose naming is `${parent-directory}_${service-name}-vol`. For example `lgd-docker_lgd-osmosis-sync-vol`. You can check existing volumes with `docker volume ls`.
 * Before starting the containers the sources for the initial data and incremental updates can be configured. These settings should not be changed after starting the containers.
+* SQL scripts and RDB2RDF Mappings are located in the [sql](sql) and [sml](sml) folders, respectively. The build process bundles these up as a debian package that gets installed in the docker container on docker build. Therefore, changes to these resources require the debian package to be updated.
 
 
 ### Contributions Welcome
