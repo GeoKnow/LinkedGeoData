@@ -21,7 +21,7 @@ Services will run under these ports:
 * Ontop: http://localhost:8014/
 * Pubby: http://localhost8021/
 
-
+### Important Notes
 * The default settings are in [lgd-docker/env.dist](lgd-docker/env.dist).
 * If the file `lgd-docker/.env`. does not exist then the `make` invocation will also create it from `env.dist`.
 * Most configuration changes, such as port and database settings, take effect when restarting the containers.
