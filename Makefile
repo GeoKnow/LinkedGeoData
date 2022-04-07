@@ -3,7 +3,7 @@ TOPTARGETS := all clean
 
 SUBDIRS := $(wildcard */.)
 
-$(TOPTARGETS): $(SUBDIRS)
+$(TOPTARGETS): lgd-thirdparty/nominatim/lgd-pkg-nominatim-4.0.1/target target/linkedgeodata.deb $(SUBDIRS)
 
 # Invoke 'make' on every subfolder that contains a Makefile (and is not called 'target')
 $(SUBDIRS):
@@ -12,8 +12,7 @@ $(SUBDIRS):
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
 .ONESHELL:
-all: lgd-thirdparty/nominatim/lgd-pkg-nominatim-4.0.1/target target/linkedgeodata.deb  ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
-
+all: ## Recursively prepare all resources (using builds and downloads) needed to build the docker images
 
 clean: ## Remove all files under 'target'
 	rm -rf target
