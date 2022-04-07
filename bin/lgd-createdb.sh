@@ -217,6 +217,7 @@ createlang -h "$dbHost" -U "$dbUser" plpgsql "$dbName"
 #psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/postgis.sql"
 #psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f "$postgisPath/spatial_ref_sys.sql"
 
+psql -h "$dbHost" -U "$dbUser" -d"$dbName" -c "CREATE EXTENSION postgis;"
 psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6.sql"
 psql -h "$dbHost" -U "$dbUser" -d"$dbName" -f"$osmosisSqlPath/pgsimple_schema_0.6_linestring.sql"
 
