@@ -3,7 +3,7 @@ TOPTARGETS := all clean
 
 SUBDIRS := $(wildcard */.)
 
-$(TOPTARGETS): lgd-thirdparty/nominatim/lgd-pkg-nominatim-4.0.1/target target/linkedgeodata.deb $(SUBDIRS)
+$(TOPTARGETS): $(SUBDIRS)
 
 # Invoke 'make' on every subfolder that contains a Makefile (and is not called 'target')
 $(SUBDIRS):

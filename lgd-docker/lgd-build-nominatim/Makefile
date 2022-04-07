@@ -10,6 +10,7 @@ target: ## Create the target directory for artifacts
 	mkdir -p target
 
 target/nominatim.jar: | target ## Setup the nominatim bundle using a goal in the parent makefile
+	$(MAKE) -C ../.. lgd-thirdparty/nominatim/lgd-pkg-nominatim-4.0.1/target
 	mvn dependency:copy -D"artifact=org.aksw.linkedgeodata:lgd-pkg-nominatim:$(NOMINATIM_VERSION)" -DoutputDirectory=target
 	mv "target/lgd-pkg-nominatim-$(NOMINATIM_VERSION).jar" target/nominatim.jar
 
