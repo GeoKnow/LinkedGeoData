@@ -77,7 +77,12 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
   echo "Starting replication with $OSM_DATA_SYNC_URL with update/recheck intervals: $NOMINATIM_REPLICATION_UPDATE_INTERVAL/$NOMINATIM_REPLICATION_RECHECK_INTERVAL"
   # Multiple inits don't cause errors but may this lead to missing updates?
   ./nominatim replication --init
+
+  # Replication in catch-up mode terminates when it caught up
   ./nominatim replication --catch-up
+
+  # Default replication runs forever
+  ./nominatim replication
 else
   echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"
 fi
