@@ -1,11 +1,22 @@
 #!/bin/bash
 
+# Simple function to echo to stderr
+echoerr() { echo "$@" 1>&2; }
+
 SCRIPT_FILE="$(realpath "${BASH_SOURCE:-$0}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_FILE")"
 
 #
 # Script for creating a LinkedGeoData database on Postgres
 #
+
+
+if ! command -v osmosis &> /dev/null
+then
+    echoerr "Command 'osmosis' not found"
+    exit 1
+fi
+
 
 # Mapping of file extensions to osmosis options
 declare -A extToReadMode
@@ -50,9 +61,6 @@ for configFile in "${configFiles[@]}"; do
         [ -f "$configFile" ] && source "$configFile"
 done
 
-
-# Simple function to echo to stderr
-echoerr() { echo "$@" 1>&2; }
 
 # Support for simple command line args
 # Source: http://mywiki.wooledge.org/BashFAQ/035#getopts
