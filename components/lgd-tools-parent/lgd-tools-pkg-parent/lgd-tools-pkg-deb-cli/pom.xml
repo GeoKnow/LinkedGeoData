@@ -102,7 +102,7 @@
 
                                                                                 <data>
                                                                                         <type>directory</type>
-                                                                                        <src>${basedir}/../../../sml</src>
+                                                                                        <src>${basedir}/../../../../sml</src>
                                                                                         <mapper>
                                                                                                 <type>perm</type>
                                                                                                 <prefix>/usr/share/${deb.packageName}/sml</prefix>
@@ -112,7 +112,7 @@
 
                                                                                 <data>
                                                                                         <type>directory</type>
-                                                                                        <src>${basedir}/../../../sql</src>
+                                                                                        <src>${basedir}/../../../../sql</src>
                                                                                         <mapper>
                                                                                                 <type>perm</type>
                                                                                                 <prefix>/usr/share/${deb.packageName}/sql</prefix>
@@ -122,7 +122,7 @@
 
                                                                                 <data>
                                                                                         <type>directory</type>
-                                                                                        <src>${basedir}/../../../bin</src>
+                                                                                        <src>${basedir}/../../../../bin</src>
                                                                                         <mapper>
                                                                                                 <type>perm</type>
                                                                                                 <prefix>/usr/share/${deb.packageName}/bin</prefix>

@@ -11,9 +11,5 @@ $(SUBDIRS):
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
-all: .env
-
-
-.env: env.dist
-	cp -n env.dist .env
+all:
 

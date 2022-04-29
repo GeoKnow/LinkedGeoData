@@ -52,7 +52,6 @@ if [ ! -z "$OSM_DATA_SYNC_URL" ]; then
     lgd osm replicate-sequences -u "$OSM_DATA_SYNC_URL" -t "$timestamp" > "$syncDir/state.txt"
   fi
 
-  cd osm
   /usr/share/linkedgeodata/bin/lgd-run-sync.sh
 else
   echo "Note: Data replication disabled as OSM_DATA_SYNC_URL no set"

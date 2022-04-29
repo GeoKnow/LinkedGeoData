@@ -34,6 +34,7 @@ Prefix geom:<http://geovocab.org/geometry#>
 
 Prefix lu: <http://id.sirf.net/def/lu#>
 
+Prefix wd: <http://www.wikidata.org/entity/>
 
 
 Set defaultGraph = "http://linkedgeodata.org/osm/"
@@ -1015,6 +1016,32 @@ Create View lgd_relation_tags_resource_prefix As
         ?p prefix "http://linkedgeodata.org/ontology/"
     From
         [[SELECT * FROM lgd_relation_tags_resource_prefix WHERE post_processing='none']]
+
+
+/**
+ * Wikidata mappings
+ */
+
+Create View node_tags_wikidata As
+  Construct { ?s lgdo:wikidata ?o }
+  With
+    ?s = uri(concat(lgd:node, ?node_id))
+    ?o = uri(concat(wd:, ?v))
+  From [[SELECT * FROM node_tags WHERE k = 'wikidata']];
+
+Create View way_tags_wikidata As
+  Construct { ?s lgdo:wikidata ?o }
+  With
+    ?s = uri(concat(lgd:way, ?way_id))
+    ?o = uri(concat(wd:, ?v))
+  From [[SELECT * FROM way_tags WHERE k = 'wikidata']];
+
+Create View relation_tags_wikidata As
+  Construct { ?s lgdo:wikidata ?o }
+  With
+    ?s = uri(concat(lgd:relation, ?relation_id))
+    ?o = uri(concat(wd:, ?v))
+  From [[SELECT * FROM relation_tags WHERE k = 'wikidata']];
 
 
 
