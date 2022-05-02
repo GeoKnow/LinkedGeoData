@@ -15,6 +15,11 @@ make clean
 make
 cd lgd-docker
 docker-compose up
+
+# Quirk: Sometimes the nominatim container startup fails
+# indicated by an error message that only reverse-only search is available
+# In that case restart the container:
+docker-compose restart lgd-nominatim-web
 ```
 
 Services will run under these ports:
@@ -24,11 +29,13 @@ Services will run under these ports:
 * Ontop: http://localhost:8014/ and http://localhost:8014/sparql
 * Pubby: http://localhost:8021/
 
+
 ### Important Notes
-* The default settings are in [lgd-docker/env.dist](lgd-docker/env.dist).
-* If the file `lgd-docker/.env`. does not exist then the `make` invocation will also create it from `env.dist`.
+* The default settings are in [env.dist](env.dist).
+* If the file `.env`. does not exist then the `make` invocation will also create it from `env.dist`.
+* The  `.env` file by default contains the setting `PROJECT_NAME=linkedgeodata`. Make sure that the project name matches the lower-case spelling of the name of the folder containing the git repo.
 * Most configuration changes, such as port and database settings, take effect when restarting the containers.
-* Many data and config files are stored in volumes whose naming is `${parent-directory}_${service-name}-vol`. For example `lgd-docker_lgd-osmosis-sync-vol`. You can check existing volumes with `docker volume ls`.
+* Many data and config files are stored in volumes whose naming is `${parent-directory}_${service-name}-vol`. For example `linkedgeodata_lgd-osmosis-sync-vol`. You can check existing volumes with `docker volume ls`.
 * Before starting the containers the sources for the initial data and incremental updates can be configured. These settings should not be changed after starting the containers.
 * SQL scripts and RDB2RDF Mappings are located in the [sql](sql) and [sml](sml) folders, respectively. The build process bundles these up as a debian package that gets installed in the docker container on docker build. Therefore, changes to these resources require the debian package to be updated.
 
