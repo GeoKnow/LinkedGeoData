@@ -13,7 +13,6 @@ git clone https://github.com/GeoKnow/LinkedGeoData.git
 cd LinkedGeoData
 make clean
 make
-cd lgd-docker
 docker-compose up
 
 # Quirk: Sometimes the nominatim container startup fails
