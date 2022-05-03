@@ -104,11 +104,11 @@ PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/>
 PREFIX lgdo: <http://linkedgeodata.org/ontology/>
 
 SELECT * WHERE {
-  ?a a lgdo:Bar ;
+  ?a a lgdo:PrimaryHighway ;
     geo:hasGeometry/geo:asWKT ?ag ;
     rdfs:label ?aname .
   FILTER(lang(?aname) = "" || lang(?aname) = "fr")
-  ?b a lgdo:Restaurant ;
+  ?b a lgdo:Rail ;
     geo:hasGeometry/geo:asWKT ?bg ;
     rdfs:label ?bname .
   FILTER(lang(?bname) = "" || lang(?bname) = "fr")
