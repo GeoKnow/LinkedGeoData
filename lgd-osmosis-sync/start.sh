@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eu
 
+# Init an absent sync url to an empty string
+: ${OSM_DATA_SYNC_URL:=}
+
 echo "lgd-osm-sync environment:"
 env | grep -i "osm\|db\|post"
 

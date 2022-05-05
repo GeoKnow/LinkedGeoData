@@ -1,6 +1,9 @@
 #!/bin/bash
 set -aeu
 
+# Init an absent sync url to an empty string
+: ${OSM_DATA_SYNC_URL:=}
+
 export NOMINATIM_PROJECT_DIR=~/nominatim-data
 mkdir -p "$NOMINATIM_PROJECT_DIR"
 
