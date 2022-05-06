@@ -12,7 +12,8 @@ services:
       - POSTGRES_PASSWORD=${DB_PASS}
       - PGDATA=/var/lib/postgresql/data
     sysctls:
-      - kernel.shmmax=4294967296
+      - kernel.shmmax=10737418240
+    shm_size: 10g
     volumes:
       - lgd-db-vol:/var/lib/postgresql/data
     restart: always
