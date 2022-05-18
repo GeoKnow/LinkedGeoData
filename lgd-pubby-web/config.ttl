@@ -40,7 +40,7 @@
 
 @prefix lgdo:     <http://linkedgeodata.org/ontology/> .
 @prefix lgdm:     <http://linkedgeodata.org/meta/> .
-@prefix lgd:      <http://linkedgeodata.org/triplify/> .
+@prefix lgd:      <http://linkedgeodata.org/resource/> .
 @prefix lgdg: <http://linkedgeodata.org/geometry/> .
 #@prefix lgdn:     <http://linkedgeodata.org/resource/node/> .
 #@prefix lgdw:     <http://linkedgeodata.org/resource/way/> .
@@ -58,7 +58,7 @@
     conf:webBase <http://linkedgeodata.org/>;
 #    conf:usePrefixesFrom <http://linkedgeodata.org/config.ttl>;
     conf:defaultLanguage "en";
-    conf:indexResource <http://linkedgeodata.org/triplify/node29857233>;
+    conf:indexResource <http://linkedgeodata.org/resource/node29857233>;
 
    conf:dataset [
         conf:sparqlEndpoint <http://localhost:7531/sparql>;
