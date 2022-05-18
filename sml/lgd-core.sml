@@ -1,39 +1,28 @@
 /**
  * Sparqlify configuration file for LinkedGeoData
  *
- * Triplify flavour
+ * Resource flavour
  *
  */
 
 // Prefixes (these will also be used in the query responses)
-Prefix spy:<http://aksw.org/sparqlify/>
-Prefix ogc:<http://www.opengis.net/ont/geosparql#>
+Prefix geo: <http://www.opengis.net/ont/geosparql#>
 
-#Prefix dc:<http://purl.org/dc/elements/1.1/>
-Prefix dcterms:<http://purl.org/dc/terms/>
-Prefix xsd:<http://www.w3.org/2001/XMLSchema#>
-Prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-Prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-Prefix owl:<http://www.w3.org/2002/07/owl#>
+Prefix dcterms: <http://purl.org/dc/terms/>
+Prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+Prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix owl: <http://www.w3.org/2002/07/owl#>
 
 
-Prefix lgd:<http://linkedgeodata.org/triplify/>
-Prefix lgd-geom:<http://linkedgeodata.org/geometry/>
-Prefix lgdo:<http://linkedgeodata.org/ontology/>
-Prefix lgdm:<http://linkedgeodata.org/meta/>
-
-//Prefix geo:<http://www.georss.org/georss/>
+Prefix lgd: <http://linkedgeodata.org/resource/>
+Prefix lgdg: <http://linkedgeodata.org/geometry/>
+Prefix lgdo: <http://linkedgeodata.org/ontology/>
+Prefix lgdm: <http://linkedgeodata.org/meta/>
 
 Prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 
-
-Prefix spatial:<http://geovocab.org/spatial#>
-Prefix geom:<http://geovocab.org/geometry#>
-
-//Prefix virtrdf:<http://www.openlinksw.com/schemas/virtrdf#>
-
 Prefix lu: <http://id.sirf.net/def/lu#>
-
 Prefix wd: <http://www.wikidata.org/entity/>
 
 
@@ -309,7 +298,7 @@ Create View property_boolean As
 Create View lgd_nodes As
     Construct {
         ?n a lgdm:Node .
-        ?n a spatial:Feature .
+        ?n a geo:Feature .
         ?n lgdo:version ?v .
         ?n dcterms:contributor ?u .
         ?n dcterms:modified ?d .
@@ -338,15 +327,15 @@ Create View lgd_nodes As
 
 Create View lgd_nodes_geometry As
     Construct {
-        ?n geom:geometry ?g .
+        ?n geo:hasGeometry ?g .
 
-        ?g a geom:Geometry .
-        ?g ogc:asWKT ?o .
+        ?g a geo:hasGeometry .
+        ?g geo:asWKT ?o .
     }
     With
         ?n = uri(concat(lgd:node, ?id))
-        ?g = uri(concat(lgd-geom:node, ?id))
-        ?o = typedLiteral(?geom, ogc:wktLiteral)
+        ?g = uri(concat(lgdg:node, ?id))
+        ?o = typedLiteral(?geom, geo:wktLiteral)
     From
       lgd_nodes_geometry
 
@@ -365,12 +354,12 @@ Create view lgd_sameAs_gadm As
 
 Create View lgd_node_geometries As
     Construct {
-        ?n a geom:Geometry .
-        ?n ogc:asWKT ?o .
+        ?n a geo:hasGeometry .
+        ?n geo:asWKT ?o .
     }
     With
-        ?n = uri(concat(lgd-geom:node, ?id))
-        ?o = typedLiteral(?geom, ogc:wktLiteral)
+        ?n = uri(concat(lgdg:node, ?id))
+        ?o = typedLiteral(?geom, geo:wktLiteral)
     From
         nodes;
 */
@@ -504,7 +493,7 @@ Create View lgd_node_tags_uri As
 Create View lgd_ways As
     Construct {
         ?w a lgdm:Way .
-        ?w a spatial:Feature .
+        ?w a geo:Feature .
         ?w lgdo:version ?v .
         ?w dcterms:contributor ?u .
         ?w dcterms:modified ?d .
@@ -522,15 +511,15 @@ Create View lgd_ways As
 
 Create View lgd_ways_geometry As
     Construct {
-        ?w geom:geometry ?g .
+        ?w geo:hasGeometry ?g .
 
-        ?g a geom:Geometry .
-        ?g ogc:asWKT ?o .
+        ?g a geo:hasGeometry .
+        ?g geo:asWKT ?o .
     }
     With
         ?w = uri(concat(lgd:way, ?id))
-        ?g = uri(concat(lgd-geom:way, ?id))
-        ?o = typedLiteral(?geom, ogc:wktLiteral)
+        ?g = uri(concat(lgdg:way, ?id))
+        ?o = typedLiteral(?geom, geo:wktLiteral)
     From
       lgd_ways_geometry
 
@@ -538,13 +527,13 @@ Create View lgd_ways_geometry As
 /*
 Create View lgd_ways_linestrings As
     Construct {
-        ?w a geom:Geometry .
-        ?w ogc:asWKT ?g .
+        ?w a geo:hasGeometry .
+        ?w geo:asWKT ?g .
     }
     With
         //?w = uri(concat(lgd:way, ?id))
-        ?w = uri(concat(lgd-geom:way, ?id))
-        ?g = typedLiteral(?linestring, ogc:wktLiteral)
+        ?w = uri(concat(lgdg:way, ?id))
+        ?g = typedLiteral(?linestring, geo:wktLiteral)
     From
         [[SELECT id, linestring FROM ways a WHERE a.id NOT IN (SELECT way_id FROM simple_polys)]];
 */
@@ -553,13 +542,13 @@ Create View lgd_ways_linestrings As
 /*
 Create View ways_polygons As
     Construct {
-        ?w a geom:Geometry .
-        ?w ogc:asWKT ?g .
+        ?w a geo:hasGeometry .
+        ?w geo:asWKT ?g .
     }
     With
         //?w = uri(concat(lgd:way, ?way_id))
-        ?w = uri(concat(lgd-geom:way, ?way_id))
-        ?g = typedLiteral(?polygon, ogc:wktLiteral)
+        ?w = uri(concat(lgdg:way, ?way_id))
+        ?g = typedLiteral(?polygon, geo:wktLiteral)
     From
         simple_polys;
 */
@@ -583,8 +572,8 @@ Create View lgd_pos_seq As
         ?w lgdo:posSeq ?wn .
     }
     With
-        ?w = uri(concat(lgd-geom:way, ?id))
-        ?wn = uri(concat(lgd-geom:posSeq, ?id))
+        ?w = uri(concat(lgdg:way, ?id))
+        ?wn = uri(concat(lgdg:posSeq, ?id))
     From
         ways;
 
@@ -593,7 +582,7 @@ Create View lgd_pos_seq_type As
         ?wn a rdf:Seq .
     }
     With
-        ?wn = uri(concat(lgd-geom:posSeq, ?id))
+        ?wn = uri(concat(lgdg:posSeq, ?id))
     From
         ways;
 
@@ -603,9 +592,9 @@ Create View view_waynodes As
         ?wn ?p ?n .
     }
     With
-        ?wn = uri(concat(lgd-geom:posSeq, ?way_id))
+        ?wn = uri(concat(lgdg:posSeq, ?way_id))
         ?p = uri(concat(rdf:_, ?sid))
-        ?n = uri(concat(lgd-geom:node, ?node_id))
+        ?n = uri(concat(lgdg:node, ?node_id))
     From
         [[SELECT *, sequence_id + 1 AS sid FROM way_nodes]]
 
@@ -738,12 +727,12 @@ Create View lgd_way_tags_uri As
 Create View lgd_relations As
     Construct {
         ?s a lgdm:Relation .
-        ?s a spatial:Feature .
+        ?s a geo:Feature .
         ?s lgdo:version ?v .
         ?s dcterms:contributor ?u .
         ?s dcterms:modified ?d .
         ?s lgdo:changeset ?c .
-        //?w geom:geometry ?g .
+        //?w geo:hasGeometry ?g .
 
         ?s lgdo:members ?m .
         ?m a rdf:Seq .
@@ -755,7 +744,7 @@ Create View lgd_relations As
         ?u = uri(concat(lgd:user, ?user_id))
         ?d = typedLiteral(?tstamp, xsd:dateTime)
         ?c = typedLiteral(?changeset_id, xsd:int)
-        //?g = uri(concat(lgd-geom:relation, ?id))
+        //?g = uri(concat(lgdg:relation, ?id))
 
         ?m = uri(lgd:rmembers, ?id)
 
@@ -766,15 +755,15 @@ Create View lgd_relations As
 /*
 Create View lgd_relations_geometry As
     Construct {
-        ?s geom:geometry ?g .
+        ?s geo:hasGeometry ?g .
 
-        ?g a geom:Geometry .
-        ?g ogc:asWKT ?o .
+        ?g a geo:hasGeometry .
+        ?g geo:asWKT ?o .
     }
     With
         ?s = uri(lgd:relation, ?id)
-        ?g = uri(lgd-geom:relation, ?id)
-        ?o = typedLiteral(?geom, ogc:wktLiteral)
+        ?g = uri(lgdg:relation, ?id)
+        ?o = typedLiteral(?geom, geo:wktLiteral)
     From
       lgd_relations_geometry
 */
@@ -782,15 +771,15 @@ Create View lgd_relations_geometry As
 /*
 Create View lgd_relation_geoms As
   Construct {
-    ?s geom:geometry ?g .
+    ?s geo:hasGeometry ?g .
 
-    ?g a geom:Geometry .
-    ?g ogc:asWKT ?o .
+    ?g a geo:hasGeometry .
+    ?g geo:asWKT ?o .
   }
   With
     ?s = uri(lgd:relation, ?relation_id)
-    ?g = uri(lgd-geom:relation, ?relation_id)
-    ?o = typedLiteral(?geom, ogc:wktLiteral)
+    ?g = uri(lgdg:relation, ?relation_id)
+    ?o = typedLiteral(?geom, geo:wktLiteral)
   From
     lgd_relation_geoms
 */
