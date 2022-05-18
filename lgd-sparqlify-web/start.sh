@@ -8,7 +8,7 @@ mkdir -p "$volumePath"
 # TODO extend to R2RML
 if [ `find "$volumePath" -maxdepth 1 -type f -name "*.sml" 2>/dev/null | wc -l` -eq "0" ]; then
    echo "Setting up default sparqlify/linkedgeodata mappings"
-   cp /usr/share/linkedgeodata/sml/LinkedGeoData-Triplify-IndividualViews.sml "$volumePath"
+   cp /usr/share/linkedgeodata/sml/lgd-core.sml "$volumePath"
 fi
 
 java -cp "@$sparqlifyPath/jib-classpath-file" "@$sparqlifyPath/jib-main-class-file" endpoint \
