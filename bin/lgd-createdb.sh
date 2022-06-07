@@ -256,13 +256,13 @@ mkdir -p "$lgdTmpDir"
 #"$lgdPrepareInterlinksCmd" > "$lgdTmpDir/interlinks.sql"
 
 # LGD Modifications
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Physical Schema.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/LinkedGeoData3 Individual Views.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/ExtraOsmIndexes.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Mappings.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/TranslateWikiLabels.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-physical-schema.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-individual-views.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-extra-osm-indexes.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-mappings.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-translatewiki-labels.sql"
 #psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "/tmp/linkedgeodata/interlinks.sql"
-psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/Interlinking.sql"
+psql -h "$dbHost" -U "$dbUser" -d "$dbName" -f "$lgdSqlPath/lgd-interlinking.sql"
 
 
 # TODO The old lgd setup bundled up a nomintim template and allowed this script to make use of it
