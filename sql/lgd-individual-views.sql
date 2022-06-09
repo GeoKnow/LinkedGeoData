@@ -31,14 +31,13 @@ DROP VIEW IF EXISTS raw_node_tags_boolean CASCADE;
 CREATE VIEW raw_node_tags_boolean AS
   SELECT a.node_id, a.k, lgd_tryparse_boolean(a.v) AS v
    FROM node_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND b.datatype = 'boolean'::lgd_datatype;
+  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'boolean'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_node_tags_boolean CASCADE;
 CREATE VIEW osm_node_tags_boolean AS
   SELECT a.node_id, a.k, a.v
    FROM raw_node_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_node_tags_boolean CASCADE;
 CREATE VIEW lgd_node_tags_boolean AS
@@ -51,14 +50,13 @@ DROP VIEW IF EXISTS raw_node_tags_int CASCADE;
 CREATE VIEW raw_node_tags_int AS
   SELECT a.node_id, a.k, lgd_tryparse_int(a.v) AS v
    FROM node_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND b.datatype = 'int'::lgd_datatype;
+  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'int'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_node_tags_int CASCADE;
 CREATE VIEW osm_node_tags_int AS
   SELECT a.node_id, a.k, a.v
    FROM raw_node_tags_int a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_node_tags_int CASCADE;
 CREATE VIEW lgd_node_tags_int AS
@@ -71,14 +69,13 @@ DROP VIEW IF EXISTS raw_node_tags_float CASCADE;
 CREATE VIEW raw_node_tags_float AS
   SELECT a.node_id, a.k, lgd_tryparse_float(a.v) AS v
    FROM node_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_float(a.v) IS NOT NULL AND b.datatype = 'float'::lgd_datatype;
+  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'float'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_node_tags_float CASCADE;
 CREATE VIEW osm_node_tags_float AS
   SELECT a.node_id, a.k, a.v
    FROM raw_node_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_node_tags_float CASCADE;
 CREATE VIEW lgd_node_tags_float AS
@@ -98,7 +95,7 @@ DROP VIEW IF EXISTS osm_node_tags_uri CASCADE;
 CREATE VIEW osm_node_tags_uri AS
   SELECT a.node_id, a.k, a.v
    FROM raw_node_tags_uri a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_node_tags_uri CASCADE;
 CREATE VIEW lgd_node_tags_uri AS
@@ -117,13 +114,14 @@ DROP VIEW IF EXISTS osm_node_tags_text CASCADE;
 CREATE VIEW osm_node_tags_text AS
   SELECT a.node_id, a.k, a.v, a.language
    FROM raw_node_tags_text a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_node_tags_text CASCADE;
 CREATE VIEW lgd_node_tags_text AS
  SELECT a.node_id, b.property, a.v, a.language
    FROM raw_node_tags_text a
    JOIN lgd_map_property b ON b.k = a.k;
+
 
 DROP VIEW IF EXISTS osm_node_tags_string CASCADE;
 CREATE VIEW osm_node_tags_string AS
@@ -281,14 +279,13 @@ DROP VIEW IF EXISTS raw_way_tags_boolean CASCADE;
 CREATE VIEW raw_way_tags_boolean AS
   SELECT a.way_id, a.k, lgd_tryparse_boolean(a.v) AS v
    FROM way_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND b.datatype = 'boolean'::lgd_datatype;
+  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'boolean'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_way_tags_boolean CASCADE;
 CREATE VIEW osm_way_tags_boolean AS
   SELECT a.way_id, a.k, a.v
    FROM raw_way_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_way_tags_boolean CASCADE;
 CREATE VIEW lgd_way_tags_boolean AS
@@ -301,14 +298,13 @@ DROP VIEW IF EXISTS raw_way_tags_int CASCADE;
 CREATE VIEW raw_way_tags_int AS
   SELECT a.way_id, a.k, lgd_tryparse_int(a.v) AS v
    FROM way_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND b.datatype = 'int'::lgd_datatype;
+  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'int'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_way_tags_int CASCADE;
 CREATE VIEW osm_way_tags_int AS
   SELECT a.way_id, a.k, a.v
    FROM raw_way_tags_int a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_way_tags_int CASCADE;
 CREATE VIEW lgd_way_tags_int AS
@@ -321,14 +317,13 @@ DROP VIEW IF EXISTS raw_way_tags_float CASCADE;
 CREATE VIEW raw_way_tags_float AS
   SELECT a.way_id, a.k, lgd_tryparse_float(a.v) AS v
    FROM way_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_float(a.v) IS NOT NULL AND b.datatype = 'float'::lgd_datatype;
+  WHERE lgd_tryparse_float(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'float'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_way_tags_float CASCADE;
 CREATE VIEW osm_way_tags_float AS
   SELECT a.way_id, a.k, a.v
    FROM raw_way_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_way_tags_float CASCADE;
 CREATE VIEW lgd_way_tags_float AS
@@ -341,14 +336,13 @@ DROP VIEW IF EXISTS raw_way_tags_uri CASCADE;
 CREATE VIEW raw_way_tags_uri AS
   SELECT a.way_id, a.k, lgd_tryparse_uri(a.v) AS v
    FROM way_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_uri(a.v) IS NOT NULL AND b.datatype = 'uri'::lgd_datatype;
+  WHERE lgd_tryparse_float(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'uri'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_way_tags_uri CASCADE;
 CREATE VIEW osm_way_tags_uri AS
   SELECT a.way_id, a.k, a.v
    FROM raw_way_tags_uri a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_way_tags_uri CASCADE;
 CREATE VIEW lgd_way_tags_uri AS
@@ -367,7 +361,7 @@ DROP VIEW IF EXISTS osm_way_tags_text CASCADE;
 CREATE VIEW osm_way_tags_text AS
   SELECT a.way_id, a.k, a.v, a.language
    FROM raw_way_tags_text a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_way_tags_text CASCADE;
 CREATE VIEW lgd_way_tags_text AS
@@ -503,14 +497,13 @@ DROP VIEW IF EXISTS raw_relation_tags_boolean CASCADE;
 CREATE VIEW raw_relation_tags_boolean AS
   SELECT a.relation_id, a.k, lgd_tryparse_boolean(a.v) AS v
    FROM relation_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND b.datatype = 'boolean'::lgd_datatype;
+  WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'boolean'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_relation_tags_boolean CASCADE;
 CREATE VIEW osm_relation_tags_boolean AS
   SELECT a.relation_id, a.k, a.v
    FROM raw_relation_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_relation_tags_boolean CASCADE;
 CREATE VIEW lgd_relation_tags_boolean AS
@@ -523,14 +516,13 @@ DROP VIEW IF EXISTS raw_relation_tags_int CASCADE;
 CREATE VIEW raw_relation_tags_int AS
   SELECT a.relation_id, a.k, lgd_tryparse_int(a.v) AS v
    FROM relation_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_int(a.v) IS NOT NULL AND b.datatype = 'int'::lgd_datatype;
+   WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'int'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_relation_tags_int CASCADE;
 CREATE VIEW osm_relation_tags_int AS
   SELECT a.relation_id, a.k, a.v
    FROM raw_relation_tags_int a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_relation_tags_int CASCADE;
 CREATE VIEW lgd_relation_tags_int AS
@@ -543,14 +535,13 @@ DROP VIEW IF EXISTS raw_relation_tags_float CASCADE;
 CREATE VIEW raw_relation_tags_float AS
   SELECT a.relation_id, a.k, lgd_tryparse_float(a.v) AS v
    FROM relation_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_float(a.v) IS NOT NULL AND b.datatype = 'float'::lgd_datatype;
+   WHERE lgd_tryparse_boolean(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'float'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_relation_tags_float CASCADE;
 CREATE VIEW osm_relation_tags_float AS
   SELECT a.relation_id, a.k, a.v
-   FROM raw_relation_tags_boolean a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   FROM raw_relation_tags_float a
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_relation_tags_float CASCADE;
 CREATE VIEW lgd_relation_tags_float AS
@@ -563,14 +554,13 @@ DROP VIEW IF EXISTS raw_relation_tags_uri CASCADE;
 CREATE VIEW raw_relation_tags_uri AS
   SELECT a.relation_id, a.k, lgd_tryparse_uri(a.v) AS v
    FROM relation_tags a
-   JOIN lgd_map_datatype b ON b.k = a.k
-  WHERE lgd_tryparse_uri(a.v) IS NOT NULL AND b.datatype = 'uri'::lgd_datatype;
+   WHERE lgd_tryparse_uri(a.v) IS NOT NULL AND a.k IN (SELECT b.k FROM lgd_map_datatype b WHERE b.datatype = 'uri'::lgd_datatype);
 
 DROP VIEW IF EXISTS osm_relation_tags_uri CASCADE;
 CREATE VIEW osm_relation_tags_uri AS
   SELECT a.relation_id, a.k, a.v
    FROM raw_relation_tags_uri a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_relation_tags_uri CASCADE;
 CREATE VIEW lgd_relation_tags_uri AS
@@ -589,7 +579,7 @@ DROP VIEW IF EXISTS osm_relation_tags_text CASCADE;
 CREATE VIEW osm_relation_tags_text AS
   SELECT a.relation_id, a.k, a.v, a.language
    FROM raw_relation_tags_text a
-   WHERE NOT EXISTS (SELECT b.k FROM lgd_map_property b WHERE b.k = a.k);
+   WHERE a.k NOT IN (SELECT b.k FROM lgd_map_property b);
 
 DROP VIEW IF EXISTS lgd_relation_tags_text CASCADE;
 CREATE VIEW lgd_relation_tags_text AS
