@@ -38,6 +38,29 @@ Services will run under these ports:
 * Before starting the containers the sources for the initial data and incremental updates can be configured. These settings should not be changed after starting the containers.
 * SQL scripts and RDB2RDF Mappings are located in the [sql](sql) and [sml](sml) folders, respectively. The build process bundles these up as a debian package that gets installed in the docker container on docker build. Therefore, changes to these resources require the debian package to be updated.
 
+## Changing the Dataset
+
+The `.env` includes the properties which can be ajusted as needed.
+
+```
+OSM_DATA_BASE_URL=http://download.geofabrik.de/europe/monaco-latest.osm.pbf
+OSM_DATA_SYNC_URL=http://download.geofabrik.de/europe/monaco-updates/
+```
+
+In addition, the `files` folder will be mounted as a shared volume to the data loading containers under `/files` so that custom datasets can be loaded as follows:
+
+```
+# Copy or download data to the files folder
+cp mydata.osm.pbf <lgd-git-project-root>/files
+```
+
+```
+OSM_DATA_BASE_URL=file:///files/mydata.osm.pbf
+
+# Leaving the following property unset by commenting it out disables sync:
+#OSM_DATA_SYNC_URL=
+```
+
 ## Recent Updates
 
 * Please refer to the [Update Section](http://linkedgeodata.org/docs/updates)

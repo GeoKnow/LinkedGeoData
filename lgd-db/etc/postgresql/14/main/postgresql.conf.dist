@@ -237,7 +237,7 @@ dynamic_shared_memory_type = posix	# the default is the first option
 #checkpoint_completion_target = 0.9	# checkpoint target duration, 0.0 - 1.0
 #checkpoint_flush_after = 256kB		# measured in pages, 0 disables
 #checkpoint_warning = 30s		# 0 disables
-max_wal_size = 4GB
+max_wal_size = 8GB
 min_wal_size = 80MB
 
 # - Archiving -
@@ -376,6 +376,7 @@ min_wal_size = 80MB
 #enable_partitionwise_join = off
 #enable_partitionwise_aggregate = off
 #enable_seqscan = on
+enable_seqscan = off
 #enable_sort = on
 #enable_tidscan = on
 
@@ -414,6 +415,7 @@ effective_cache_size = ${DB_EFFECTIVE_CACHE_SIZE}
 # - Other Planner Options -
 
 #default_statistics_target = 100	# range 1-10000
+default_statistics_target = 10000
 #constraint_exclusion = partition	# on, off, or partition
 #cursor_tuple_fraction = 0.1		# range 0.0-1.0
 #from_collapse_limit = 8

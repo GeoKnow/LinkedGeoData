@@ -31,3 +31,10 @@ review.nt
 pom.xml.versionsBackup
 trash
 
+
+share/*
+!share/README.md
+
+share/sparqlify/*
+!share/sparqlify/README.md
+

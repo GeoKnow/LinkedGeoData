@@ -30,6 +30,7 @@ services:
       - lgd-db
     volumes:
       - lgd-nominatim-sync-vol:/lgd/nominatim/src/settings
+      - ./share:/share:ro
     restart: on-failure
     networks:
       - lgd-net
@@ -42,6 +43,7 @@ services:
       - lgd-db
     volumes:
       - lgd-osmosis-sync-vol:/lgd/osmosis/sync
+      - ./share:/share:ro
     restart: on-failure
     networks:
       - lgd-net
@@ -91,7 +93,8 @@ services:
     depends_on:
       - lgd-db
     volumes:
-      - lgd-sparqlify-web-vol:/lgd/sparqlify/conf
+      # - lgd-sparqlify-web-vol:/lgd/sparqlify/conf
+      - ./share:/share:ro
     restart: always
     networks:
       - lgd-net
