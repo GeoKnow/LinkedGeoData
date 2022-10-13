@@ -9,20 +9,17 @@ nav_order: 8
 The community project Linked Geo Data was started and is administered by the AKSW research group from Universität Leipzig.
 
 * [Claus Stadler](http://aksw.org/ClausStadler.html)
-* [Dr. Jens Lehmann](http://aksw.org/JensLehmann.html)
+* [Prof Jens Lehmann](http://jens-lehmann.org)
 * [Prof. Sören Auer](http://aksw.org/SoerenAuer.html)
 
 | Contact |
 |---|
-| Tel.: +49 341 97–32260 |
-| Fax: +49 341 97–32260 |
-| lehmann@informatik.uni-leipzig.de |
+| lehmann@infai.org |
 | http://jens-lehmann.org |
 |---|
-| Universität Leipzig |
-| Institut für Informatik |
-| Abt. Betriebliche Informationssysteme |
-| Augustusplatz 10 |
+| Institut für Angewandthe Informatik |
+| An-Institut der Universität Leipzig |
+| Gordelerring 9 |
 | 04109 Leipzig |
 | Germany |
 
