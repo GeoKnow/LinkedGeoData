@@ -5,9 +5,11 @@ nav_order: 3
 ---
 
 The LinkedGeoData data set is a large spatial knowledge base which has been derived from Open Street Map.
-All files, including previous releases, can be found at
+All files, including previous releases, can be found at:
 
-* [http://downloads.linkedgeodata.org/releases](http://downloads.linkedgeodata.org/releases)
+* [http://downloads.linkedgeodata.org](http://downloads.linkedgeodata.org) 
+* [http://downloads.linkedgeodata.org/releases](http://downloads.linkedgeodata.org/releases) (official, non-experimental releases only)
+
 
 Additionally, in the Sparql Endpoints we are also linking to the CC0 licensed Map icons from [SJJB Management](http://www.sjjb.co.uk/mapicons/).
 
