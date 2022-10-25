@@ -9,6 +9,7 @@ kramdown:
 
 exclude:
   - linkedgeodata*
+  - legacy*
 
 
 # Footer last edited timestamp
