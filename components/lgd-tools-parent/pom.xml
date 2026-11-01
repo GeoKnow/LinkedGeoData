@@ -35,7 +35,7 @@
 		<ver.jena>4.4.0</ver.jena>
 		<ver.jenax>4.4.0-1</ver.jenax>
 		<ver.aksw-commons>0.9.2</ver.aksw-commons>
-		<ver.guava>31.0.1-jre</ver.guava>
+		<ver.guava>33.7.1-jre</ver.guava>
 		<ver.rs-api>3.0.0</ver.rs-api>
 
 
